@@ -179,3 +179,8 @@ class MySQLRepository implements UserRepository { }
 // - Spring injects the correct implementation.
 // - You can change the implementation without touching UserService
 ```
+- Someone else is injecting the object in your app. -> Spring(IoC container)
+
+## Spring Boot
+
+![Diagram:SpringBoot](./)
