@@ -185,11 +185,11 @@ class MySQLRepository implements UserRepository { }
 
 ![Diagram:SpringBoot](./springboot.jpg)
 
-- Question: Do you want Spring to handle all the classes?
+### Question: 
+- Do you want Spring to handle all the classes?
 - Most of the time, we don't need objects for all the classes.
 - We need objects for a selected few classes.
 
-- How do you talk to your Spring Framework and say -> Don't create objects for everything.
+### How do you talk to your Spring Framework and say -> Don't create objects for everything?
 - I just want a few classes.
-
 - We do it in a configuration file -> xml or property file. (talk to framework)
