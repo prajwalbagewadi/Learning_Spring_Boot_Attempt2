@@ -183,4 +183,4 @@ class MySQLRepository implements UserRepository { }
 
 ## Spring Boot
 
-![Diagram:SpringBoot](./)
+![Diagram:SpringBoot](./springboot.jpg)
