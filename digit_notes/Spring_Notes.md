@@ -38,13 +38,13 @@ class Repo {
 }
 ```
 
-- Typically,we developers create objects by ourselfs using new keyword.
+- Typically, we developers create objects by ourselves using the new keyword.
 - But what if we give that control to someone else (a framework)?
 - - This concept is called IoC.
 - IoC(Inversion Of Control) is principle.
 - IoC means you don't create objects yourself -- the framework creates and manages them for you
-- To achive IoC, we use a technique called DI(Dependency Injection).
-- DI is the actual implementation of IoC (a Concreate Technique).
+- To achieve IoC, we use a technique called DI(Dependency Injection).
+- DI is the actual implementation of IoC (a Concrete Technique).
 
 ### example:
 
@@ -53,11 +53,11 @@ class Controller {
     //instead of doing.
     Service service = new Service();
 
-    //you can ask spring to inject -> you mention the reference -> Spring will give you the object.
+    //you can ask Spring to inject -> you mention the reference -> Spring will give you the object.
 }
 ```
 
-## 3 Techniques to achive Dependency Injection:
+## 3 Techniques to achieve Dependency Injection:
 
 ### Without Dependency Injection:
 
@@ -127,3 +127,55 @@ public class Service {
 ```
 
 ### 3. Field Injection (Not Recommended):
+
+- Field Injection = dependency is injected directly into a class variable(field), instead of through a constructor or setter method.
+- Most commonly seen in Spring/Spring Boot using the '@Autowired' annotation.
+
+```
+public class Controller {
+    @Autowired
+    private Service service; //interface
+
+    public void handleRequest() {
+        service.doSomeThing();
+    }
+}
+
+public class Service {
+    public void doSomeThing() {
+        System.out.println("doing somework");
+    }
+}
+```
+
+- Loose Coupling: you don't have a concrete implementation of one class in another. You code for interfaces.
+- What it means:
+- You do not create objects using the new keyword.
+- You do not depend on a specific class.
+- You declare the dependency as an interface.
+- Spring injects the actual implementation at runtime.
+
+### example :
+1. Without Loose Coupling (tight coupling):
+```
+@Component
+class UserService {
+    private MySQLRepository repo = new MySQLRepository();
+}
+// problem: UserService is stuck with MySQLRepository.
+```
+2. With Loose Coupling (Field Injection):
+```
+@Component
+class UserService {
+    @Autowired
+    private UserRepository repo; // interface
+}
+
+@Repository
+class MySQLRepository implements UserRepository { }
+// What this means:
+// - UserService does not know which class is used.
+// - Spring injects the correct implementation.
+// - You can change the implementation without touching UserService
+```
