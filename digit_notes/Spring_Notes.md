@@ -205,3 +205,5 @@ class MySQLRepository implements UserRepository { }
 -  Build projects in less time.
 
 ## Note: In Spring, you do the configurations manually.
+
+![Diagram:SpringBootOnSpringFramework](./spingbootOnSpring.jpg)
