@@ -207,3 +207,64 @@ class MySQLRepository implements UserRepository { }
 ## Note: In Spring, you do the configurations manually.
 
 ![Diagram:SpringBootOnSpringFramework](./spingbootOnSpring.jpg)
+
+- We can build apps using Spring Framework.
+- Or if you want to make it easy, use Spring Boot. (opinionated Framework)
+
+## Spring Boot is an opinionated framework, which means:
+- The framework decides defaults for you.
+- You follow its way of doing things.
+- Fewer choices, fewer configurations.
+
+- Means: Spring Boot will give you certain things the way it wants.
+- And you can simply use it to run your apps.
+
+## Spring Initializer (steps):
+- https://start.spring.io
+- Project (Build Tool): Maven.
+- Language: Java.
+- Spring Boot (Version): 3.2.5
+- Project Metadata:
+- Group: com.bagewadi
+- Artifact: DemoApp
+- Name: DemoApp
+- Description: Demo project for Spring Boot
+- Package name: com.bagewadi.DemoApp
+- Packaging (type): jar(selected)  war
+- Java (version): 22 21(selected) 17
+
+## Web apps:
+- Deploy on the cloud.
+- You need a (.War) file (Web Archive).
+- And then you push your war file into Tomcat to run it.
+
+- You can create a Jar file, -> Jar doesn't run on Tomcat.
+- What if you don't need an external Tomcat?
+- What if the project itself has a Tomcat?
+- Spring Boot says if you want to build a web app, -> you will get embedded Tomcat.
+
+## Dependencies:
+- We talked about Spring. -> There are multiple projects inside Spring, and we don't need all.
+- Depending on your use case, you will choose one.
+
+## Add Dependencies:
+- Example: I want to build a web app, select -> Spring web.
+- Add Database -> JPA.
+- Click on generate.
+- Download and Unzip.
+- Goto -> IDE -> open downloaded project.
+- If you expand the dependencies.
+- Jackson: (Convert Java objects to JSON) automatically.
+- Micrometer: Used for application metrics (Monitoring).
+- - Collects metrics like:
+  - request count
+  - response time
+  - memory / CPU usage
+  - custom counters
+  - Sends them to monitoring tools (Prometheus, Grafana, etc.)
+- Embedded Tomcat
+- Spring Boot
+- Spring Framework
+- Spring Core
+- all things needed for the Spring project.
+    
