@@ -192,4 +192,16 @@ class MySQLRepository implements UserRepository { }
 
 ### How do you talk to your Spring Framework and say -> Don't create objects for everything?
 - I just want a few classes.
-- We do it in a configuration file -> xml or property file. (talk to framework)
+- We do it in a configuration file -> xml or property file. (talking to framework)
+
+- Just because you are using Spring, -> you will not be able to run your code on the first go.
+- You will have to first work with the 'Configuration file'.
+- For web apps, -> you need a server;  -> you can use Tomcat.
+- If you build a web app in Spring, -> you need to have Tomcat configured and installed.
+
+## Spring Boot:
+-  Let me take care of your config problems.
+-  Get your project running in a few minutes.
+-  Build projects in less time.
+
+## Note: In Spring, you do the configurations manually.
