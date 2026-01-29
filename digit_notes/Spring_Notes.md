@@ -267,4 +267,52 @@ class MySQLRepository implements UserRepository { }
 - Spring Framework
 - Spring Core
 - all things needed for the Spring project.
-    
+
+## Using the above steps and information, create a DemoApp.
+- Trying to create and run the project.
+- (Steps):
+- - Steps in Spring initializer.
+  - Add the dependency (Spring Web).
+  - And try to run the Project.
+  - Observe the (External dependencies) and try to find the above dependencies.
+  - Unzip the project folder.
+  - Open the project with IntelliJ IDEA.
+  - Let Maven download the dependencies.
+  - Goto -> src (folder) -> main -> java -> com.prajwal.demo -> DemoApplication.java
+```
+//auto-generated
+package com.prajwal.demo;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class DemoApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(DemoApplication.class, args);
+    }
+}
+```
+ - Current file -> run.
+ - Goto -> Chrome -> localhost:8080
+ - Observe the 'Whitelabel Error Page' (more on that).
+ - * Servlet or anyother app before.
+ - Create a class Hello.
+ - Create -> src (folder) -> main -> java -> com.prajwal.demo -> Controller (Package)
+ - Create class Hello.java in the controller package.
+```
+package com.prajwal.demo.Controller;
+
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class Hello {
+    @RequestMapping("/") // "/" maps to homepage
+    public String greet() {
+        return "Hello World!";
+    }
+}
+```
+ - Goto -> Chrome -> localhost:8080
+ - Observe the output on the screen: "Hello World!"      
