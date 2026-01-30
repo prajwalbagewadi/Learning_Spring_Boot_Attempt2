@@ -314,5 +314,21 @@ public class Hello {
     }
 }
 ```
+ - Running Project: Goto -> src (folder) -> main -> java -> com.prajwal.demo -> DemoApplication.java -> Run (automatically compiling and running the project on the embedded Tomcat)
  - Goto -> Chrome -> localhost:8080
- - Observe the output on the screen: "Hello World!"      
+ - Observe the output on the screen: "Hello World!".
+
+## Spring Boot Issues:
+- Default.
+- It will do a lot of stuff for you.
+- Convenience over Configuration.
+- In Spring, you will have to configure a lot of the stuff.
+- Spring Boot will give you extra things that you might need or might not.
+- It gives you a lot of default stuff.
+- If you want more control over your stuff, use Spring.
+- Debatable.
+- Convenient Spring Boot.
+
+## Dependency Injection using Spring Boot:
+- Create a 'Core Spring Boot app' using the Spring Initializr (https://start.spring.io)
+- Repeat the steps in [Go to above section](#spring-initializer-(steps))
