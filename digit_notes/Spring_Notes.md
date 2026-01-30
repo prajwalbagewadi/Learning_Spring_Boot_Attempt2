@@ -332,3 +332,27 @@ public class Hello {
 ## Dependency Injection using Spring Boot:
 - Create a 'Core Spring Boot app' using the Spring Initializr (https://start.spring.io)
 - Repeat the steps in [Go to Spring Initializer (steps)](#spring-initializer-steps)
+- Maven -> java -> 3.2.5,(3.5.5)
+- Group -> com.prajwal
+- Name -> MyApp
+- Packaging -> Jar
+- Java -> 21
+- (No Dependencies!) Please don't add any Dependencies.
+
+```
+package com.prajwal.MyApp;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+
+@SpringBootApplication
+public class MyAppApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(MyAppApplication.class, args);
+        // It creates a container responsible for creating and running an IoC container.
+        // ChatGpt corrected: It starts the Spring Boot Application and initializes the IoC container. 
+    }
+} 
+```
+- SpringApplication.run() bootstraps the Spring Boot app and creates the IoC container.
