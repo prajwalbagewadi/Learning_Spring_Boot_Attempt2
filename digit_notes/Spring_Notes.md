@@ -331,4 +331,4 @@ public class Hello {
 
 ## Dependency Injection using Spring Boot:
 - Create a 'Core Spring Boot app' using the Spring Initializr (https://start.spring.io)
-- Repeat the steps in [Go to above section](#spring-initializer-(steps))
+- Repeat the steps in [Go to Spring Initializer (steps)](#spring-initializer-steps)
