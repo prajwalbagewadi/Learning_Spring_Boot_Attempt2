@@ -356,4 +356,5 @@ public class MyAppApplication {
 } 
 ```
 - SpringApplication.run() bootstraps the Spring Boot app and creates the IoC container.
+  
 ![Diagram:Role of Spring IoC Container in Dependency Injection](./RoleOfSpringIoCContainerInDependencyInjection.jpg)
