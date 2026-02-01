@@ -549,3 +549,53 @@ public class Laptop {
     }
 }
 ```
+- REST-style controller returning plain text style example:
+```
+// src (folder) -> main -> java -> com.prajwal.MyWebApp1 -> MyWebApp1Application  
+package com.prajwal.MyWebApp1;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class MyWebApp1Application {
+
+	public static void main(String[] args) {
+		SpringApplication.run(MyWebApp1Application.class, args);
+	}
+
+}
+```
+```
+// src (folder) -> main -> java -> com.prajwal.MyWebApp1 -> Controller -> Dev.java
+package com.prajwal.MyWebApp1.Controller;
+
+import com.prajwal.MyWebApp1.Service.Laptop;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class Dev {
+    @Autowired //Field Injection
+    private Laptop macbook;
+
+    @RequestMapping("/")
+    public String dev(){
+        return macbook.ide()+" !dev working on code.";
+    }
+}
+```
+```
+// src (folder) -> main -> java -> com.prajwal.MyWebApp1 -> Service -> Laptop.java
+package com.prajwal.MyWebApp1.Service;
+
+import org.springframework.stereotype.Component;
+
+@Component
+public class Laptop {
+    public String ide(){
+        return "IntelliJ Idea Running.";
+    }
+}
+```
