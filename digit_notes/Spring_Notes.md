@@ -358,3 +358,142 @@ public class MyAppApplication {
 - SpringApplication.run() bootstraps the Spring Boot app and creates the IoC container.
   
 ![Diagram:Role of Spring IoC Container in Dependency Injection](./RoleOfSpringIoCContainerInDependencyInjection.jpg)
+
+## Spring Boot without Dependency Injection:
+```
+package com.prajwal.demo.Controller;
+
+public class Calculator {
+    public int calculate(int a, int b, String opr){
+        switch (opr){
+            case "+": {
+                return a+b;
+            }
+            case "-": {
+                return a-b;
+            }
+            case "*": {
+                return a*b;
+            }
+            case "/": {
+                if(b==0){
+                    throw new ArithmeticException("Division by zero");
+                }
+                return a/b;
+            }
+            case "%": {
+                return a%b;
+            }
+            default: {
+                throw new  IllegalArgumentException("Invalid operation");
+            }
+        }
+    }
+}
+```
+```
+package com.prajwal.demo;
+
+import com.prajwal.demo.Controller.Calculator;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+import java.util.Calendar;
+
+@SpringBootApplication
+public class DemoApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(DemoApplication.class, args); //responsible for creating and running IoC Container
+
+		//object without Dependency Injection
+		Calculator calculator = new Calculator();
+		System.out.println("calculator:"+calculator.calculate(25,25,"+"));
+	}
+
+}
+
+```
+
+## Before Spring:
+- To talk to the container, we need to (get a reference to the container).
+- To get a Reference to the IoC container, we must know the type of the container.
+- Which is Application Context.
+- ApplicationContext is the central Spring IoC container that creates, manages, and injects beans in a Spring application.
+-  SpringApplication.run() method creates and returns an object of type ApplicationContext.
+```
+@SpringBootApplication
+public class MyAppApplication {
+    public static void main(String[] args) {
+        ApplicationContext context = SpringApplication.run(MyAppApplication.class, args);
+        Service object = context.getBean(Service.class); //Spring creates the Service object of Service in my IoC container.
+        object.display();
+    }
+}
+// Service must be a Spring Bean.
+@Service //or @Component
+public class Service {
+    public void display() {
+        System.out.println("Hello from Service");
+    }
+}
+```
+
+## What is getBean():
+- The purpose of 'getBean()' is to retrieve an instance of a Bean managed by the Spring IoC(Inversion of Control).
+
+## Spring:
+- Spring, by default, will not create objects for all the classes (Eg, 1000 classes), and also we don't want that.
+- Spring says, "You tell me which class objects you want".
+- "And I'll manage them for you."
+- How will you talk to Spring? -> You may need a configuration, typically via a '@Configuration' class.
+- OR in Spring Boot. -> We can use an Annotation called '@Component'.
+
+### @Component:
+- @Component annotation marks a class as a Spring Bean so that Spring can create and manage its object.
+- Spring identifies this class during component scanning and registers it as a bean definition in the ApplicationContext(Spring IoC container).
+- Spring creates the object and manages its lifecycle (creation, dependency injection, destruction).
+```
+//PaymentService.java
+package com.prajwal.MyApp1.Service;
+
+import org.springframework.stereotype.Component;
+
+@Component
+public class PaymentService {
+    public void run() {
+        System.out.println("PaymentService is running");
+    }
+}
+//MyApp1Application.java
+package com.prajwal.MyApp1;
+
+import com.prajwal.MyApp1.Service.PaymentService;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
+
+@SpringBootApplication
+public class MyApp1Application {
+
+	public static void main(String[] args) {
+		ApplicationContext context = SpringApplication.run(MyApp1Application.class, args);
+
+		PaymentService paymentService = context.getBean(PaymentService.class);
+		paymentService.run();
+	}
+
+}
+```
+## What is ApplicationContext:
+- ApplicationContext is a central interface of the Spring Framework that represents the Spring IoC(Inversion of Control) container.
+- It is responsible for creating, configuring, and managing the lifecycle of your app -> "Spring Beans".
+
+## What is @Component:
+- @Component is a core Spring annotation used to mark a class as a Spring-managed component (Bean).
+
+## We can go a bit more layers (Sub Classes):
+- Autowiring:
+```
+```
+
