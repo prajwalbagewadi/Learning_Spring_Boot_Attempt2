@@ -497,5 +497,55 @@ public class MyApp1Application {
 ## We can go a bit more layers (Sub Classes):
 - Autowiring:
 ```
-```
+// src (folder) -> main -> java -> com.prajwal.MyApp2 ->  MyApp2Application.java  
+package com.prajwal.MyApp2;
 
+import com.prajwal.MyApp2.Controller.Dev;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
+
+@SpringBootApplication
+public class MyApp2Application {
+
+	public static void main(String[] args) {
+		ApplicationContext context = SpringApplication.run(MyApp2Application.class, args);
+		Dev dev = context.getBean(Dev.class);
+		dev.build();
+	}
+
+}
+```
+```
+// src (folder) -> main -> java -> com.prajwal.MyApp2 -> Controller -> Dev.java  
+package com.prajwal.MyApp2.Controller;
+
+import com.prajwal.MyApp2.Service.Laptop;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+@Component
+public class Dev {
+    @Autowired //Field Injection
+    private Laptop macbook;
+
+    public void build() {
+        macbook.ide();
+        System.out.println("Dev Writing on Code.");
+    }
+}
+```
+```
+// src (folder) -> main -> java -> com.prajwal.MyApp2 -> Service -> Laptop.java  
+package com.prajwal.MyApp2.Service;
+
+import org.springframework.stereotype.Component;
+
+@Component
+public class Laptop {
+    public void ide() {
+        System.out.println("IntelliJ IDEA Running.");
+    }
+}
+```
