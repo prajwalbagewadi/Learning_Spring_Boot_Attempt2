@@ -599,3 +599,68 @@ public class Laptop {
     }
 }
 ```
+## @Autowired:
+- @Autowired is a Spring annotation used for Dependency Injection. It tells Spring, "Inject the required bean here automatically".
+
+- As we don't want to manually invoke ApplicationContext.
+- We can use @Autowired.
+- Now Spring understands "I need an object of Dev".
+- But Dev is dependent on the Laptop.
+- So Spring says, "Let me connect (wire) these two classes."
+- (Behind the scenes, dependency injection happens.)
+- As a result, you get an instance of Laptop injected into Dev.
+- @Autowired //field injection (placed on top of the variable).
+
+## Constructor Injection:
+```
+package com.prajwal.MyWebApp1;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class MyWebApp1Application {
+
+	public static void main(String[] args) {
+		SpringApplication.run(MyWebApp1Application.class, args);
+	}
+
+}
+```
+```
+package com.prajwal.MyWebApp1.Controller;
+
+import com.prajwal.MyWebApp1.Service.Laptop;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class Dev {
+
+    private Laptop macbook;
+
+    @Autowired //Constructor Injection.
+    public Dev(Laptop laptop) {
+        this.macbook = laptop;
+    }
+
+    @RequestMapping("/")
+    public String dev(){
+        return macbook.ide()+" !dev working on code.";
+    }
+}
+```
+```
+package com.prajwal.MyWebApp1.Service;
+
+import org.springframework.stereotype.Component;
+
+@Component
+public class Laptop {
+    public String ide(){
+        return "IntelliJ Idea Running.";
+    }
+}
+```
+## Setter Injection
