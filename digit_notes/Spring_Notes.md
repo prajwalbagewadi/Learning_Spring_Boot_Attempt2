@@ -664,3 +664,130 @@ public class Laptop {
 }
 ```
 ## Setter Injection
+```
+package com.prajwal.MyWebApp1;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class MyWebApp1Application {
+
+	public static void main(String[] args) {
+		SpringApplication.run(MyWebApp1Application.class, args);
+	}
+
+}
+```
+```
+package com.prajwal.MyWebApp1.Controller;
+
+import com.prajwal.MyWebApp1.Service.Laptop;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class Dev {
+
+    private Laptop macbook;
+
+    @Autowired //Setter Injection.
+    public void setDevice(Laptop laptop) {
+        this.macbook = laptop;
+    }
+
+    @RequestMapping("/")
+    public String dev(){
+        return macbook.ide()+" !dev working on code.";
+    }
+}
+```
+```
+package com.prajwal.MyWebApp1.Service;
+
+import org.springframework.stereotype.Component;
+
+@Component
+public class Laptop {
+    public String ide(){
+        return "IntelliJ Idea Running.";
+    }
+}
+```
+## How does Setter Injection work:
+- Spring finds Beans: Spring creates one Laptop object and stores it in the IoC Container
+- Dev Controller Spring creates the Dev object.
+- Notices @Autowired on a setter method.
+- Setter Injection happens:
+- Looks at the Parameter Type -> Laptop.
+- Searches the IoC container for a Laptop Bean.
+- Calls the setter method automatically. setDevice(laptopBean);
+- Assigns it to: this.macbook = laptopBean;
+- Request comes to '/', @RequestMapping("/").
+- Object 'macbook' is NOT null.
+- Because Spring already injected it via the setter.
+- Method executes successfully.
+
+## Note: 
+- For field injection(not recommended), '@Autowired' is required.
+- For setter injection, '@Autowired' is required unless the class has only one setter.
+
+## Field Injection:
+```
+package com.prajwal.MyWebApp1;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class MyWebApp1Application {
+
+	public static void main(String[] args) {
+		SpringApplication.run(MyWebApp1Application.class, args);
+	}
+
+}
+```
+```
+package com.prajwal.MyWebApp1.Controller;
+
+import com.prajwal.MyWebApp1.Service.Laptop;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class Dev {
+
+    @Autowired //Field Injection.
+    private Laptop macbook;
+
+//    @Autowired //Setter Injection.
+//    public void setDevice(Laptop laptop) {
+//        this.macbook = laptop;
+//    }
+    
+//    @Autowired //Constructor Injection.
+//    public Dev(Laptop laptop) {
+//        this.macbook = laptop;
+//    }
+
+    @RequestMapping("/")
+    public String dev(){
+        return macbook.ide()+" !dev working on code.";
+    }
+}
+```
+```
+package com.prajwal.MyWebApp1.Service;
+
+import org.springframework.stereotype.Component;
+
+@Component
+public class Laptop {
+    public String ide(){
+        return "IntelliJ Idea Running.";
+    }
+}
+```
