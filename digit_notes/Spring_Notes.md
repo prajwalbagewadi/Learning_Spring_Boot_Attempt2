@@ -804,3 +804,13 @@ private Laptop macbook;
 ```
 - The Datatype of 'macbook'.
 
+## Loose Coupling:
+- What if you create an interface for Laptop?
+- Refactor -> Extract interface -> Code to the interface.
+- Meaning:
+- Take an existing class.
+- Extract an interface from it.
+- Use the interface type instead of the concrete class.
+- Achieves loose coupling.
+
+### Example:
