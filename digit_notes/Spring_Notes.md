@@ -791,3 +791,16 @@ public class Laptop {
     }
 }
 ```
+
+## How exactly is Spring Boot Connecting @Autowired?
+- How does your Spring framework know that when you say @Autowired?
+- It will connect with Laptop.class and not some other class.
+- As the project has multiple classes.
+- How does it know we have to connect with the object 'laptop' only?
+- It goes for By Type.
+```
+@Autowired //Field Injection.
+private Laptop macbook;
+```
+- The Datatype of 'macbook'.
+
