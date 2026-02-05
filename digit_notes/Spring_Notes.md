@@ -814,3 +814,26 @@ private Laptop macbook;
 - Achieves loose coupling.
 
 ### Example:
+- Lets take the example of 'Computer'.
+- In the real world, there is no single entity called a 'Computer'.
+- Instead, we have Desktop and Laptop both of which are called as Computers.
+
+```
+// Interface methods are implicitly public and abstract
+public  interface Computer {
+  
+  //abstract method
+  void compile() {}
+}
+
+public class Laptop implements Computer {
+
+  @Override
+  public void compile () {
+    System.out.println("Java Compiler running.");
+  }
+}
+```
+
+- When you join a company they don't promise you a specific device, they promise a Computer.
+- Which could be a Desktop or Laptop.
