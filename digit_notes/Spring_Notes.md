@@ -805,7 +805,7 @@ private Laptop macbook;
 - The Datatype of 'macbook'.
 
 ## Loose Coupling:
-- What if you create an interface for Laptop?
+- What if you create an interface for a laptop?
 - Refactor -> Extract interface -> Code to the interface.
 - Meaning:
 - Take an existing class.
@@ -814,26 +814,110 @@ private Laptop macbook;
 - Achieves loose coupling.
 
 ### Example:
-- Lets take the example of 'Computer'.
+- Let's take the example of 'Computer'.
 - In the real world, there is no single entity called a 'Computer'.
-- Instead, we have Desktop and Laptop both of which are called as Computers.
+- Instead, we have Desktop and Laptop, both of which are called Computers.
 
 ```
 // Interface methods are implicitly public and abstract
 public  interface Computer {
   
-  //abstract method
-  void compile() {}
+	//abstract method
+  	void compile() {}
 }
 
 public class Laptop implements Computer {
 
-  @Override
-  public void compile () {
-    System.out.println("Java Compiler running.");
-  }
+	@Override
+  	public void compile () {
+    	System.out.println("Java Compiler running.");
+  	}
 }
 ```
 
-- When you join a company they don't promise you a specific device, they promise a Computer.
-- Which could be a Desktop or Laptop.
+- When you join a company, they don't promise you a specific device; they promise a Computer.
+- Which could be a Desktop or a laptop.
+
+```
+public class Dev {
+
+	@Autowired //Field injection
+	//private Laptop macbook; //❌ hardcoded value.
+	private Computer comp;
+	public void build() {
+		comp.compile();
+	}
+}
+```
+
+- The company can provide you with a laptop or a desktop.
+- You should go by Computer.
+- As @Autowired goes by type 'Computer.'
+- Class Laptop implements Computer.
+-  ### "As a Laptop is a type of Computer".
+
+```
+package com.prajwal.InterfaceExample;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class InterfaceExampleApplication {
+
+	public static void main(String[] args) {
+
+		SpringApplication.run(InterfaceExampleApplication.class, args);
+	}
+
+}
+```
+```
+package com.prajwal.InterfaceExample.Controller;
+
+import com.prajwal.InterfaceExample.Service.Computer;
+import com.prajwal.InterfaceExample.Service.Laptop;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class Dev {
+
+    //private Laptop macbook; //❌ hard coded value.
+    @Autowired //Field injection
+    private Computer computer;
+
+    @RequestMapping("/")
+    public String build() {
+        return "Dev Building."+"<br>"+computer.compile();
+    }
+}
+```
+```
+package com.prajwal.InterfaceExample.Service;
+
+// Interface methods are implicitly public and abstract
+public interface Computer {
+
+    // Abstract method
+    String compile();
+}
+```
+```
+package com.prajwal.InterfaceExample.Service;
+
+import org.springframework.stereotype.Component;
+
+@Component
+public class Laptop implements Computer {
+
+    @Override
+    public String compile() {
+        return "Java Compiler running...";
+    }
+}
+```
+- rerun. -> Loose Coupling.
+
+## Loose Coupling Confusion:
