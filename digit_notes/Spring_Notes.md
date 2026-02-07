@@ -921,3 +921,13 @@ public class Laptop implements Computer {
 - rerun. -> Loose Coupling.
 
 ## Loose Coupling Confusion:
+- But what if there is confusion?
+- Copy the Laptop class and rename it to Desktop.
+- Both classes implement the Computer interface.
+  
+![Diagram:iocContainerClasses](./iocContainerClasses.jpg)
+
+### Question:
+- We have two classes, both implementing the computer interface "type of Computer".
+- Now in the Dev class, when you use Computer, which object will it connect to: Laptop or Desktop?
+- When you join a company, they give you a choice: Desktop or Laptop.
