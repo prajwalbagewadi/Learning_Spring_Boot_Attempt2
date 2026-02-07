@@ -1222,3 +1222,38 @@ Syntax:
 
 ## @Qualifier("bean-name"):
 - Specifies exactly which bean to inject when multiple beans of the same type exist.
+
+## Spring without Spring Boot:
+- What if you cannot use Spring Boot?
+- You work directly with Spring.
+- A company may be using Spring without Spring Boot.
+
+## Steps to create a Spring project:
+- New Project. -> IntelliJ IDEA (Community).
+- New Project. -> Generators Maven Archetype (creates a Maven project).
+- Name: SimpleSpringProject.
+- JDK: 21 Oracle JDK.
+- Catalog: Internal.
+- Archetype: maven-archetype-quickstart.
+- Version: 1.1
+- Advanced Settings ->
+- GroupId: com.prajwal
+- ArtifactId: SimpleSpringProject
+- Version: 1.0-SNAPSHOT
+- create.
+
+- This is just a Project with a Spring name.
+- There is no Spring Framework in the Project.
+- Project with no Spring Feature. -> Add Dependency.
+- (Unknown) Add Spring Dependency.
+- (Unknown) No Configuration file for Spring.
+- Add Public class Developer.java
+```
+package com.prajwal;
+
+public class Developer {
+    public void build() {
+        System.out.println( "Developer working on code..." );
+    }
+}
+```
