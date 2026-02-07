@@ -1257,3 +1257,34 @@ public class Developer {
     }
 }
 ```
+- First step, run your project to check if it is working.
+```
+package com.prajwal;
+
+/**
+ * Hello world!
+ *
+ */
+public class App {
+    public static void main( String[] args ) {
+        System.out.println( "Hello World!" );
+        Developer developer = new Developer();
+        developer.build();
+    }
+}
+```
+```
+package com.prajwal;
+
+public class Developer {
+    public void build() {
+        System.out.println( "Developer working on code..." );
+    }
+}
+```
+```
+//output:
+Hello World!
+Developer working on code...
+Process finished with exit code 0
+```
