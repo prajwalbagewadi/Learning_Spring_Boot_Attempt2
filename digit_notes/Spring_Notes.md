@@ -931,3 +931,294 @@ public class Laptop implements Computer {
 - We have two classes, both implementing the computer interface "type of Computer".
 - Now in the Dev class, when you use Computer, which object will it connect to: Laptop or Desktop?
 - When you join a company, they give you a choice: Desktop or Laptop.
+
+```
+package com.prajwal.InterfaceExample;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class InterfaceExampleApplication {
+
+	public static void main(String[] args) {
+
+		SpringApplication.run(InterfaceExampleApplication.class, args);
+	}
+
+}
+```
+```
+package com.prajwal.InterfaceExample.Controller;
+
+import com.prajwal.InterfaceExample.Service.Computer;
+import com.prajwal.InterfaceExample.Service.Laptop;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class Dev {
+
+    //private Laptop macbook; //❌ hard coded value.
+    @Autowired //Field injection
+    private Computer computer;
+
+    @RequestMapping("/")
+    public String build() {
+        return "Dev Building."+"<br>"+computer.compile();
+    }
+}
+```
+```
+package com.prajwal.InterfaceExample.Service;
+
+// Interface methods are implicitly public and abstract
+public interface Computer {
+
+    // Abstract method
+    String compile();
+}
+```
+```
+package com.prajwal.InterfaceExample.Service;
+
+import org.springframework.stereotype.Component;
+
+@Component
+public class Desktop implements Computer {
+
+    @Override
+    public String compile() {
+        return "Java Compiler running..."+"<br>"+"On Desktop.";
+    }
+}
+```
+```
+package com.prajwal.InterfaceExample.Service;
+
+import org.springframework.stereotype.Component;
+
+@Component
+public class Laptop implements Computer {
+
+    @Override
+    public String compile() {
+        return "Java Compiler running..."+"<br>"+"On Laptop.";
+    }
+}
+```
+```
+//Error:
+Description:
+Field computer in com.prajwal.InterfaceExample.Controller.Dev required a single bean, but 2 were found:
+	- desktop: defined in file [C:\Users\bagew\Desktop\Project_Ideas\spring24jan2026\InterfaceExample\InterfaceExample\target\classes\com\prajwal\InterfaceExample\Service\Desktop.class]
+	- laptop: defined in file [C:\Users\bagew\Desktop\Project_Ideas\spring24jan2026\InterfaceExample\InterfaceExample\target\classes\com\prajwal\InterfaceExample\Service\Laptop.class]
+```
+
+- Error: App failed to start. Field Computer requires a single bean. But found 2.
+- I prefer Desktop -> you can add @Primary annotation.
+
+```
+package com.prajwal.InterfaceExample;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class InterfaceExampleApplication {
+
+	public static void main(String[] args) {
+
+		SpringApplication.run(InterfaceExampleApplication.class, args);
+	}
+
+}
+```
+```
+package com.prajwal.InterfaceExample.Controller;
+
+import com.prajwal.InterfaceExample.Service.Computer;
+import com.prajwal.InterfaceExample.Service.Laptop;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class Dev {
+
+    //private Laptop macbook; //❌ hard coded value.
+    @Autowired //Field injection
+    private Computer computer;
+
+    @RequestMapping("/")
+    public String build() {
+        return "Dev Building."+"<br>"+computer.compile();
+    }
+}
+```
+```
+package com.prajwal.InterfaceExample.Service;
+
+// Interface methods are implicitly public and abstract
+public interface Computer {
+
+    // Abstract method
+    String compile();
+}
+```
+```
+package com.prajwal.InterfaceExample.Service;
+
+import org.springframework.context.annotation.Primary;
+import org.springframework.stereotype.Component;
+
+@Component
+@Primary //Default bean when multiple implementations are present.
+public class Desktop implements Computer {
+
+    @Override
+    public String compile() {
+        return "Java Compiler running..."+"<br>"+"On Desktop.";
+    }
+}
+```  
+```
+package com.prajwal.InterfaceExample.Service;
+
+import org.springframework.stereotype.Component;
+
+@Component
+public class Laptop implements Computer {
+
+    @Override
+    public String compile() {
+        return "Java Compiler running..."+"<br>"+"On Laptop.";
+    }
+}
+```
+```
+//output:
+//browser: http://localhost:8080/
+Dev Building.
+Java Compiler running...
+On Desktop.
+```
+
+## Use of @Primary:
+- In case of confusion/ambiguity, this class will be preferred.
+- If you put @Primary on both classes.
+- An error occurs, more than one @Primary bean found.
+
+## What if you don't want to use @Primary:
+- Then you can decide explicitly in Dev class.
+
+```
+package com.prajwal.InterfaceExample;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class InterfaceExampleApplication {
+
+	public static void main(String[] args) {
+
+		SpringApplication.run(InterfaceExampleApplication.class, args);
+	}
+
+}
+```
+```
+package com.prajwal.InterfaceExample.Controller;
+
+import com.prajwal.InterfaceExample.Service.Computer;
+import com.prajwal.InterfaceExample.Service.Laptop;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class Dev {
+
+    //private Laptop macbook; //❌ hard coded value.
+    @Autowired //Field injection
+    @Qualifier("laptop") // Explicitly tells Spring to inject the Laptop bean.
+    private Computer computer;
+
+    @RequestMapping("/")
+    public String build() {
+        return "Dev Building."+"<br>"+computer.compile();
+    }
+}
+```
+```
+package com.prajwal.InterfaceExample.Service;
+
+// Interface methods are implicitly public and abstract
+public interface Computer {
+
+    // Abstract method
+    String compile();
+}
+```
+```
+package com.prajwal.InterfaceExample.Service;
+
+import org.springframework.context.annotation.Primary;
+import org.springframework.stereotype.Component;
+
+@Component
+public class Desktop implements Computer {
+
+    @Override
+    public String compile() {
+        return "Java Compiler running..."+"<br>"+"On Desktop.";
+    }
+}
+```
+```
+package com.prajwal.InterfaceExample.Service;
+
+import org.springframework.stereotype.Component;
+
+@Component
+public class Laptop implements Computer {
+
+    @Override
+    public String compile() {
+        return "Java Compiler running..."+"<br>"+"On Laptop.";
+    }
+}
+
+```
+```
+//output:
+Dev Building.
+Java Compiler running...
+On Laptop.
+```
+
+## Use of @Qualifier("bean-name"):
+- Used when multiple beans of the same type exist.
+- Explicitly tells Spring which bean to inject.
+- Applied at the injection point (field, setter, or constructor).
+- Overrides @Primary when both are present.
+```
+Syntax:
+@Qualifer("bean-name")
+```
+- Refers to the name of the bean instance.
+- By default, every class object managed by Spring has a bean name.
+- The default "bean-name" is the class name with the first letter in lowercase.
+- Example: class Laptop -> bean-name: laptop.
+
+## @Autowired:
+- Tells Spring to find a matching bean in the application context and inject it automatically."
+
+## @Primary:
+- Resolves the conflict when multiple beans of the same type exist by marking one as the default choice.
+
+## @Qualifier("bean-name"):
+- Specifies exactly which bean to inject when multiple beans of the same type exist.
