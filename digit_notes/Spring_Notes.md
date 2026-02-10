@@ -1839,4 +1839,20 @@ age -> element (tag) name.
     <author>Ana Huang</author>
 </book>
 ```
+```
+<!--Example 3-->
+<!DOCTYPE books [
+    <!ELEMENT books (book)>
+    <!ELEMENT book (title,author)>
+    <!ELEMENT title (#PCDATA)>
+    <!ELEMENT author (#PCDATA)>
+]>
+
+<books>
+    <book>
+        <title>TWISTED LOVE</title>
+        <author>Ana Huang</author>
+    </book>
+</books>
+```
 - XML Tags: The actual elements in the XML file, written like <tag>content</tag>.
