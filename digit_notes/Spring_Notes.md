@@ -1477,3 +1477,229 @@ Exception in thread "main" java.lang.IllegalStateException: BeanFactory not init
 
 ## Bean Lifecycle Diagram
 ![Diagram:BeanLifecycleDiagram](./BeanLifecycleDiagram.jpg)
+
+- Spring creates the Bean.
+- Injects Dependencies.
+- Initializes it.
+- Uses it.
+- Destroys it.
+```
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.prajwal</groupId>
+  <artifactId>BeanLifecycle</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  <packaging>jar</packaging>
+
+  <name>BeanLifecycle</name>
+  <url>http://maven.apache.org</url>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
+
+    <!-- Source: https://mvnrepository.com/artifact/org.springframework/spring-context -->
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-context</artifactId>
+      <version>6.2.9</version>
+      <scope>compile</scope>
+    </dependency>
+
+    <!-- Source: https://mvnrepository.com/artifact/jakarta.annotation/jakarta.annotation-api -->
+    <dependency>
+      <groupId>jakarta.annotation</groupId>
+      <artifactId>jakarta.annotation-api</artifactId>
+      <version>2.1.1</version>
+      <scope>compile</scope>
+    </dependency>
+
+  </dependencies>
+</project>
+```
+```
+package com.prajwal;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+/**
+ * Hello world!
+ *
+ */
+public class App 
+{
+    public static void main( String[] args ) {
+        System.out.println( "Hello World!" );
+        //ApplicationContext context = new ClassPathXmlApplicationContext("Spring.xml");
+        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("Spring.xml");
+        //Student student = context.getBean("student");
+        //Error: java: incompatible types: java.lang.Object cannot be converted to com.prajwal.Student
+        Student student = (Student) context.getBean("student");
+        //typecasting to solve the error.
+        student.display();
+        context.close();  // 🔥 REQUIRED for @PreDestroy
+    }
+}
+```
+```
+package com.prajwal;
+// search: Jakarta Annotations API, in MVNRepository.
+import jakarta.annotation.PostConstruct;
+import jakarta.annotation.PreDestroy;
+
+public class Student {
+
+    private String name;
+
+    public Student(){
+        System.out.println("1. Bean Created.");
+    }
+
+    //setter
+    public void setName(String name){
+        this.name = name;
+    }
+
+    @PostConstruct
+    public void init(){
+        System.out.println("2. Bean Initialized.");
+        //setName(name);
+    }
+
+    public void display() {
+        System.out.println("3. Bean is Ready to Use.");
+        System.out.println("Student Name: " + this.name);
+    }
+
+    @PreDestroy
+    public void destroy(){
+        System.out.println("4. Bean Destroyed.");
+    }
+}
+```
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- bean definitions here -->
+
+
+    <!-- REQUIRED for @PostConstruct & @PreDestroy -->
+    <bean class="org.springframework.context.annotation.CommonAnnotationBeanPostProcessor"/>
+
+    <bean id="student" class="com.prajwal.Student">
+        <property name="name" value="Prajwal Bagewadi"/>
+    </bean>
+</beans>
+```
+```
+//output:
+D:\Software_Installed\jdk\bin\java.exe "-
+Hello World!
+1. Bean Created.
+2. Bean Initialized.
+3. Bean is Ready to Use.
+Student Name: Prajwal Bagewadi
+4. Bean Destroyed.
+
+Process finished with exit code 0
+```
+- ### Note:
+- To get @PostConstruct & @PreDestroy.
+- Add Maven dependency
+```
+  <!-- Source: https://mvnrepository.com/artifact/jakarta.annotation/jakarta.annotation-api -->
+    <dependency>
+      <groupId>jakarta.annotation</groupId>
+      <artifactId>jakarta.annotation-api</artifactId>
+      <version>2.1.1</version>
+      <scope>compile</scope>
+    </dependency>
+```
+- Observe Error: java: incompatible types: java.lang.Object cannot be converted to com.prajwal.Student
+- Use TypeCasting to fix the error.
+```
+Student student = (Student) context.getBean("student");
+```
+- Observe that when running the App, @PostConstruct and @PreDestroy won't run.
+- Insert the DTD code in Spring.xml <Beans></Beans>.
+```
+<!-- REQUIRED for @PostConstruct & @PreDestroy -->
+    <bean class="org.springframework.context.annotation.CommonAnnotationBeanPostProcessor"/>
+```
+- To @PreDestroy, we need to close the IoC container at the end of the main() code.
+```
+context.close(); // 🔥 REQUIRED for @PreDestroy
+```
+- Use of public void init() method with no args.
+- The init() method is not meant to receive any data.
+- It is meant to run logic after the dependencies are added.
+- When to use init() method:
+- Validation.
+- Logging.
+- Initial Calculations.
+- Opening Resources.
+- Checking Required Fields.
+```
+ @PostConstruct
+    public void init(){
+        System.out.println("2. Bean Initialized.");
+        //setName(name);
+        if (name.equals("")) {
+            throw new IllegalStateException("Name must not be null.");
+        }
+    }
+```
+```
+package com.prajwal;
+// search: Jakarta Annotations API, in MVNRepository.
+import jakarta.annotation.PostConstruct;
+import jakarta.annotation.PreDestroy;
+
+public class Student {
+
+    private String name;
+
+    public Student(){
+        System.out.println("1. Bean Created.");
+    }
+
+    //setter
+    public void setName(String name){
+        this.name = name;
+    }
+
+    @PostConstruct
+    public void init(){
+        System.out.println("2. Bean Initialized.");
+        //setName(name);
+        if (name.equals("")) {
+            throw new IllegalStateException("Name must not be null.");
+        }
+    }
+
+    public void display() {
+        System.out.println("3. Bean is Ready to Use.");
+        System.out.println("Student Name: " + this.name);
+    }
+
+    @PreDestroy
+    public void destroy(){
+        System.out.println("4. Bean Destroyed.");
+    }
+}
+```
