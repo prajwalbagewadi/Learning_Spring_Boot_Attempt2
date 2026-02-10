@@ -1796,7 +1796,7 @@ Process finished with exit code 0
 ```
 <!--Example/Syntax:-->
 <!DOCTYPE student [
-    <!ELEMENT student (name,age)>
+    <!ELEMENT student (name, age)>
     <!ELEMENT name (#PCDATA)>
     <!ELEMENT age (#PCDATA)>
 ]>
@@ -1825,5 +1825,18 @@ age -> element (tag) name.
 <name>Prajwal</name>
 <age>26</age>
 </student>
+```
+```
+<!--Example 2-->
+<!DOCTYPE book [
+    <!ELEMENT book (title, author)>
+    <!ELEMENT title (#PCDATA)>
+    <!ELEMENT author (#PCDATA)>
+]>
+
+<book>
+    <title>TWISTED LOVE</title>
+    <author>Ana Huang</author>
+</book>
 ```
 - XML Tags: The actual elements in the XML file, written like <tag>content</tag>.
