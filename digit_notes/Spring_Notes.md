@@ -1703,3 +1703,84 @@ public class Student {
     }
 }
 ```
+## Creating Spring.xml Or Anyname.xml file:
+```
+//Load Spring Configuration (two options)
+ApplicationContext context = new ClassPathXmlApplicationContext("Spring.xml");
+//OR
+ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("Spring.xml");
+```
+- In your project, go to src/main -> create a new folder: resources -> inside it, create a new file -> Spring.xml
+- Spring.xml is the Spring configuration file where you define beans, their properties, and lifecycle callbacks.
+- Spring reads this file to create, manage, and configure beans in your application.
+
+### How to use Spring.xml or Anyname.xml for lifecycle callbacks
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- bean definitions here -->
+
+
+    <!-- REQUIRED for @PostConstruct & @PreDestroy -->
+    <!-- <bean class="org.springframework.context.annotation.CommonAnnotationBeanPostProcessor"/> -->
+
+    <bean id="student" class="com.prajwal.Student" init-method="initMethod" destroy-method="destroyMethod">
+        <property name="name" value="Prajwal"/>
+    </bean>
+</beans>
+```
+```
+package com.prajwal;
+// search: Jakarta Annotations API, in MVNRepository.
+import jakarta.annotation.PostConstruct;
+import jakarta.annotation.PreDestroy;
+
+public class Student {
+
+    private String name;
+
+    public Student(){
+        System.out.println("1. Bean Created.");
+    }
+
+    //setter
+    public void setName(String name){
+        this.name = name;
+    }
+
+    //@PostConstruct
+    public void initMethod(){
+        System.out.println("2. Bean Initialized.");
+        //setName(name);
+        if (name.equals("")) {
+            throw new IllegalStateException("Name must not be null.");
+        }
+    }
+
+    public void display() {
+        System.out.println("3. Bean is Ready to Use.");
+        System.out.println("Student Name: " + this.name);
+    }
+
+    //@PreDestroy
+    public void destroyMethod(){
+        System.out.println("4. Bean Destroyed.");
+    }
+}
+```
+```
+\\output
+D:\Software_Installed\jdk\bin\java.exe "-
+Hello World!
+1. Bean Created.
+2. Bean Initialized.
+3. Bean is Ready to Use.
+Student Name: Prajwal
+4. Bean Destroyed.
+
+Process finished with exit code 0
+```
