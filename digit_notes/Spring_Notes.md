@@ -1335,7 +1335,7 @@ public class App {
 - We need to create the Spring.xml file in:
 - src -> main -> resources
 - run App.java code.
-- Error: "Exception in thread "main" org.springframework.beans.factory.xml.XmlBeanDefinitionStoreException: Line 1 in XML document from class path resource [Spring.xml] is invalid".
+- ### Error: "Exception in thread "main" org.springframework.beans.factory.xml.XmlBeanDefinitionStoreException: Line 1 in XML document from class path resource [Spring.xml] is invalid".
 - ### Why does this error occur:
 - Spring tried to parse the Spring.xml
 - The parser immediately failed at line 1, col 1.
@@ -1356,7 +1356,7 @@ public class App {
 
 </beans>
 ```
-- Error: Exception in thread "main" org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'com.prajwal.Developer' available.
+- ### Error: Exception in thread "main" org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'com.prajwal.Developer' available.
 - To fix, we need to create a bean.
 ```
 // defining a bean in Spring.xml
@@ -1413,3 +1413,67 @@ Hello World!
 Developer working on code...
 Process finished with exit code 0
 ```
+- ### Error: BeanFactory not initialized or closed.
+- It is a Spring lifecycle/context management issue.
+- Occurs when your code tries to access Spring beans before the container is ready or after it has been shut down.
+```
+package com.prajwal;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+/**
+ * Hello world!
+ *
+ */
+public class App {
+    public static void main( String[] args ) {
+        System.out.println( "Hello World!" );
+//        Developer developer = new Developer();
+//        developer.build();
+        //ApplicationContext context = new ClassPathXmlApplicationContext("Spring.xml");
+        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("Spring.xml");
+        context.close(); // ❌ close Spring container
+        //ApplicationContext -> Spring interface that defines the IoC Container behavior.
+        //ClassPathXmlApplicationContext() -> Concrete class that implements ApplicationContext and loads beans definitions from an XML file present in the classpath.
+        //This line creates the IoC container.
+        Developer developer = context.getBean(Developer.class);
+        //Spring gives the object.
+        developer.build();
+    }
+}
+```
+```
+package com.prajwal;
+
+public class Developer {
+    public void build() {
+        System.out.println( "Developer working on code..." );
+    }
+}
+```
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- bean definitions here -->
+    <bean id="developer" class="com.prajwal.Developer" />
+</beans>
+```
+```
+//output:
+Exception in thread "main" java.lang.IllegalStateException: BeanFactory not initialized or already closed - call 'refresh' before accessing beans via the ApplicationContext
+```
+## What is BeanFactory:
+- BeanFactory is an IoC(Inversion of Control) container in Spring.
+- It is responsible for creating, managing, and configuring beans.
+- In earlier versions of Spring, BeanFactory was commonly used as the core container.
+- Beans are created lazily (only when they are requested).
+- The container remains active as long as the application is running (it is not closed by default).
+- BeanFactory is a lightweight Spring IoC container that manages beans using lazy initialization.
+
+## Bean Lifecycle Diagram
+![Diagram:BeanLifecycleDiagram](./BeanLifecycleDiagram.jpg)
