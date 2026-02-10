@@ -1703,7 +1703,7 @@ public class Student {
     }
 }
 ```
-## Creating Spring.xml Or Anyname.xml file:
+## Creating Spring.xml or Anyname.xml file:
 ```
 //Load Spring Configuration (two options)
 ApplicationContext context = new ClassPathXmlApplicationContext("Spring.xml");
@@ -1784,3 +1784,46 @@ Student Name: Prajwal
 
 Process finished with exit code 0
 ```
+## Why Spring instead of Spring Boot?
+- The project might be a legacy project that was built using Spring, not Spring Boot.
+- To understand what happens behind the scenes: Spring provides the container first, and then it creates and manages objects (beans).
+- Every class that Spring manages is called a bean.
+
+## <!Extensible Markup Lang/>:
+- DTD (Document Type Definition):
+- Defines which tags and attributes are allowed in an XML file.
+- Can be in a separate file or inside XML with <!DOCTYPE>.
+```
+<!--Example/Syntax:-->
+<!DOCTYPE student [
+    <!ELEMENT student (name,age)>
+    <!ELEMENT name (#PCDATA)>
+    <!ELEMENT age (#PCDATA)>
+]>
+
+<!--
+NOTE:
+<!DOCTYPE -> Declares the document type.
+student -> Root element of the XML.
+[ ] -> Contains internal DTD.
+<!DOCTYPE> Defines the root element and its DTD rules.
+<!Element -> DTD keyword to define an element.
+age -> element (tag) name.
+( ) -> content of the element.
+#PCDATA -> plain text data.
+> -> end of definition.
+-->
+
+<student>
+    <name>Prajwal</name>
+    <age>26</age>
+</student>
+```
+```
+//output:
+> <student>
+<name>Prajwal</name>
+<age>26</age>
+</student>
+```
+- XML Tags: The actual elements in the XML file, written like <tag>content</tag>.
