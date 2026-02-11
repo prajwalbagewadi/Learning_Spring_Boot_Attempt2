@@ -156,7 +156,9 @@ public class Service {
 - Spring injects the actual implementation at runtime.
 
 ### example :
+
 1. Without Loose Coupling (tight coupling):
+
 ```
 @Component
 class UserService {
@@ -164,7 +166,9 @@ class UserService {
 }
 // problem: UserService is stuck with MySQLRepository.
 ```
+
 2. With Loose Coupling (Field Injection):
+
 ```
 @Component
 class UserService {
@@ -179,30 +183,34 @@ class MySQLRepository implements UserRepository { }
 // - Spring injects the correct implementation.
 // - You can change the implementation without touching UserService
 ```
+
 - Someone else is injecting the object in your app. -> Spring(IoC container)
 
 ## Spring Boot:
 
 ![Diagram:SpringBoot](./springboot.jpg)
 
-### Question: 
+### Question:
+
 - Do you want Spring to handle all the classes?
 - Most of the time, we don't need objects for all the classes.
 - We need objects for a selected few classes.
 
 ### How do you talk to your Spring Framework and say -> Don't create objects for everything?
+
 - I just want a few classes.
 - We do it in a configuration file -> xml or property file. (talking to framework)
 
 - Just because you are using Spring, -> you will not be able to run your code on the first go.
 - You will have to first work with the 'Configuration file'.
-- For web apps, -> you need a server;  -> you can use Tomcat.
+- For web apps, -> you need a server; -> you can use Tomcat.
 - If you build a web app in Spring, -> you need to have Tomcat configured and installed.
 
 ## Spring Boot:
--  Let me take care of your config problems.
--  Get your project running in a few minutes.
--  Build projects in less time.
+
+- Let me take care of your config problems.
+- Get your project running in a few minutes.
+- Build projects in less time.
 
 ## Note: In Spring, you do the configurations manually.
 
@@ -212,6 +220,7 @@ class MySQLRepository implements UserRepository { }
 - Or if you want to make it easy, use Spring Boot. (opinionated Framework)
 
 ## Spring Boot is an opinionated framework, which means:
+
 - The framework decides defaults for you.
 - You follow its way of doing things.
 - Fewer choices, fewer configurations.
@@ -220,6 +229,7 @@ class MySQLRepository implements UserRepository { }
 - And you can simply use it to run your apps.
 
 ## Spring Initializer (steps):
+
 - https://start.spring.io
 - Project (Build Tool): Maven.
 - Language: Java.
@@ -230,10 +240,11 @@ class MySQLRepository implements UserRepository { }
 - Name: DemoApp
 - Description: Demo project for Spring Boot
 - Package name: com.bagewadi.DemoApp
-- Packaging (type): jar(selected)  war
+- Packaging (type): jar(selected) war
 - Java (version): 22 21(selected) 17
 
 ## Web apps:
+
 - Deploy on the cloud.
 - You need a (.War) file (Web Archive).
 - And then you push your war file into Tomcat to run it.
@@ -244,10 +255,12 @@ class MySQLRepository implements UserRepository { }
 - Spring Boot says if you want to build a web app, -> you will get embedded Tomcat.
 
 ## Dependencies:
+
 - We talked about Spring. -> There are multiple projects inside Spring, and we don't need all.
 - Depending on your use case, you will choose one.
 
 ## Add Dependencies:
+
 - Example: I want to build a web app, select -> Spring web.
 - Add Database -> JPA.
 - Click on generate.
@@ -269,6 +282,7 @@ class MySQLRepository implements UserRepository { }
 - all things needed for the Spring project.
 
 ## Using the above steps and information, create a DemoApp.
+
 - Trying to create and run the project.
 - (Steps):
 - - Steps in Spring initializer.
@@ -279,6 +293,7 @@ class MySQLRepository implements UserRepository { }
   - Open the project with IntelliJ IDEA.
   - Let Maven download the dependencies.
   - Goto -> src (folder) -> main -> java -> com.prajwal.demo -> DemoApplication.java
+
 ```
 //auto-generated
 package com.prajwal.demo;
@@ -293,13 +308,15 @@ public class DemoApplication {
     }
 }
 ```
- - Current file -> run.
- - Goto -> Chrome -> localhost:8080
- - Observe the 'Whitelabel Error Page' (more on that).
- - * Servlet or anyother app before.
- - Create a class Hello.
- - Create -> src (folder) -> main -> java -> com.prajwal.demo -> Controller (Package)
- - Create class Hello.java in the controller package.
+
+- Current file -> run.
+- Goto -> Chrome -> localhost:8080
+- Observe the 'Whitelabel Error Page' (more on that).
+- - Servlet or anyother app before.
+- Create a class Hello.
+- Create -> src (folder) -> main -> java -> com.prajwal.demo -> Controller (Package)
+- Create class Hello.java in the controller package.
+
 ```
 package com.prajwal.demo.Controller;
 
@@ -314,11 +331,13 @@ public class Hello {
     }
 }
 ```
- - Running Project: Goto -> src (folder) -> main -> java -> com.prajwal.demo -> DemoApplication.java -> Run (automatically compiling and running the project on the embedded Tomcat)
- - Goto -> Chrome -> localhost:8080
- - Observe the output on the screen: "Hello World!".
+
+- Running Project: Goto -> src (folder) -> main -> java -> com.prajwal.demo -> DemoApplication.java -> Run (automatically compiling and running the project on the embedded Tomcat)
+- Goto -> Chrome -> localhost:8080
+- Observe the output on the screen: "Hello World!".
 
 ## Spring Boot Issues:
+
 - Default.
 - It will do a lot of stuff for you.
 - Convenience over Configuration.
@@ -330,6 +349,7 @@ public class Hello {
 - Convenient Spring Boot.
 
 ## Dependency Injection using Spring Boot:
+
 - Create a 'Core Spring Boot app' using the Spring Initializr (https://start.spring.io)
 - Repeat the steps in [Go to Spring Initializer (steps)](#spring-initializer-steps)
 - Maven -> java -> 3.2.5,(3.5.5)
@@ -351,15 +371,17 @@ public class MyAppApplication {
     public static void main(String[] args) {
         SpringApplication.run(MyAppApplication.class, args);
         // It creates a container responsible for creating and running an IoC container.
-        // ChatGpt corrected: It starts the Spring Boot Application and initializes the IoC container. 
+        // ChatGpt corrected: It starts the Spring Boot Application and initializes the IoC container.
     }
-} 
+}
 ```
+
 - SpringApplication.run() bootstraps the Spring Boot app and creates the IoC container.
-  
+
 ![Diagram:Role of Spring IoC Container in Dependency Injection](./RoleOfSpringIoCContainerInDependencyInjection.jpg)
 
 ## Spring Boot without Dependency Injection:
+
 ```
 package com.prajwal.demo.Controller;
 
@@ -391,6 +413,7 @@ public class Calculator {
     }
 }
 ```
+
 ```
 package com.prajwal.demo;
 
@@ -416,11 +439,13 @@ public class DemoApplication {
 ```
 
 ## Before Spring:
+
 - To talk to the container, we need to (get a reference to the container).
 - To get a Reference to the IoC container, we must know the type of the container.
 - Which is Application Context.
 - ApplicationContext is the central Spring IoC container that creates, manages, and injects beans in a Spring application.
--  SpringApplication.run() method creates and returns an object of type ApplicationContext.
+- SpringApplication.run() method creates and returns an object of type ApplicationContext.
+
 ```
 @SpringBootApplication
 public class MyAppApplication {
@@ -440,9 +465,11 @@ public class Service {
 ```
 
 ## What is getBean():
+
 - The purpose of 'getBean()' is to retrieve an instance of a Bean managed by the Spring IoC(Inversion of Control).
 
 ## Spring:
+
 - Spring, by default, will not create objects for all the classes (Eg, 1000 classes), and also we don't want that.
 - Spring says, "You tell me which class objects you want".
 - "And I'll manage them for you."
@@ -450,9 +477,11 @@ public class Service {
 - OR in Spring Boot. -> We can use an Annotation called '@Component'.
 
 ### @Component:
+
 - @Component annotation marks a class as a Spring Bean so that Spring can create and manage its object.
 - Spring identifies this class during component scanning and registers it as a bean definition in the ApplicationContext(Spring IoC container).
 - Spring creates the object and manages its lifecycle (creation, dependency injection, destruction).
+
 ```
 //PaymentService.java
 package com.prajwal.MyApp1.Service;
@@ -466,6 +495,7 @@ public class PaymentService {
     }
 }
 ```
+
 ```
 //MyApp1Application.java
 package com.prajwal.MyApp1;
@@ -487,17 +517,22 @@ public class MyApp1Application {
 
 }
 ```
+
 ## What is ApplicationContext:
+
 - ApplicationContext is a central interface of the Spring Framework that represents the Spring IoC(Inversion of Control) container.
 - It is responsible for creating, configuring, and managing the lifecycle of your app -> "Spring Beans".
 
 ## What is @Component:
+
 - @Component is a core Spring annotation used to mark a class as a Spring-managed component (Bean).
 
 ## We can go a bit more layers (Sub Classes):
+
 - Autowiring:
+
 ```
-// src (folder) -> main -> java -> com.prajwal.MyApp2 ->  MyApp2Application.java  
+// src (folder) -> main -> java -> com.prajwal.MyApp2 ->  MyApp2Application.java
 package com.prajwal.MyApp2;
 
 import com.prajwal.MyApp2.Controller.Dev;
@@ -517,8 +552,9 @@ public class MyApp2Application {
 
 }
 ```
+
 ```
-// src (folder) -> main -> java -> com.prajwal.MyApp2 -> Controller -> Dev.java  
+// src (folder) -> main -> java -> com.prajwal.MyApp2 -> Controller -> Dev.java
 package com.prajwal.MyApp2.Controller;
 
 import com.prajwal.MyApp2.Service.Laptop;
@@ -536,8 +572,9 @@ public class Dev {
     }
 }
 ```
+
 ```
-// src (folder) -> main -> java -> com.prajwal.MyApp2 -> Service -> Laptop.java  
+// src (folder) -> main -> java -> com.prajwal.MyApp2 -> Service -> Laptop.java
 package com.prajwal.MyApp2.Service;
 
 import org.springframework.stereotype.Component;
@@ -549,9 +586,11 @@ public class Laptop {
     }
 }
 ```
+
 - REST-style controller returning plain text style example:
+
 ```
-// src (folder) -> main -> java -> com.prajwal.MyWebApp1 -> MyWebApp1Application  
+// src (folder) -> main -> java -> com.prajwal.MyWebApp1 -> MyWebApp1Application
 package com.prajwal.MyWebApp1;
 
 import org.springframework.boot.SpringApplication;
@@ -566,6 +605,7 @@ public class MyWebApp1Application {
 
 }
 ```
+
 ```
 // src (folder) -> main -> java -> com.prajwal.MyWebApp1 -> Controller -> Dev.java
 package com.prajwal.MyWebApp1.Controller;
@@ -586,6 +626,7 @@ public class Dev {
     }
 }
 ```
+
 ```
 // src (folder) -> main -> java -> com.prajwal.MyWebApp1 -> Service -> Laptop.java
 package com.prajwal.MyWebApp1.Service;
@@ -599,7 +640,9 @@ public class Laptop {
     }
 }
 ```
+
 ## @Autowired:
+
 - @Autowired is a Spring annotation used for Dependency Injection. It tells Spring, "Inject the required bean here automatically".
 
 - As we don't want to manually invoke ApplicationContext.
@@ -612,6 +655,7 @@ public class Laptop {
 - @Autowired //field injection (placed on top of the variable).
 
 ## Constructor Injection:
+
 ```
 package com.prajwal.MyWebApp1;
 
@@ -627,6 +671,7 @@ public class MyWebApp1Application {
 
 }
 ```
+
 ```
 package com.prajwal.MyWebApp1.Controller;
 
@@ -651,6 +696,7 @@ public class Dev {
     }
 }
 ```
+
 ```
 package com.prajwal.MyWebApp1.Service;
 
@@ -663,7 +709,9 @@ public class Laptop {
     }
 }
 ```
+
 ## Setter Injection
+
 ```
 package com.prajwal.MyWebApp1;
 
@@ -679,6 +727,7 @@ public class MyWebApp1Application {
 
 }
 ```
+
 ```
 package com.prajwal.MyWebApp1.Controller;
 
@@ -703,6 +752,7 @@ public class Dev {
     }
 }
 ```
+
 ```
 package com.prajwal.MyWebApp1.Service;
 
@@ -715,7 +765,9 @@ public class Laptop {
     }
 }
 ```
+
 ## How does Setter Injection work:
+
 - Spring finds Beans: Spring creates one Laptop object and stores it in the IoC Container
 - Dev Controller Spring creates the Dev object.
 - Notices @Autowired on a setter method.
@@ -729,11 +781,13 @@ public class Laptop {
 - Because Spring already injected it via the setter.
 - Method executes successfully.
 
-## Note: 
+## Note:
+
 - For field injection(not recommended), '@Autowired' is required.
 - For setter injection, '@Autowired' is required unless the class has only one setter.
 
 ## Field Injection:
+
 ```
 package com.prajwal.MyWebApp1;
 
@@ -749,6 +803,7 @@ public class MyWebApp1Application {
 
 }
 ```
+
 ```
 package com.prajwal.MyWebApp1.Controller;
 
@@ -767,7 +822,7 @@ public class Dev {
 //    public void setDevice(Laptop laptop) {
 //        this.macbook = laptop;
 //    }
-    
+
 //    @Autowired //Constructor Injection.
 //    public Dev(Laptop laptop) {
 //        this.macbook = laptop;
@@ -779,6 +834,7 @@ public class Dev {
     }
 }
 ```
+
 ```
 package com.prajwal.MyWebApp1.Service;
 
@@ -793,18 +849,22 @@ public class Laptop {
 ```
 
 ## How exactly is Spring Boot Connecting @Autowired?
+
 - How does your Spring framework know that when you say @Autowired?
 - It will connect with Laptop.class and not some other class.
 - As the project has multiple classes.
 - How does it know we have to connect with the object 'laptop' only?
 - It goes for By Type.
+
 ```
 @Autowired //Field Injection.
 private Laptop macbook;
 ```
+
 - The Datatype of 'macbook'.
 
 ## Loose Coupling:
+
 - What if you create an interface for a laptop?
 - Refactor -> Extract interface -> Code to the interface.
 - Meaning:
@@ -814,6 +874,7 @@ private Laptop macbook;
 - Achieves loose coupling.
 
 ### Example:
+
 - Let's take the example of 'Computer'.
 - In the real world, there is no single entity called a 'Computer'.
 - Instead, we have Desktop and Laptop, both of which are called Computers.
@@ -821,7 +882,7 @@ private Laptop macbook;
 ```
 // Interface methods are implicitly public and abstract
 public  interface Computer {
-  
+
 	//abstract method
   	void compile() {}
 }
@@ -854,7 +915,7 @@ public class Dev {
 - You should go by Computer.
 - As @Autowired goes by type 'Computer.'
 - Class Laptop implements Computer.
--  ### "As a Laptop is a type of Computer".
+- ### "As a Laptop is a type of Computer".
 
 ```
 package com.prajwal.InterfaceExample;
@@ -872,6 +933,7 @@ public class InterfaceExampleApplication {
 
 }
 ```
+
 ```
 package com.prajwal.InterfaceExample.Controller;
 
@@ -894,6 +956,7 @@ public class Dev {
     }
 }
 ```
+
 ```
 package com.prajwal.InterfaceExample.Service;
 
@@ -904,6 +967,7 @@ public interface Computer {
     String compile();
 }
 ```
+
 ```
 package com.prajwal.InterfaceExample.Service;
 
@@ -918,16 +982,19 @@ public class Laptop implements Computer {
     }
 }
 ```
+
 - rerun. -> Loose Coupling.
 
 ## Loose Coupling Confusion:
+
 - But what if there is confusion?
 - Copy the Laptop class and rename it to Desktop.
 - Both classes implement the Computer interface.
-  
+
 ![Diagram:iocContainerClasses](./iocContainerClasses.jpg)
 
 ### Question:
+
 - We have two classes, both implementing the computer interface "type of Computer".
 - Now in the Dev class, when you use Computer, which object will it connect to: Laptop or Desktop?
 - When you join a company, they give you a choice: Desktop or Laptop.
@@ -948,6 +1015,7 @@ public class InterfaceExampleApplication {
 
 }
 ```
+
 ```
 package com.prajwal.InterfaceExample.Controller;
 
@@ -970,6 +1038,7 @@ public class Dev {
     }
 }
 ```
+
 ```
 package com.prajwal.InterfaceExample.Service;
 
@@ -980,6 +1049,7 @@ public interface Computer {
     String compile();
 }
 ```
+
 ```
 package com.prajwal.InterfaceExample.Service;
 
@@ -994,6 +1064,7 @@ public class Desktop implements Computer {
     }
 }
 ```
+
 ```
 package com.prajwal.InterfaceExample.Service;
 
@@ -1008,6 +1079,7 @@ public class Laptop implements Computer {
     }
 }
 ```
+
 ```
 //Error:
 Description:
@@ -1035,6 +1107,7 @@ public class InterfaceExampleApplication {
 
 }
 ```
+
 ```
 package com.prajwal.InterfaceExample.Controller;
 
@@ -1057,6 +1130,7 @@ public class Dev {
     }
 }
 ```
+
 ```
 package com.prajwal.InterfaceExample.Service;
 
@@ -1067,6 +1141,7 @@ public interface Computer {
     String compile();
 }
 ```
+
 ```
 package com.prajwal.InterfaceExample.Service;
 
@@ -1082,7 +1157,8 @@ public class Desktop implements Computer {
         return "Java Compiler running..."+"<br>"+"On Desktop.";
     }
 }
-```  
+```
+
 ```
 package com.prajwal.InterfaceExample.Service;
 
@@ -1097,6 +1173,7 @@ public class Laptop implements Computer {
     }
 }
 ```
+
 ```
 //output:
 //browser: http://localhost:8080/
@@ -1106,11 +1183,13 @@ On Desktop.
 ```
 
 ## Use of @Primary:
+
 - In case of confusion/ambiguity, this class will be preferred.
 - If you put @Primary on both classes.
 - An error occurs, more than one @Primary bean found.
 
 ## What if you don't want to use @Primary:
+
 - Then you can decide explicitly in Dev class.
 
 ```
@@ -1129,6 +1208,7 @@ public class InterfaceExampleApplication {
 
 }
 ```
+
 ```
 package com.prajwal.InterfaceExample.Controller;
 
@@ -1153,6 +1233,7 @@ public class Dev {
     }
 }
 ```
+
 ```
 package com.prajwal.InterfaceExample.Service;
 
@@ -1163,6 +1244,7 @@ public interface Computer {
     String compile();
 }
 ```
+
 ```
 package com.prajwal.InterfaceExample.Service;
 
@@ -1178,6 +1260,7 @@ public class Desktop implements Computer {
     }
 }
 ```
+
 ```
 package com.prajwal.InterfaceExample.Service;
 
@@ -1193,6 +1276,7 @@ public class Laptop implements Computer {
 }
 
 ```
+
 ```
 //output:
 Dev Building.
@@ -1201,34 +1285,42 @@ On Laptop.
 ```
 
 ## Use of @Qualifier("bean-name"):
+
 - Used when multiple beans of the same type exist.
 - Explicitly tells Spring which bean to inject.
 - Applied at the injection point (field, setter, or constructor).
 - Overrides @Primary when both are present.
+
 ```
 Syntax:
 @Qualifer("bean-name")
 ```
+
 - Refers to the name of the bean instance.
 - By default, every class object managed by Spring has a bean name.
 - The default "bean-name" is the class name with the first letter in lowercase.
 - Example: class Laptop -> bean-name: laptop.
 
 ## @Autowired:
+
 - Tells Spring to find a matching bean in the application context and inject it automatically."
 
 ## @Primary:
+
 - Resolves the conflict when multiple beans of the same type exist by marking one as the default choice.
 
 ## @Qualifier("bean-name"):
+
 - Specifies exactly which bean to inject when multiple beans of the same type exist.
 
 ## Spring without Spring Boot:
+
 - What if you cannot use Spring Boot?
 - You work directly with Spring.
 - A company may be using Spring without Spring Boot.
 
 ## Steps to create a Spring project:
+
 - New Project. -> IntelliJ IDEA (Community).
 - New Project. -> Generators Maven Archetype (creates a Maven project).
 - Name: SimpleSpringProject.
@@ -1248,6 +1340,7 @@ Syntax:
 - (Unknown) Add Spring Dependency.
 - (Unknown) No Configuration file for Spring.
 - Add Public class Developer.java
+
 ```
 package com.prajwal;
 
@@ -1257,7 +1350,9 @@ public class Developer {
     }
 }
 ```
+
 - First step, run your project to check if it is working.
+
 ```
 package com.prajwal;
 
@@ -1273,6 +1368,7 @@ public class App {
     }
 }
 ```
+
 ```
 package com.prajwal;
 
@@ -1282,20 +1378,24 @@ public class Developer {
     }
 }
 ```
+
 ```
 //output:
 Hello World!
 Developer working on code...
 Process finished with exit code 0
 ```
+
 ![Diagram:createIoCContainer](./createIoCContainer.jpg)
 
 ### pom.xml:
+
 - Add the Spring dependency.
 - Go to https://mvnrepository.com.
 - Search for Spring Context
 - Select Version: 6.2.9
 - Copy the Maven dependency code.
+
 ```
 <!-- Source: https://mvnrepository.com/artifact/org.springframework/spring-context -->
 <dependency>
@@ -1305,8 +1405,10 @@ Process finished with exit code 0
     <scope>compile</scope>
 </dependency>
 ```
+
 - Paste it inside the '<dependencies></dependencies>' section of 'pom.xml'.
 - Click on Sync Maven changes.
+
 ```
 package com.prajwal;
 
@@ -1332,6 +1434,7 @@ public class App {
     }
 }
 ```
+
 - We need to create the Spring.xml file in:
 - src -> main -> resources
 - run App.java code.
@@ -1344,6 +1447,7 @@ public class App {
 - search: "Spring XML Schema-based configuration."
 - https://docs.spring.io/spring-framework/docs/4.2.x/spring-framework-reference/html/xsd-configuration.html
 - Copy the XML code in Spring.xml
+
 ```
 //DTD
 <?xml version="1.0" encoding="UTF-8"?>
@@ -1356,12 +1460,15 @@ public class App {
 
 </beans>
 ```
+
 - ### Error: Exception in thread "main" org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'com.prajwal.Developer' available.
 - To fix, we need to create a bean.
+
 ```
 // defining a bean in Spring.xml
 <bean id="developer" class="com.prajwal.Developer" />
 ```
+
 ```
 package com.prajwal;
 
@@ -1387,6 +1494,7 @@ public class App {
     }
 }
 ```
+
 ```
 package com.prajwal;
 
@@ -1396,6 +1504,7 @@ public class Developer {
     }
 }
 ```
+
 ```
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
@@ -1407,15 +1516,18 @@ public class Developer {
     <bean id="developer" class="com.prajwal.Developer" />
 </beans>
 ```
+
 ```
 //output:
 Hello World!
 Developer working on code...
 Process finished with exit code 0
 ```
+
 - ### Error: BeanFactory not initialized or closed.
 - It is a Spring lifecycle/context management issue.
 - Occurs when your code tries to access Spring beans before the container is ready or after it has been shut down.
+
 ```
 package com.prajwal;
 
@@ -1443,6 +1555,7 @@ public class App {
     }
 }
 ```
+
 ```
 package com.prajwal;
 
@@ -1452,6 +1565,7 @@ public class Developer {
     }
 }
 ```
+
 ```
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
@@ -1463,11 +1577,14 @@ public class Developer {
     <bean id="developer" class="com.prajwal.Developer" />
 </beans>
 ```
+
 ```
 //output:
 Exception in thread "main" java.lang.IllegalStateException: BeanFactory not initialized or already closed - call 'refresh' before accessing beans via the ApplicationContext
 ```
+
 ## What is BeanFactory:
+
 - BeanFactory is an IoC(Inversion of Control) container in Spring.
 - It is responsible for creating, managing, and configuring beans.
 - In earlier versions of Spring, BeanFactory was commonly used as the core container.
@@ -1476,6 +1593,7 @@ Exception in thread "main" java.lang.IllegalStateException: BeanFactory not init
 - BeanFactory is a lightweight Spring IoC container that manages beans using lazy initialization.
 
 ## Bean Lifecycle Diagram
+
 ![Diagram:BeanLifecycleDiagram](./BeanLifecycleDiagram.jpg)
 
 - Spring creates the Bean.
@@ -1483,6 +1601,7 @@ Exception in thread "main" java.lang.IllegalStateException: BeanFactory not init
 - Initializes it.
 - Uses it.
 - Destroys it.
+
 ```
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
@@ -1527,6 +1646,7 @@ Exception in thread "main" java.lang.IllegalStateException: BeanFactory not init
   </dependencies>
 </project>
 ```
+
 ```
 package com.prajwal;
 
@@ -1537,7 +1657,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  * Hello world!
  *
  */
-public class App 
+public class App
 {
     public static void main( String[] args ) {
         System.out.println( "Hello World!" );
@@ -1552,6 +1672,7 @@ public class App
     }
 }
 ```
+
 ```
 package com.prajwal;
 // search: Jakarta Annotations API, in MVNRepository.
@@ -1588,6 +1709,7 @@ public class Student {
     }
 }
 ```
+
 ```
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
@@ -1606,6 +1728,7 @@ public class Student {
     </bean>
 </beans>
 ```
+
 ```
 //output:
 D:\Software_Installed\jdk\bin\java.exe "-
@@ -1618,9 +1741,11 @@ Student Name: Prajwal Bagewadi
 
 Process finished with exit code 0
 ```
+
 - ### Note:
 - To get @PostConstruct & @PreDestroy.
 - Add Maven dependency
+
 ```
   <!-- Source: https://mvnrepository.com/artifact/jakarta.annotation/jakarta.annotation-api -->
     <dependency>
@@ -1630,21 +1755,28 @@ Process finished with exit code 0
       <scope>compile</scope>
     </dependency>
 ```
+
 - Observe Error: java: incompatible types: java.lang.Object cannot be converted to com.prajwal.Student
 - Use TypeCasting to fix the error.
+
 ```
 Student student = (Student) context.getBean("student");
 ```
+
 - Observe that when running the App, @PostConstruct and @PreDestroy won't run.
 - Insert the DTD code in Spring.xml <Beans></Beans>.
+
 ```
 <!-- REQUIRED for @PostConstruct & @PreDestroy -->
     <bean class="org.springframework.context.annotation.CommonAnnotationBeanPostProcessor"/>
 ```
+
 - To @PreDestroy, we need to close the IoC container at the end of the main() code.
+
 ```
 context.close(); // 🔥 REQUIRED for @PreDestroy
 ```
+
 - Use of public void init() method with no args.
 - The init() method is not meant to receive any data.
 - It is meant to run logic after the dependencies are added.
@@ -1654,6 +1786,7 @@ context.close(); // 🔥 REQUIRED for @PreDestroy
 - Initial Calculations.
 - Opening Resources.
 - Checking Required Fields.
+
 ```
  @PostConstruct
     public void init(){
@@ -1664,6 +1797,7 @@ context.close(); // 🔥 REQUIRED for @PreDestroy
         }
     }
 ```
+
 ```
 package com.prajwal;
 // search: Jakarta Annotations API, in MVNRepository.
@@ -1703,18 +1837,22 @@ public class Student {
     }
 }
 ```
+
 ## Creating Spring.xml or Anyname.xml file:
+
 ```
 //Load Spring Configuration (two options)
 ApplicationContext context = new ClassPathXmlApplicationContext("Spring.xml");
 //OR
 ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("Spring.xml");
 ```
+
 - In your project, go to src/main -> create a new folder: resources -> inside it, create a new file -> Spring.xml
 - Spring.xml is the Spring configuration file where you define beans, their properties, and lifecycle callbacks.
 - Spring reads this file to create, manage, and configure beans in your application.
 
 ### How to use Spring.xml or Anyname.xml for lifecycle callbacks
+
 ```
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
@@ -1733,6 +1871,7 @@ ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("Spr
     </bean>
 </beans>
 ```
+
 ```
 package com.prajwal;
 // search: Jakarta Annotations API, in MVNRepository.
@@ -1772,6 +1911,7 @@ public class Student {
     }
 }
 ```
+
 ```
 \\output
 D:\Software_Installed\jdk\bin\java.exe "-
@@ -1784,15 +1924,19 @@ Student Name: Prajwal
 
 Process finished with exit code 0
 ```
+
 ## Why Spring instead of Spring Boot?
+
 - The project might be a legacy project that was built using Spring, not Spring Boot.
 - To understand what happens behind the scenes: Spring provides the container first, and then it creates and manages objects (beans).
 - Every class that Spring manages is called a bean.
 
 ## <!Extensible Markup Lang/>:
+
 - DTD (Document Type Definition):
 - Defines which tags and attributes are allowed in an XML file.
 - Can be in a separate file or inside XML with <!DOCTYPE>.
+
 ```
 <!--Example/Syntax:-->
 <!DOCTYPE student [
@@ -1819,6 +1963,7 @@ age -> element (tag) name.
     <age>26</age>
 </student>
 ```
+
 ```
 //output:
 > <student>
@@ -1826,6 +1971,7 @@ age -> element (tag) name.
 <age>26</age>
 </student>
 ```
+
 ```
 <!--Example 2-->
 <!DOCTYPE book [
@@ -1839,6 +1985,7 @@ age -> element (tag) name.
     <author>Ana Huang</author>
 </book>
 ```
+
 ```
 <!--Example 3-->
 <!DOCTYPE books [
@@ -1855,4 +2002,51 @@ age -> element (tag) name.
     </book>
 </books>
 ```
+
 - XML Tags: The actual elements in the XML file, written like <tag>content</tag>.
+
+```
+<beans>
+    <!---->
+    <bean class="com.prajwal.Developer" id="developer"/>
+    <!--class -> attribute-->
+    <!--com.prajwal. -> package-->
+    <!--Developer -> classname-->
+    <!--com.prajwal.Developer -> qualified classname-->
+    <!--id="developer -> optional beanname"-->
+</beans>
+```
+
+- When id is Mandatory?
+- If you access bean like this:
+
+```
+Developer dev = (Developer) context.getBean("developer");
+```
+
+- When id is not required:
+- If you access bean like this:
+
+```
+Developer dev = context.getBean("Developer.class");
+```
+
+## App.java
+
+```
+package com.prajwal;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+public class App {
+    public static void main(String[] args) {
+
+        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("Spring.xml");
+
+        Student student = (Student) context.getBean("student");
+        //instead of context.getBean("Student.class");
+        //getBean -> returns type Object, typecast it to (Developer)
+    }
+}
+```
