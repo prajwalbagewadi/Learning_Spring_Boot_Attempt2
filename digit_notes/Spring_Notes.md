@@ -2050,3 +2050,25 @@ public class App {
     }
 }
 ```
+
+## Error: Cannot find defination for <beans>:
+
+- This happens when Spring cannot find the XML schema definations that validates <beans> and <bean>
+
+```
+<!--Error causing code:-->
+<beans>
+    <bean id="student" class="com.prajwal.Student" init-method="initMethod" destroy-method="destroyMethod">-->
+        <property name="name" value="Prajwal"/>
+    </bean>
+</beans>
+```
+
+- To fix, search:
+
+```
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+```
