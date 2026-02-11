@@ -2065,14 +2065,16 @@ public class App {
 ```
 
 - To fix, search: XML Schema-based configuration.
+- Copy paste the xml script in Spring.xml
 
 ```
 <?xml version="1.0" encoding="UTF-8"?>
+<!--code line that resolves error-->
 <beans xmlns="http://www.springframework.org/schema/beans"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="
         http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
-
+<!--Provide defination for beans and bean tags-->
     <!-- bean definitions here -->
 
 </beans
@@ -2084,4 +2086,17 @@ public class App {
        xsi:schemaLocation="
         http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 </beans>
+```
+
+- We are asking Spring that you responsible for creating the objects defined in bean.
+- which we have configured in Spring.xml
+
+## Adding one more class (complexity):
+
+```
+public class Laptop {
+    public void compiler() {
+        System.out.println("Java compiler running");
+    }
+}
 ```
