@@ -2628,3 +2628,276 @@ dev1 age:0
 
 Process finished with exit code 0
 ```
+
+## What about Reference variable (<property name ="" ref=""/>):
+
+- "ref" is used in Spring XML to inject a reference to another bean (object) instead of a primitive value.
+- 'value=""' refers to primitives/String.
+- 'ref=""' refers to another Spring managed object.
+
+```
+package com.prajwal;
+
+public class Developer {
+
+    private int age;
+    private double salary;
+    private Laptop macbook;
+
+    public Developer(){
+        System.out.println("Default Developer constructor Obj created in IoC.");
+    }
+
+    public Developer(int age, double salary, Laptop macbook){
+        System.out.println("Developer constructor Obj created in IoC.");
+        this.age = age;
+        this.salary = salary;
+        this.macbook = macbook;
+    }
+
+//    public void setAge(int age) {
+//        this.age = age;
+//    }
+    public int getAge() {
+        return age;
+    }
+
+    public double getSalary(){
+        return salary;
+    }
+
+    public Laptop getLatop(){ return macbook; }
+
+    public void build() {
+        macbook.compiler();
+        System.out.println("Dev writing code.");
+    }
+}
+```
+
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- bean definitions here -->
+
+
+    <!-- REQUIRED for @PostConstruct & @PreDestroy -->
+    <!-- <bean class="org.springframework.context.annotation.CommonAnnotationBeanPostProcessor"/> -->
+    <bean class="com.prajwal.Developer" id="developer">
+        <!--<property name="age" value="26"/>-->
+        <!--<constructor-arg name="age" value="26"/>-->
+        <constructor-arg index="0" value="26"/>
+        <constructor-arg index="1" value="6500"/>
+        <constructor-arg index="3" ref="laptop"/>
+    </bean>
+
+    <bean id="developer1" class="com.prajwal.Developer"/>
+    <bean class="com.prajwal.Laptop" id="laptop"/>
+</beans>
+```
+
+- Error: WARNING: Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'developer' defined in class path resource [Spring.xml]: Could not resolve matching constructor on bean class [com.prajwal.Developer] (hint: specify index/type/name arguments for simple parameters to avoid type ambiguities. You should also check the consistency of arguments when mixing indexed and named arguments, especially in case of bean definition inheritance)
+  Exception in thread "main" org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'developer' defined in class path resource [Spring.xml]: Could not resolve matching constructor on bean class [com.prajwal.Developer] (hint: specify index/type/name arguments for simple parameters to avoid type ambiguities. You should also check the consistency of arguments when mixing indexed and named arguments, especially in case of bean definition inheritance)
+- Chatgpt: give error in one line.
+- **Error:** Spring failed to create the `developer` bean because the constructor argument index is wrong (index `3` used instead of `2`).
+
+```
+<bean class="com.prajwal.Developer" id="developer">
+    <!--<property name="age" value="26"/>-->
+    <!--<constructor-arg name="age" value="26"/>-->
+    <constructor-arg index="0" value="26"/>
+    <constructor-arg index="1" value="6500"/>
+    <constructor-arg index="3" ref="laptop"/> <!--Line causing Error.-->
+</bean>
+```
+
+- Indexes start from 0,1,2 hence 3 is causing the error.
+- Code:
+
+```
+//pom.xml
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.prajwal</groupId>
+  <artifactId>SpringCore</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  <packaging>jar</packaging>
+
+  <name>SpringCore</name>
+  <url>http://maven.apache.org</url>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
+
+    <!-- Source: https://mvnrepository.com/artifact/org.springframework/spring-context -->
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-context</artifactId>
+      <version>6.2.9</version>
+      <scope>compile</scope>
+    </dependency>
+
+  </dependencies>
+</project>
+```
+
+```
+//App.java
+package com.prajwal;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+/**
+ * Hello world!
+ *
+ */
+public class App {
+    public static void main( String[] args ) {
+        System.out.println( "Hello World!" );
+        ApplicationContext context = new ClassPathXmlApplicationContext("Spring.xml");
+        Developer dev = (Developer) context.getBean("developer");
+        Developer dev1 = (Developer) context.getBean("developer1");
+        System.out.println("dev age:"+dev.getAge());
+        System.out.println("dev salary:"+dev.getSalary());
+        System.out.println("dev laptop:"+dev.getLatop().toString());
+        dev.build();
+        System.out.println("dev1 age:"+dev1.getAge());
+    }
+}
+```
+
+```
+//Developer.java
+package com.prajwal;
+
+public class Developer {
+
+    private int age;
+    private double salary;
+    private Laptop macbook;
+
+    public Developer(){
+        System.out.println("Default Developer constructor Obj created in IoC.");
+    }
+
+    public Developer(int age, double salary, Laptop macbook){
+        System.out.println("Developer constructor Obj created in IoC.");
+        this.age = age;
+        this.salary = salary;
+        this.macbook = macbook;
+    }
+
+//    public void setAge(int age) {
+//        this.age = age;
+//    }
+    public int getAge() {
+        return age;
+    }
+
+    public double getSalary(){
+        return salary;
+    }
+
+    public Laptop getLatop(){ return macbook; }
+
+    public void build() {
+        macbook.compiler();
+        System.out.println("Dev writing code.");
+    }
+}
+```
+
+```
+//Laptop.java
+package com.prajwal;
+
+public class Laptop {
+
+    private String model;
+    private String manufacturer;
+
+    public Laptop(){
+        System.out.println("Laptop constructor Obj created in IoC.");
+    }
+
+    public void setModel(String model) {
+        //MacBook Air 13
+        this.model = model;
+    }
+
+    public void setManufacturer(String manufacturer) {
+        //Apple
+        this.manufacturer = manufacturer;
+    }
+
+    public void compiler() {
+        System.out.println("Java compiler running.");
+    }
+
+    @Override
+    public String toString() {
+        return "model:"+model+", manufacturer:"+manufacturer;
+    }
+}
+```
+
+```
+//Spring.xml
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- bean definitions here -->
+
+
+    <!-- REQUIRED for @PostConstruct & @PreDestroy -->
+    <!-- <bean class="org.springframework.context.annotation.CommonAnnotationBeanPostProcessor"/> -->
+    <bean class="com.prajwal.Developer" id="developer">
+        <!--<property name="age" value="26"/>-->
+        <!--<constructor-arg name="age" value="26"/>-->
+        <constructor-arg index="0" value="26"/>
+        <constructor-arg index="1" value="6500"/>
+        <constructor-arg index="2" ref="laptop"/>
+    </bean>
+
+    <bean id="developer1" class="com.prajwal.Developer"/>
+    <bean class="com.prajwal.Laptop" id="laptop">
+        <property name="model" value="MacBook Air 13"/>
+        <property name="manufacturer" value="Apple"/>
+    </bean>
+</beans>
+```
+
+```
+//output:
+Hello World!
+Laptop constructor Obj created in IoC.
+Developer constructor Obj created in IoC.
+Default Developer constructor Obj created in IoC.
+dev age:26
+dev salary:6500.0
+dev laptop:model:MacBook Air 13, manufacturer:Apple
+Java compiler running.
+Dev writing code.
+dev1 age:0
+
+Process finished with exit code 0
+```
