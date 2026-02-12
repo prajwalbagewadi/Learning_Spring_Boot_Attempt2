@@ -2095,8 +2095,536 @@ public class App {
 
 ```
 public class Laptop {
+    public Laptop(){
+        System.out.println("Laptop constructor Obj created in IoC.");
+    }
     public void compiler() {
         System.out.println("Java compiler running");
     }
 }
+```
+
+```
+public class Developer {
+    public Developer(){
+        System.out.println("Developer constructor Obj created in IoC.");
+    }
+    public void build() {
+        System.out.println("Dev writing code.")
+    }
+}
+```
+
+- In the Container we create objects of 2 bean classes.
+
+```
+//pom.xml
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.prajwal</groupId>
+  <artifactId>SpringCore</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  <packaging>jar</packaging>
+
+  <name>SpringCore</name>
+  <url>http://maven.apache.org</url>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
+
+    <!-- Source: https://mvnrepository.com/artifact/org.springframework/spring-context -->
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-context</artifactId>
+      <version>6.2.9</version>
+      <scope>compile</scope>
+    </dependency>
+
+  </dependencies>
+</project>
+```
+
+```
+//App.java
+package com.prajwal;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+/**
+ * Hello world!
+ *
+ */
+public class App {
+    public static void main( String[] args ) {
+        System.out.println( "Hello World!" );
+        ApplicationContext context = new ClassPathXmlApplicationContext("Spring.xml");
+    }
+}
+```
+
+```
+//Developer.java
+package com.prajwal;
+
+public class Developer {
+    public Developer(){
+        System.out.println("Developer constructor Obj created in IoC.");
+    }
+
+    public void build() {
+        System.out.println("Dev writing code.");
+    }
+}
+```
+
+```
+//Laptop.java
+package com.prajwal;
+
+public class Laptop {
+
+    public Laptop(){
+        System.out.println("Laptop constructor Obj created in IoC.");
+    }
+
+    public void compiler() {
+        System.out.println("Java compiler running.");
+    }
+
+}
+```
+
+```
+//Spring.xml
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- bean definitions here -->
+
+
+    <!-- REQUIRED for @PostConstruct & @PreDestroy -->
+    <!-- <bean class="org.springframework.context.annotation.CommonAnnotationBeanPostProcessor"/> -->
+    <bean class="com.prajwal.Developer" id="developer"/>
+    <bean class="com.prajwal.Laptop" id="laptop"/>
+</beans>
+```
+
+```
+//output:
+Hello World!
+Developer constructor Obj created in IoC.
+Laptop constructor Obj created in IoC.
+
+Process finished with exit code 0
+```
+
+- It will create the Container.
+- Spring will see two bean configs.
+- It will create objects for both of the beans.
+
+![Diagram:devAndLapBean](./devAndLapBean.jpg)
+
+- Adding another Dev class bean.
+
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- bean definitions here -->
+
+
+    <!-- REQUIRED for @PostConstruct & @PreDestroy -->
+    <!-- <bean class="org.springframework.context.annotation.CommonAnnotationBeanPostProcessor"/> -->
+    <bean class="com.prajwal.Developer" id="developer"/>
+    <bean id="developer1" class="com.prajwal.Developer"/>
+    <bean class="com.prajwal.Laptop" id="laptop"/>
+</beans>
+```
+
+```
+//output:
+Hello World!
+Developer constructor Obj created in IoC.
+Developer constructor Obj created in IoC.
+Laptop constructor Obj created in IoC.
+
+Process finished with exit code 0
+```
+
+![Diagram:devdevAndLapBean](./devdevAndLapBean.jpg)
+
+## Setter and Constructor Injection:
+
+- Setter Injection:
+
+```
+package com.prajwal;
+
+public class Developer {
+
+    private int age;
+
+    public Developer(){
+        System.out.println("Developer constructor Obj created in IoC.");
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+    public int getAge() {
+        return age;
+    }
+
+    public void build() {
+        System.out.println("Dev writing code.");
+    }
+}
+```
+
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- bean definitions here -->
+
+
+    <!-- REQUIRED for @PostConstruct & @PreDestroy -->
+    <!-- <bean class="org.springframework.context.annotation.CommonAnnotationBeanPostProcessor"/> -->
+    <bean class="com.prajwal.Developer" id="developer">
+        <property name="age" value="26"/>
+    </bean>
+
+    <bean id="developer1" class="com.prajwal.Developer"/>
+    <bean class="com.prajwal.Laptop" id="laptop"/>
+</beans>
+```
+
+```
+package com.prajwal;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+/**
+ * Hello world!
+ *
+ */
+public class App {
+    public static void main( String[] args ) {
+        System.out.println( "Hello World!" );
+        ApplicationContext context = new ClassPathXmlApplicationContext("Spring.xml");
+        Developer dev = (Developer) context.getBean("developer");
+        System.out.println("dev age:"+dev.getAge());
+    }
+}
+```
+
+```
+//output
+Hello World!
+Developer constructor Obj created in IoC.
+Developer constructor Obj created in IoC.
+Laptop constructor Obj created in IoC.
+dev age:26
+
+Process finished with exit code 0
+```
+
+- Spring.xml
+
+```
+<bean class="com.prajwal.Developer" id="developer">
+    <property name="age" value="26"/>
+    <!--sets the age property in dev.class with setAge() using Spring-->
+</bean>
+```
+
+- Spring is assiging value to age.
+
+```
+//output
+dev age:26
+```
+
+![Diagram:setterinjection](./setterinjection.jpg)
+
+```
+package com.prajwal;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+/**
+ * Hello world!
+ *
+ */
+public class App {
+    public static void main( String[] args ) {
+        System.out.println( "Hello World!" );
+        ApplicationContext context = new ClassPathXmlApplicationContext("Spring.xml");
+        Developer dev = (Developer) context.getBean("developer");
+        Developer dev1 = (Developer) context.getBean("developer1");
+        System.out.println("dev age:"+dev.getAge());
+        System.out.println("dev1 age:"+dev1.getAge());
+    }
+}
+```
+
+```
+//output
+Hello World!
+Developer constructor Obj created in IoC.
+Developer constructor Obj created in IoC.
+Laptop constructor Obj created in IoC.
+dev age:26
+dev1 age:0
+
+Process finished with exit code 0
+```
+
+```
+Developer dev1 = (Developer) context.getBean("developer1");
+System.out.println("dev1 age:"+dev1.getAge());
+```
+
+- Dev1 age = value 0 as it is not set in properties.
+
+- Constructor Injection:
+
+```
+package com.prajwal;
+
+public class Developer {
+
+    private int age;
+
+    public Developer(int age){
+        System.out.println("Developer constructor Obj created in IoC.");
+        this.age = age;
+    }
+
+//    public void setAge(int age) {
+//        this.age = age;
+//    }
+    public int getAge() {
+        return age;
+    }
+
+    public void build() {
+        System.out.println("Dev writing code.");
+    }
+}
+```
+
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- bean definitions here -->
+
+
+    <!-- REQUIRED for @PostConstruct & @PreDestroy -->
+    <!-- <bean class="org.springframework.context.annotation.CommonAnnotationBeanPostProcessor"/> -->
+    <bean class="com.prajwal.Developer" id="developer">
+        <!--<property name="age" value="26"/>-->
+        <constructor-arg name="age" value="26"/>
+    </bean>
+
+    <bean id="developer1" class="com.prajwal.Developer"/>
+    <bean class="com.prajwal.Laptop" id="laptop"/>
+</beans>
+```
+
+```
+package com.prajwal;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+/**
+ * Hello world!
+ *
+ */
+public class App {
+    public static void main( String[] args ) {
+        System.out.println( "Hello World!" );
+        ApplicationContext context = new ClassPathXmlApplicationContext("Spring.xml");
+        Developer dev = (Developer) context.getBean("developer");
+        Developer dev1 = (Developer) context.getBean("developer1");
+        System.out.println("dev age:"+dev.getAge());
+        System.out.println("dev1 age:"+dev1.getAge());
+    }
+}
+```
+
+- Error: Spring cannot create the developer1 bean because the class has no no-argument (default) constructor and no constructor is specified in Spring.xml.
+- To fix, create a default constructor with no arguments.
+
+```
+package com.prajwal;
+
+public class Developer {
+
+    private int age;
+
+    public Developer(){
+        System.out.println("Default Developer constructor Obj created in IoC.");
+    }
+
+    public Developer(int age){
+        System.out.println("Developer constructor Obj created in IoC.");
+        this.age = age;
+    }
+
+//    public void setAge(int age) {
+//        this.age = age;
+//    }
+    public int getAge() {
+        return age;
+    }
+
+    public void build() {
+        System.out.println("Dev writing code.");
+    }
+}
+```
+
+```
+//output:
+Hello World!
+Developer constructor Obj created in IoC.
+Default Developer constructor Obj created in IoC.
+Laptop constructor Obj created in IoC.
+dev age:26
+dev1 age:0
+
+Process finished with exit code 0
+```
+
+- We can use `<constructor-arg name="age" value="26"/>`
+- If you have multiple parameters and you want to specify the sequence.
+- We use index = 0 to n.
+
+```
+//example:
+<constructor-arg index="0" value="26"/>
+```
+
+```
+package com.prajwal;
+
+public class Developer {
+
+    private int age;
+    private double salary;
+
+    public Developer(){
+        System.out.println("Default Developer constructor Obj created in IoC.");
+    }
+
+    public Developer(int age, double salary){
+        System.out.println("Developer constructor Obj created in IoC.");
+        this.age = age;
+        this.salary = salary;
+    }
+
+//    public void setAge(int age) {
+//        this.age = age;
+//    }
+    public int getAge() {
+        return age;
+    }
+
+    public double getSalary(){
+        return salary;
+    }
+
+    public void build() {
+        System.out.println("Dev writing code.");
+    }
+}
+```
+
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- bean definitions here -->
+
+
+    <!-- REQUIRED for @PostConstruct & @PreDestroy -->
+    <!-- <bean class="org.springframework.context.annotation.CommonAnnotationBeanPostProcessor"/> -->
+    <bean class="com.prajwal.Developer" id="developer">
+        <!--<property name="age" value="26"/>-->
+        <!--<constructor-arg name="age" value="26"/>-->
+        <constructor-arg index="0" value="26"/>
+        <constructor-arg index="1" value="6500"/>
+    </bean>
+
+    <bean id="developer1" class="com.prajwal.Developer"/>
+    <bean class="com.prajwal.Laptop" id="laptop"/>
+</beans>
+```
+
+```
+package com.prajwal;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+/**
+ * Hello world!
+ *
+ */
+public class App {
+    public static void main( String[] args ) {
+        System.out.println( "Hello World!" );
+        ApplicationContext context = new ClassPathXmlApplicationContext("Spring.xml");
+        Developer dev = (Developer) context.getBean("developer");
+        Developer dev1 = (Developer) context.getBean("developer1");
+        System.out.println("dev age:"+dev.getAge());
+        System.out.println("dev salary:"+dev.getSalary());
+        System.out.println("dev1 age:"+dev1.getAge());
+    }
+}
+```
+
+```
+//output:
+Hello World!
+Developer constructor Obj created in IoC.
+Default Developer constructor Obj created in IoC.
+Laptop constructor Obj created in IoC.
+dev age:26
+dev salary:6500.0
+dev1 age:0
+
+Process finished with exit code 0
 ```
