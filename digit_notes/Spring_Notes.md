@@ -2901,3 +2901,354 @@ dev1 age:0
 
 Process finished with exit code 0
 ```
+
+## What Causes Null Exception:
+
+- Dependency is not injected, so the object is null and its method is called.
+
+```
+//Spring.xml
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- bean definitions here -->
+
+
+    <!-- REQUIRED for @PostConstruct & @PreDestroy -->
+    <!-- <bean class="org.springframework.context.annotation.CommonAnnotationBeanPostProcessor"/> -->
+    <bean class="com.prajwal.Developer" id="developer">
+        <!--<property name="age" value="26"/>-->
+        <!--<constructor-arg name="age" value="26"/>-->
+        <constructor-arg index="0" value="26"/>
+        <constructor-arg index="1" value="6500"/>
+        <constructor-arg index="2" ref="laptop"/>
+    </bean>
+
+    <bean id="developer1" class="com.prajwal.Developer"/>
+    <bean class="com.prajwal.Laptop" id="laptop">
+        <property name="model" value="MacBook Air 13"/>
+        <property name="manufacturer" value="Apple"/>
+    </bean>
+</beans>
+```
+
+```
+package com.prajwal;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+/**
+ * Hello world!
+ *
+ */
+public class App {
+    public static void main( String[] args ) {
+        System.out.println( "Hello World!" );
+        ApplicationContext context = new ClassPathXmlApplicationContext("Spring.xml");
+        Developer dev = (Developer) context.getBean("developer");
+        Developer dev1 = (Developer) context.getBean("developer1");
+        System.out.println("dev age:"+dev.getAge());
+        System.out.println("dev salary:"+dev.getSalary());
+        System.out.println("dev laptop:"+dev.getLatop().toString());
+        dev.build();
+        System.out.println("dev1 age:"+dev1.getAge());
+        dev1.build(); // 💥 NullPointerException
+    }
+}
+```
+
+```
+<bean id="developer1" class="com.prajwal.Developer"/>
+```
+
+- Observe that developer1 is created using default constructor.
+- Laptop dependecy is not injected.
+- So macbook remains null.
+
+```
+dev1.build(); // 💥 NullPointerException
+```
+
+- When dev1.build() -> build() tries to call, macbook.compiler().
+- Since macbook is null, java throws NullPointerException.
+
+![Diagram:LapBeanInjectDev](./LapBeanInjectDev.jpg)
+
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- bean definitions here -->
+
+
+    <!-- REQUIRED for @PostConstruct & @PreDestroy -->
+    <!-- <bean class="org.springframework.context.annotation.CommonAnnotationBeanPostProcessor"/> -->
+    <bean class="com.prajwal.Developer" id="developer">
+        <!--<property name="age" value="26"/>-->
+        <!--<constructor-arg name="age" value="26"/>-->
+        <constructor-arg index="0" value="26"/>
+        <constructor-arg index="1" value="6500"/>
+        <constructor-arg index="2" ref="laptop"/>
+    </bean>
+
+    <bean id="developer1" class="com.prajwal.Developer">
+        <property name="macbook" ref="laptop"/>
+    </bean>
+    <bean class="com.prajwal.Laptop" id="laptop">
+        <property name="model" value="MacBook Air 13"/>
+        <property name="manufacturer" value="Apple"/>
+    </bean>
+</beans>
+```
+
+```
+<bean id="developer1" class="com.prajwal.Developer">
+    <property name="macbook" ref="laptop"/>
+</bean>
+```
+
+```
+package com.prajwal;
+
+public class Developer {
+
+    private int age;
+    private double salary;
+    private Laptop macbook;
+
+    public Developer(){
+        System.out.println("Default Developer constructor Obj created in IoC.");
+    }
+
+    public Developer(int age, double salary, Laptop macbook){
+        System.out.println("Developer constructor Obj created in IoC.");
+        this.age = age;
+        this.salary = salary;
+        this.macbook = macbook;
+    }
+
+//    public void setAge(int age) {
+//        this.age = age;
+//    }
+    public void setLaptop(Laptop macbook) {
+        this.macbook = macbook;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public double getSalary(){
+        return salary;
+    }
+
+    public Laptop getLatop(){ return macbook; }
+
+    public void build() {
+        macbook.compiler();
+        System.out.println("Dev writing code.");
+    }
+}
+```
+
+```
+public void setLaptop(Laptop macbook) {
+    this.macbook = macbook;
+}
+```
+
+- Error: WARNING: Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'developer1' defined in class path resource [Spring.xml]: Invalid property 'macbook' of bean class [com.prajwal.Developer]: Bean property 'macbook' is not writable or has an invalid setter method. Does the parameter type of the setter match the return type of the getter?
+  Exception in thread "main" org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'developer1' defined in class path resource [Spring.xml]: Invalid property 'macbook' of bean class [com.prajwal.Developer]: Bean property 'macbook' is not writable or has an invalid setter method. Does the parameter type of the setter match the return type of the getter?
+- Error: Spring failed to create developer1 because the property macbook has no matching setter method (setMacbook) in the Developer class.
+
+- Spring XML maps <property> to setter methods (JavaBean rule)
+- Property name comes from the method name after set.
+- setLaptop() -> property name = laptop.
+- setMacbook() -> property name = macbook.
+- Field name and parameter name are ignored.
+- Wrong property name -> setter not found -> dependency stays null.
+
+```
+//Spring.xml
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- bean definitions here -->
+
+
+    <!-- REQUIRED for @PostConstruct & @PreDestroy -->
+    <!-- <bean class="org.springframework.context.annotation.CommonAnnotationBeanPostProcessor"/> -->
+    <bean class="com.prajwal.Developer" id="developer">
+        <!--<property name="age" value="26"/>-->
+        <!--<constructor-arg name="age" value="26"/>-->
+        <constructor-arg index="0" value="26"/>
+        <constructor-arg index="1" value="6500"/>
+        <constructor-arg index="2" ref="laptop"/>
+    </bean>
+
+    <bean id="developer1" class="com.prajwal.Developer">
+        <property name="laptop" ref="laptop"/>
+    </bean>
+    <bean class="com.prajwal.Laptop" id="laptop">
+        <property name="model" value="MacBook Air 13"/>
+        <property name="manufacturer" value="Apple"/>
+    </bean>
+</beans>
+```
+
+```
+//Developer.java
+package com.prajwal;
+
+public class Developer {
+
+    private int age;
+    private double salary;
+    private Laptop macbook;
+
+    public Developer(){
+        System.out.println("Default Developer constructor Obj created in IoC.");
+    }
+
+    public Developer(int age, double salary, Laptop macbook){
+        System.out.println("Developer constructor Obj created in IoC.");
+        this.age = age;
+        this.salary = salary;
+        this.macbook = macbook;
+    }
+
+//    public void setAge(int age) {
+//        this.age = age;
+//    }
+    public void setLaptop(Laptop macbook) {
+        this.macbook = macbook;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public double getSalary(){
+        return salary;
+    }
+
+    public Laptop getLatop(){ return macbook; }
+
+    public void build() {
+        macbook.compiler();
+        System.out.println("Dev writing code.");
+    }
+}
+```
+
+```
+//Laptop.java
+package com.prajwal;
+
+public class Laptop {
+
+    private String model;
+    private String manufacturer;
+
+    public Laptop(){
+        System.out.println("Laptop constructor Obj created in IoC.");
+    }
+
+    public void setModel(String model) {
+        //MacBook Air 13
+        this.model = model;
+    }
+
+    public void setManufacturer(String manufacturer) {
+        //Apple
+        this.manufacturer = manufacturer;
+    }
+
+    public void compiler() {
+        System.out.println("Java compiler running.");
+    }
+
+    @Override
+    public String toString() {
+        return "model:"+model+", manufacturer:"+manufacturer;
+    }
+}
+```
+
+```
+//App.java
+package com.prajwal;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+/**
+ * Hello world!
+ *
+ */
+public class App {
+    public static void main( String[] args ) {
+        System.out.println( "Hello World!" );
+        ApplicationContext context = new ClassPathXmlApplicationContext("Spring.xml");
+        Developer dev = (Developer) context.getBean("developer");
+        Developer dev1 = (Developer) context.getBean("developer1");
+        System.out.println("dev age:"+dev.getAge());
+        System.out.println("dev salary:"+dev.getSalary());
+        System.out.println("dev laptop:"+dev.getLatop().toString());
+        dev.build();
+        System.out.println("dev1 age:"+dev1.getAge());
+        System.out.println("dev1 Laptop:"+dev1.getLatop().toString());
+        dev1.build(); // 💥 NullPointerException
+    }
+}
+```
+
+```
+//output
+Hello World!
+Laptop constructor Obj created in IoC.
+Developer constructor Obj created in IoC.
+Default Developer constructor Obj created in IoC.
+dev age:26
+dev salary:6500.0
+dev laptop:model:MacBook Air 13, manufacturer:Apple
+Java compiler running.
+Dev writing code.
+dev1 age:0
+dev1 Laptop:model:MacBook Air 13, manufacturer:Apple
+Java compiler running.
+Dev writing code.
+
+Process finished with exit code 0
+```
+
+```
+<bean id="developer1" class="com.prajwal.Developer">
+    <property name="laptop" ref="laptop"/>
+                        <!--Object ref-->
+</bean>
+<bean class="com.prajwal.Laptop" id="laptop">
+    <property name="model" value="MacBook Air 13"/>
+    <property name="manufacturer" value="Apple"/>
+</bean>
+```
+
+- Hey Spring create the object.
+- Create object for developer1.
+- Spring will see the property -> Laptop ref="laptop".
+- Spring will search the IoC container for laptop.
+- Do we have any object name laptop.
+
+![Diagram:LapBeanInjectDev](./LapBeanInjectDev.jpg)
+
+- We are wiring the laptop object in the Dev1 class similar to (@Autowired).
