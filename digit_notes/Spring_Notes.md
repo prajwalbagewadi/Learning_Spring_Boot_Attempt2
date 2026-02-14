@@ -3251,7 +3251,7 @@ Process finished with exit code 0
 
 ![Diagram:LapBeanInjectDev](./LapBeanInjectDev.jpg)
 
-- We are wiring the laptop object in the Dev1 class similar to (@Autowired).
+- We are injecting the laptop object in the Dev1 class using setter injection.
 
 - **_Error:_** laptop is not writable has no valid setter.
 - Exception in thread "main" org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'developer1' defined in class path resource [Spring.xml]: Invalid property 'laptop' of bean class [com.prajwal.Developer]: Bean property 'laptop' is not writable or has an invalid setter method. Does the parameter type of the setter match the return type of the getter?
@@ -3520,3 +3520,225 @@ Process finished with exit code 0
 
 - Constructor injection -> Compulsary Dependencies.
 - Setter injection -> Optional Dependencies.
+
+## Autowiring:
+
+- autowire="constructor"
+
+```
+<bean name="dev" class="com.prajwal.Dev" autowire="constructor">
+    <!--<property name="laptop" ref="lap"/>-->
+    <!--<constructor-arg ref="lap"/>-->
+</bean>
+```
+
+- Spring looks at the constructors of Dev.
+- It checks the parameter types.
+- It searches the IoC container for beans matching those types.
+- It automatically injects the matching bean(s).
+- No <constructor-arg> is needed.
+
+```
+//Dev.java
+package com.prajwal;
+
+public class Dev {
+
+    private Laptop laptop;
+
+    //setter injection
+//    public void setLaptop(Laptop laptop) {
+//        this.laptop = laptop;
+//    }
+
+    //constructor injection
+    public Dev(Laptop laptop) {
+        this.laptop = laptop;
+    }
+
+    public Laptop getLaptop() {
+        return laptop;
+    }
+
+    public void build() {
+        laptop.compiler();
+        System.out.println("Dev writing code.");
+    }
+}
+```
+
+```
+//Laptop.java
+package com.prajwal;
+
+public class Laptop {
+
+    private String model;
+    private String manufacturer;
+
+    public void setModel(String model) {
+        this.model = model;
+    }
+
+    public void setManufacturer(String manufacturer) {
+        this.manufacturer = manufacturer;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
+    public String getManufacturer() {
+        return manufacturer;
+    }
+
+    public void compiler() {
+        System.out.println("java compiler running.");
+    }
+
+    @Override
+    public String toString() {
+        return getManufacturer() + " " + getModel() ;
+    }
+}
+```
+
+```
+//Spring.xml
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- bean definitions here -->
+    <bean name="dev" class="com.prajwal.Dev" autowire="constructor">
+        <!--<property name="laptop" ref="lap"/>-->
+        <!--<constructor-arg ref="lap"/>-->
+    </bean>
+    <bean name="lap" class="com.prajwal.Laptop">
+        <property name="model" value="MacBook Air 13"/>
+        <property name="manufacturer" value="Apple"/>
+    </bean>
+</beans>
+```
+
+```
+//output
+Hello World!
+java compiler running.
+Dev writing code.
+Apple MacBook Air 13
+
+Process finished with exit code 0
+```
+
+- autowire="byType"
+
+```
+<bean name="dev" class="com.prajwal.Dev" autowire="byType">
+    <!--<property name="laptop" ref="lap"/>-->
+    <!--<constructor-arg ref="lap"/>-->
+</bean>
+```
+
+- Spring creates the Dev object using the default constructor.
+- It scans all setter methods in Dev.
+- For each setter, Spring checks the parameter type.
+- It searches the container for exactly One bean of that type.
+- If found -> Spring automatically calls the setter.
+
+```
+//Dev.java
+package com.prajwal;
+
+public class Dev {
+
+    private Laptop laptop;
+
+    //setter injection
+    public void setLaptop(Laptop laptop) {
+        this.laptop = laptop;
+    }
+
+    //constructor injection
+//    public Dev(Laptop laptop) {
+//        this.laptop = laptop;
+//    }
+
+    public Laptop getLaptop() {
+        return laptop;
+    }
+
+    public void build() {
+        laptop.compiler();
+        System.out.println("Dev writing code.");
+    }
+}
+```
+
+```
+//Laptop.java
+package com.prajwal;
+
+public class Laptop {
+
+    private String model;
+    private String manufacturer;
+
+    public void setModel(String model) {
+        this.model = model;
+    }
+
+    public void setManufacturer(String manufacturer) {
+        this.manufacturer = manufacturer;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
+    public String getManufacturer() {
+        return manufacturer;
+    }
+
+    public void compiler() {
+        System.out.println("java compiler running.");
+    }
+
+    @Override
+    public String toString() {
+        return getManufacturer() + " " + getModel() ;
+    }
+}
+```
+
+```
+//Spring.xml
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- bean definitions here -->
+    <bean name="dev" class="com.prajwal.Dev" autowire="byType">
+        <!--<property name="laptop" ref="lap"/>-->
+        <!--<constructor-arg ref="lap"/>-->
+    </bean>
+    <bean name="lap" class="com.prajwal.Laptop">
+        <property name="model" value="MacBook Air 13"/>
+        <property name="manufacturer" value="Apple"/>
+    </bean>
+</beans>
+```
+
+```
+//output
+Hello World!
+java compiler running.
+Dev writing code.
+Apple MacBook Air 13
+
+Process finished with exit code 0
+```
