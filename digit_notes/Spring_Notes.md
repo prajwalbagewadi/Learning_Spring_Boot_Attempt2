@@ -3252,3 +3252,271 @@ Process finished with exit code 0
 ![Diagram:LapBeanInjectDev](./LapBeanInjectDev.jpg)
 
 - We are wiring the laptop object in the Dev1 class similar to (@Autowired).
+
+- **_Error:_** laptop is not writable has no valid setter.
+- Exception in thread "main" org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'developer1' defined in class path resource [Spring.xml]: Invalid property 'laptop' of bean class [com.prajwal.Developer]: Bean property 'laptop' is not writable or has an invalid setter method. Does the parameter type of the setter match the return type of the getter?
+
+```
+package com.prajwal;
+
+public class Developer {
+
+    private int age;
+    private double salary;
+    private Laptop macbook;
+
+    public Developer(){
+        System.out.println("Default Developer constructor Obj created in IoC.");
+    }
+
+    public Developer(int age, double salary, Laptop macbook){
+        System.out.println("Developer constructor Obj created in IoC.");
+        this.age = age;
+        this.salary = salary;
+        this.macbook = macbook;
+    }
+
+//    public void setAge(int age) {
+//        this.age = age;
+//    }
+
+// code that causes the exception. Commenting the setter
+//    public void setLaptop(Laptop macbook) {
+//        this.macbook = macbook;
+//    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public double getSalary(){
+        return salary;
+    }
+
+    public Laptop getLatop(){ return macbook; }
+
+    public void build() {
+        macbook.compiler();
+        System.out.println("Dev writing code.");
+    }
+}
+```
+
+- To fix use.
+- **_\_Setter Injection:_**:\_\*\*
+
+```
+//Dev.java
+package com.prajwal;
+
+public class Dev {
+
+    private Laptop laptop;
+
+    //setter injection
+    public void setLaptop(Laptop laptop) {
+        this.laptop = laptop;
+    }
+
+    public Laptop getLaptop() {
+        return laptop;
+    }
+
+    public void build() {
+        laptop.compiler();
+        System.out.println("Dev writing code.");
+    }
+}
+```
+
+```
+//Laptop.java
+package com.prajwal;
+
+public class Laptop {
+
+    private String model;
+    private String manufacturer;
+
+    public void setModel(String model) {
+        this.model = model;
+    }
+
+    public void setManufacturer(String manufacturer) {
+        this.manufacturer = manufacturer;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
+    public String getManufacturer() {
+        return manufacturer;
+    }
+
+    public void compiler() {
+        System.out.println("java compiler running.");
+    }
+
+    @Override
+    public String toString() {
+        return getManufacturer() + " " + getModel() ;
+    }
+}
+```
+
+```
+//App.java
+package com.prajwal;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+/**
+ * Hello world!
+ *
+ */
+public class App
+{
+    public static void main( String[] args ) {
+
+        System.out.println( "Hello World!" );
+        ApplicationContext context = new ClassPathXmlApplicationContext("Spring.xml");
+        Dev dev = (Dev) context.getBean("dev");
+        dev.build();
+        System.out.println(dev.getLaptop());
+
+    }
+}
+```
+
+```
+//Spring.xml
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- bean definitions here -->
+    <bean name="dev" class="com.prajwal.Dev">
+        <property name="laptop" ref="lap"/>
+    </bean>
+    <bean name="lap" class="com.prajwal.Laptop">
+        <property name="model" value="MacBook Air 13"/>
+        <property name="manufacturer" value="Apple"/>
+    </bean>
+</beans>
+```
+
+```
+//pom.xml
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.prajwal</groupId>
+  <artifactId>SpringCoreComplication</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  <packaging>jar</packaging>
+
+  <name>SpringCoreComplication</name>
+  <url>http://maven.apache.org</url>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
+
+    <!-- Source: https://mvnrepository.com/artifact/org.springframework/spring-context -->
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-context</artifactId>
+      <version>6.2.9</version>
+      <scope>compile</scope>
+    </dependency>
+
+  </dependencies>
+</project>
+```
+
+```
+//output:
+Hello World!
+java compiler running.
+Dev writing code.
+Apple MacBook Air 13
+
+Process finished with exit code 0
+```
+
+- **_Constructor Injection:_**
+
+```
+//Dev.java
+package com.prajwal;
+
+public class Dev {
+
+    private Laptop laptop;
+
+    //setter injection
+//    public void setLaptop(Laptop laptop) {
+//        this.laptop = laptop;
+//    }
+
+    //constructor injection
+    public Dev(Laptop laptop) {
+        this.laptop = laptop;
+    }
+
+    public Laptop getLaptop() {
+        return laptop;
+    }
+
+    public void build() {
+        laptop.compiler();
+        System.out.println("Dev writing code.");
+    }
+}
+```
+
+```
+//Spring.xml
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- bean definitions here -->
+    <bean name="dev" class="com.prajwal.Dev">
+        <!--<property name="laptop" ref="lap"/>-->
+        <constructor-arg ref="lap"/>
+    </bean>
+    <bean name="lap" class="com.prajwal.Laptop">
+        <property name="model" value="MacBook Air 13"/>
+        <property name="manufacturer" value="Apple"/>
+    </bean>
+</beans>
+```
+
+```
+//output:
+Hello World!
+java compiler running.
+Dev writing code.
+Apple MacBook Air 13
+
+Process finished with exit code 0
+```
+
+- Constructor injection -> Compulsary Dependencies.
+- Setter injection -> Optional Dependencies.
