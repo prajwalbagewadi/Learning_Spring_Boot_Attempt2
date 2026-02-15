@@ -3742,3 +3742,126 @@ Apple MacBook Air 13
 
 Process finished with exit code 0
 ```
+
+- autowire="byName".
+
+```
+<bean name="dev" class="com.prajwal.Dev" autowire="byName">
+    <!--<property name="laptop" ref="lap"/>-->
+    <!--<constructor-arg ref="lap"/>-->
+</bean>
+```
+
+- Spring creates the bean using the default constructor.
+- Spring scans the class for setter methods.
+- For each setter, Spring derives the property name from the setter method name.
+- Eg: setLap() -> property name = lap
+- Spring does not use the setter parameter name.
+- Eg: setLap(Laptop xyz) -> xyz is ignored.
+- Spring searches the container for a bean with id = property name. id = "lap".
+- if a matching bean is found, Spring injects it by calling the setter.
+- else is skipped silently.
+
+```
+//Spring.xml
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- bean definitions here -->
+    <bean name="dev" class="com.prajwal.Dev" autowire="byName">
+        <!--<property name="laptop" ref="lap"/>-->
+        <!--<constructor-arg ref="lap"/>-->
+    </bean>
+    <bean name="lap" class="com.prajwal.Laptop">
+        <property name="model" value="MacBook Air 13"/>
+        <property name="manufacturer" value="Apple"/>
+    </bean>
+</beans>
+```
+
+```
+//Dev.java
+package com.prajwal;
+
+public class Dev {
+
+    private Laptop laptop;
+
+    //setter injection
+    public void setLap(Laptop laptop) {
+        this.laptop = laptop;
+    }
+
+    //constructor injection
+//    public Dev(Laptop laptop) {
+//        this.laptop = laptop;
+//    }
+
+    public Laptop getLaptop() {
+        return laptop;
+    }
+
+    public void build() {
+        laptop.compiler();
+        System.out.println("Dev writing code.");
+    }
+}
+```
+
+```
+//Laptop.java
+package com.prajwal;
+
+public class Laptop {
+
+    private String model;
+    private String manufacturer;
+
+    public void setModel(String model) {
+        this.model = model;
+    }
+
+    public void setManufacturer(String manufacturer) {
+        this.manufacturer = manufacturer;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
+    public String getManufacturer() {
+        return manufacturer;
+    }
+
+    public void compiler() {
+        System.out.println("java compiler running.");
+    }
+
+    @Override
+    public String toString() {
+        return getManufacturer() + " " + getModel() ;
+    }
+}
+```
+
+```
+//output:
+Hello World!
+java compiler running.
+Dev writing code.
+Apple MacBook Air 13
+
+Process finished with exit code 0
+
+```
+
+- **_Remaining types:_**
+- no : <bean class="com.prajwal.Dev" autowire="no"/>
+- autodetect (deprecated) : <bean class="com.prajwal.Dev" autowire="autodetect"/>
+- **_autodetect:_**
+- Tries constructor first, then setter.
+
+## Adding complexities to Spring Core Project:
