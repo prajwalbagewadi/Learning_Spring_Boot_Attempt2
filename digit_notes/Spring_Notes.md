@@ -4118,3 +4118,9 @@ Process finished with exit code 0
 
 - public class Laptop implements interface Computer.
 - public class Desktop implements interface Computer.
+
+![Diagram:springCoreComplexContainer](./springCoreComplexContainer.jpg)
+
+- But in Dev class we are using lap1 bean.
+- And in Dev1 class we are using desk1 bean.
+- You can interchange the beans.
