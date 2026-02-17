@@ -4124,3 +4124,283 @@ Process finished with exit code 0
 - But in Dev class we are using lap1 bean.
 - And in Dev1 class we are using desk1 bean.
 - You can interchange the beans.
+
+```
+//Computer.java
+package com.prajwal;
+
+public interface Computer {
+    //abstract method
+    void compiler();
+}
+```
+
+```
+//Desktop.java
+package com.prajwal;
+
+public class Desktop implements Computer {
+
+    private String cpu;
+    private String ram;
+    private String storage;
+
+    public Desktop() {
+        System.out.println("Default Desktop Constructor");
+    }
+
+    public void setCpu(String cpu) {
+        this.cpu = cpu;
+    }
+
+    public void setRam(String ram) {
+        this.ram = ram;
+    }
+
+    public void setStorage(String storage) {
+        this.storage = storage;
+    }
+
+    public String getCpu() {
+        return cpu;
+    }
+
+    public String getRam() {
+        return ram;
+    }
+
+    public String getStorage() {
+        return storage;
+    }
+
+    @Override
+    public void compiler() {
+        System.out.println("java compiler running.");
+    }
+
+    @Override
+    public String toString() {
+        return getCpu() + " /" + getRam() + " /" + getStorage();
+    }
+
+}
+```
+
+```
+//Laptop.java
+package com.prajwal;
+
+public class Laptop implements Computer {
+
+    private String model;
+    private String manufacturer;
+
+    public Laptop() {
+        System.out.println("Default Laptop Constructor");
+    }
+
+    public void setModel(String model) {
+        this.model = model;
+    }
+
+    public void setManufacturer(String manufacturer) {
+        this.manufacturer = manufacturer;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
+    public String getManufacturer() {
+        return manufacturer;
+    }
+
+    @Override
+    public void compiler() {
+        System.out.println("java compiler running.");
+    }
+
+    @Override
+    public String toString() {
+        return getManufacturer() + " /" + getModel() ;
+    }
+}
+```
+
+```
+//Dev.java
+package com.prajwal;
+
+public class Dev {
+
+//    private Laptop laptop;
+    private Computer device;
+
+    //setter injection
+//    public void setLap(Laptop laptop) {
+//        this.laptop = laptop;
+//    }
+
+    public void setDevice(Computer device) {
+        this.device = device;
+    }
+
+    public Computer getDevice() {
+        return device;
+    }
+
+    //constructor injection
+//    public Dev(Laptop laptop) {
+//        this.laptop = laptop;
+//    }
+
+//    public Laptop getLaptop() {
+//        return laptop;
+//    }
+
+    public void build() {
+        device.compiler();
+        System.out.println("Dev writing code.");
+    }
+}
+```
+
+```
+//App.java
+package com.prajwal;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+/**
+ * Hello world!
+ *
+ */
+public class App
+{
+    public static void main( String[] args ) {
+
+        System.out.println( "Hello World!" );
+        ApplicationContext context = new ClassPathXmlApplicationContext("Spring.xml");
+        Dev dev = (Dev) context.getBean("dev");
+        Dev dev1 = (Dev) context.getBean("dev1");
+        dev.build();
+        dev1.build();
+        System.out.println("dev_device="+dev.getDevice().toString());
+        System.out.println("dev1_device="+dev1.getDevice().toString());
+    }
+}
+```
+
+```
+//Spring.xml
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- bean definitions here -->
+    <!--<bean name="dev" class="com.prajwal.Dev" autowire="byType">-->
+    <bean name="dev" class="com.prajwal.Dev">
+        <!--<property name="laptop" ref="lap"/>-->
+        <!--<constructor-arg ref="lap"/>-->
+        <property name="device" ref="desk1"/>
+        <!--<property name="device" ref="desk1"/>-->
+    </bean>
+    <bean name="dev1" class="com.prajwal.Dev">
+        <property name="device" ref="lap1"/>
+    </bean>
+    <!--<bean name="lap1" class="com.prajwal.Laptop">-->
+    <bean name="lap1" class="com.prajwal.Laptop">
+        <property name="model" value="MacBook Air 13"/>
+        <property name="manufacturer" value="Apple"/>
+    </bean>
+    <!--<bean class="com.prajwal.Desktop" name="desk1">-->
+    <bean name="desk1" class="com.prajwal.Desktop">
+        <property name="cpu" value="Intel Core i7 12700F 12 Gen"/>
+        <property name="ram" value=" Corsair Vengeance LPX 16GB (1x16GB) DDR4 3200MHZ UDIMM"/>
+        <property name="storage" value="Western Digital WD Black SN7100 NVMe 500GB"/>
+    </bean>
+</beans>
+```
+
+```
+//pom.xml
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.prajwal</groupId>
+  <artifactId>SpringCoreComplication</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  <packaging>jar</packaging>
+
+  <name>SpringCoreComplication</name>
+  <url>http://maven.apache.org</url>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
+
+    <!-- Source: https://mvnrepository.com/artifact/org.springframework/spring-context -->
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-context</artifactId>
+      <version>6.2.9</version>
+      <scope>compile</scope>
+    </dependency>
+
+  </dependencies>
+</project>
+```
+
+```
+//output:
+Hello World!
+Default Desktop Constructor
+Default Laptop Constructor
+java compiler running.
+Dev writing code.
+java compiler running.
+Dev writing code.
+dev_device=Intel Core i7 12700F 12 Gen / Corsair Vengeance LPX 16GB (1x16GB) DDR4 3200MHZ UDIMM /Western Digital WD Black SN7100 NVMe 500GB
+dev1_device=Apple /MacBook Air 13
+
+Process finished with exit code 0
+```
+
+![diagram:springCoreComplexContainerInterchange](./springCoreComplexContainerInterchange.jpg)
+
+- **_*Example 2(Book):copy example from book.*_**
+
+```
+//errorcode
+<beans>
+    <bean name="dev" class="com.prajwal.Dev">
+        <property name="device" ref="lap1">
+    </bean>
+    <bean name="lap1" class="com.prajwal.Laptop"/>
+    <bean name="desk1" class="com.prajwal.Desktop"/>
+</beans>
+// to this
+<beans>
+    <bean name="dev" class="com.prajwal.Dev">
+        <property name="device" ref="com">
+    </bean>
+    <bean name="com" class="com.prajwal.Laptop"/>
+    <bean name="com" class="com.prajwal.Desktop"/>
+</beans>
+```
+
+- if we comment the <property name="com" ref="com">
+- Null pointerException
+- Spring says it will not automatically wire -> user will have to tell me to do it.
