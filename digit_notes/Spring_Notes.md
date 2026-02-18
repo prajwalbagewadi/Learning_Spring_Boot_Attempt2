@@ -4800,4 +4800,52 @@ Process finished with exit code 0
 </beans>
 ```
 
-- Spring says it will not automatically wire -> user will have to tell me to do it.
+- Spring says it will not automatically wire -> user will have to tell me to do it.(Default behaviour.)
+- Spring's 'I won't auto-wire' rule explains why NullPointerException occurs.
+- They are two sides of the same cause.
+- Because Spring does not auto-wire dependencies unless explicitly configured, the field remains 'null', and Java throws a NullPointerException when <property> are not mentioned.
+
+```
+//Error code: Spring.xml
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- bean definitions here -->
+    <bean name="dev" class="com.prajwal.Dev" autowire="byName">
+        <!--<property name="com" ref="com"/>-->
+        <!--Comment the property to cause nullpointerException-->
+    </bean>
+
+    <bean name="comp" class="com.prajwal.Laptop">
+        <property name="model" value="MacBook Air 13"/>
+        <property name="manufacturer" value="Apple"/>
+    </bean>
+
+    <bean name="comp" class="com.prajwal.Desktop">
+        <property name="cpu" value="Intel Core i5-13400F"/>
+        <property name="ram" value="Corsair Vengeance RGB Pro 16GB DDR4"/>
+        <property name="storage" value="Samsung 980 NVMe M.2 SSD 250GB"/>
+    </bean>
+</beans>
+```
+
+- It fails because two beans are defined with the same name 'comp'.
+- Spring requires every bean name/id in a <beans> file to be unique.
+
+## Autowire
+
+- **_byName:_**
+
+```
+<bean name="dev" class="com.prajwal.Dev" autowire="byName">
+</bean>
+```
+
+- 'byName' autowiring works by matching the bean name with the setter (property) name in the target class.
+- Eg: if Dev has setComp(). Spring looks for bean named comp and injects it.
+
+- **_byType:_**
+- **_constructor:_**
