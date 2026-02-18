@@ -5040,5 +5040,201 @@ dev working on code.
 Process finished with exit code 0
 ```
 
+- Example2:
+
+```
+//Spring.xml
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- bean definitions here -->
+    <bean name="dev" class="com.prajwal.Dev" autowire="byName">
+        <!--<property name="com" ref="com"/>-->
+        <!--Comment the property to cause nullpointerException-->
+    </bean>
+
+    <bean name="comp" class="com.prajwal.Laptop">
+        <property name="model" value="MacBook Air 13"/>
+        <property name="manufacturer" value="Apple"/>
+    </bean>
+
+    <bean name="comp1" class="com.prajwal.Desktop">
+        <property name="cpu" value="Intel Core i5-13400F"/>
+        <property name="ram" value="Corsair Vengeance RGB Pro 16GB DDR4"/>
+        <property name="storage" value="Samsung 980 NVMe M.2 SSD 250GB"/>
+    </bean>
+</beans>
+```
+
+```
+//Dev.java
+package com.prajwal;
+
+public class Dev {
+    private Computer comp;
+
+    public Dev() {
+        System.out.println("Default constructor dev.");
+    }
+
+    public void setComp1(Computer comp) {
+        this.comp = comp;
+    }
+
+    public Computer getComp1() {
+        return comp;
+    }
+
+    public void build() {
+        comp.compile();
+        System.out.println("dev working on code.");
+    }
+}
+```
+
+```
+//App.java
+package com.prajwal;
+
+public class Dev {
+    private Computer comp;
+
+    public Dev() {
+        System.out.println("Default constructor dev.");
+    }
+
+    public void setComp1(Computer comp) {
+        this.comp = comp;
+    }
+
+    public Computer getComp1() {
+        return comp;
+    }
+
+    public void build() {
+        comp.compile();
+        System.out.println("dev working on code.");
+    }
+}
+```
+
+```
+//output:
+Hello World!
+Default constructor dev.
+Default Constructor Desktop.
+Default constructor laptop.
+dev comp=Desktop{cpu=Intel Core i5-13400F, ram=Corsair Vengeance RGB Pro 16GB DDR4, Storage=Samsung 980 NVMe M.2 SSD 250GB}
+Java compiler running.
+dev working on code.
+
+Process finished with exit code 0
+```
+
 - **_byType:_**
+- 'byType' autowiring works by matching the data type of the property with a single bean of the same type in the Spring container.
+- If more than one bean of the same type exists, Spring throws an ambiguity error and fails to autowire.
+- byType autowiring in Spring checks the type of the setter parameter.
+
+```
+//Spring.xml
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- bean definitions here -->
+    <bean name="dev" class="com.prajwal.Dev" autowire="byType">
+        <!--<property name="com" ref="com"/>-->
+        <!--Comment the property to cause nullpointerException-->
+    </bean>
+
+    <bean name="comp" class="com.prajwal.Laptop">
+        <property name="model" value="MacBook Air 13"/>
+        <property name="manufacturer" value="Apple"/>
+    </bean>
+
+    <bean name="comp1" class="com.prajwal.Desktop">
+        <property name="cpu" value="Intel Core i5-13400F"/>
+        <property name="ram" value="Corsair Vengeance RGB Pro 16GB DDR4"/>
+        <property name="storage" value="Samsung 980 NVMe M.2 SSD 250GB"/>
+    </bean>
+</beans>
+```
+
+```
+//Dev.java
+package com.prajwal;
+
+public class Dev {
+//    private Computer comp;
+    private Desktop comp; //change for byType
+
+    public Dev() {
+        System.out.println("Default constructor dev.");
+    }
+
+//    public void setComp1(Computer comp) {
+//        this.comp = comp;
+//    }
+
+//    public Computer getComp1() {
+//        return comp;
+//    }
+
+    public void setComp(Desktop comp) {
+        this.comp = comp;
+    }
+
+    public Desktop getComp() {
+        return comp;
+    }
+
+    public void build() {
+        comp.compile();
+        System.out.println("dev working on code.");
+    }
+}
+```
+
+```
+//App.java
+package com.prajwal;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+/**
+ * Hello world!
+ *
+ */
+public class App {
+    public static void main( String[] args ) {
+        System.out.println( "Hello World!" );
+
+        ApplicationContext context = new ClassPathXmlApplicationContext("Spring.xml");
+        Dev dev = (Dev) context.getBean("dev");
+        System.out.println("dev comp="+dev.getComp().toString());
+        dev.build();
+    }
+}
+```
+
+```
+//output:
+Hello World!
+Default constructor dev.
+Default Constructor Desktop.
+Default constructor laptop.
+dev comp=Desktop{cpu=Intel Core i5-13400F, ram=Corsair Vengeance RGB Pro 16GB DDR4, Storage=Samsung 980 NVMe M.2 SSD 250GB}
+Java compiler running.
+dev working on code.
+
+Process finished with exit code 0
+```
+
 - **_constructor:_**
