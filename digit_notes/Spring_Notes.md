@@ -4380,8 +4380,6 @@ Process finished with exit code 0
 
 ![diagram:springCoreComplexContainerInterchange](./springCoreComplexContainerInterchange.jpg)
 
-- **_*Example 2(Book):copy example from book.*_**
-
 ```
 //errorcode
 <beans>
@@ -4401,6 +4399,405 @@ Process finished with exit code 0
 </beans>
 ```
 
+- **_*Example 2(Book):copy example from book.*_**
+
+```
+//pom.xml
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.prajwal</groupId>
+  <artifactId>SpringComplex2</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  <packaging>jar</packaging>
+
+  <name>SpringComplex2</name>
+  <url>http://maven.apache.org</url>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
+
+    <!-- Source: https://mvnrepository.com/artifact/org.springframework/spring-context -->
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-context</artifactId>
+      <version>6.2.9</version>
+      <scope>compile</scope>
+    </dependency>
+  </dependencies>
+</project>
+```
+
+```
+//Desktop.java
+package com.prajwal;
+
+public class Desktop implements Computer {
+
+    private String cpu;
+    private String ram;
+    private String Storage;
+
+    public Desktop() {
+        System.out.println("Default Constructor Desktop.");
+    }
+
+    public void setCpu( String cpu ) {
+        this.cpu = cpu;
+    }
+
+    public void setRam( String ram ) {
+        this.ram = ram;
+    }
+
+    public void setStorage( String Storage ) {
+        this.Storage = Storage;
+    }
+
+    public String getCpu() {
+        return this.cpu;
+    }
+
+    public String getRam() {
+        return this.ram;
+    }
+
+    public String getStorage() {
+        return this.Storage;
+    }
+
+    @Override
+    public void compile() {
+        System.out.println("Java compiler running.");
+    }
+
+    @Override
+    public String toString() {
+        return  "Desktop{" + "cpu=" + cpu + ", ram=" + ram + ", Storage=" + Storage + '}';
+    }
+}
+```
+
+```
+//Laptop.java
+package com.prajwal;
+
+public class Laptop implements Computer {
+
+    private String model;
+    private String manufacturer;
+
+    public Laptop() {
+        System.out.println("Default constructor laptop.");
+    }
+
+    public void setModel( String model ) {
+        this.model = model;
+    }
+
+    public void setManufacturer( String manufacturer ) {
+        this.manufacturer = manufacturer;
+    }
+
+    public String getModel() {
+        return this.model;
+    }
+
+    public String getManufacturer() {
+        return this.manufacturer;
+    }
+
+    @Override
+    public void compile() {
+        System.out.println("Java compiler running.");
+    }
+
+    @Override
+    public String toString() {
+        return "Laptop{" + "model=" + model + ", manufacturer=" + manufacturer + '}';
+    }
+}
+```
+
+```
+//Computer.java
+package com.prajwal;
+
+public interface Computer {
+    //abstract method
+    void compile();
+}
+```
+
+```
+//Dev.java
+package com.prajwal;
+
+public class Dev {
+    private Computer comp;
+
+    public Dev() {
+        System.out.println("Default constructor dev.");
+    }
+
+    public void setComp(Computer comp) {
+        this.comp = comp;
+    }
+
+    public Computer getComp() {
+        return comp;
+    }
+
+    public void build() {
+        comp.compile();
+        System.out.println("dev working on code.");
+    }
+}
+```
+
+```
+//App.java
+package com.prajwal;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+/**
+ * Hello world!
+ *
+ */
+public class App
+{
+    public static void main( String[] args ) {
+        System.out.println( "Hello World!" );
+
+        ApplicationContext context = new ClassPathXmlApplicationContext("Spring.xml");
+        Dev dev = (Dev) context.getBean("dev");
+        System.out.println("dev comp="+dev.getComp().toString());
+        dev.build();
+    }
+}
+```
+
+```
+//Spring.xml
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- bean definitions here -->
+    <bean name="dev" class="com.prajwal.Dev">
+        <property name="comp" ref="lap1"/>
+    </bean>
+
+    <bean name="lap1" class="com.prajwal.Laptop">
+        <property name="model" value="MacBook Air 13"/>
+        <property name="manufacturer" value="Apple"/>
+    </bean>
+
+    <bean name="desk1" class="com.prajwal.Desktop">
+        <property name="cpu" value="Intel Core i5-13400F"/>
+        <property name="ram" value="Corsair Vengeance RGB Pro 16GB DDR4"/>
+        <property name="storage" value="Samsung 980 NVMe M.2 SSD 250GB"/>
+    </bean>
+</beans>
+```
+
+```
+//output:
+Hello World!
+Default constructor dev.
+Default constructor laptop.
+Default Constructor Desktop.
+dev comp=Laptop{model=MacBook Air 13, manufacturer=Apple}
+Java compiler running.
+dev working on code.
+
+Process finished with exit code 0
+```
+
+![diagram:IoCSpringIfaceComp](./IoCSpringIfaceComp.jpg)
+
+- But in dev bean we are using lap1 as property ref.
+- You can change to property to Desk1.
+
+```
+//Spring.xml
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- bean definitions here -->
+    <bean name="dev" class="com.prajwal.Dev">
+        <property name="comp" ref="desk1"/>
+    </bean>
+
+    <bean name="lap1" class="com.prajwal.Laptop">
+        <property name="model" value="MacBook Air 13"/>
+        <property name="manufacturer" value="Apple"/>
+    </bean>
+
+    <bean name="desk1" class="com.prajwal.Desktop">
+        <property name="cpu" value="Intel Core i5-13400F"/>
+        <property name="ram" value="Corsair Vengeance RGB Pro 16GB DDR4"/>
+        <property name="storage" value="Samsung 980 NVMe M.2 SSD 250GB"/>
+    </bean>
+</beans>
+```
+
+```
+//App.java
+package com.prajwal;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+/**
+ * Hello world!
+ *
+ */
+public class App
+{
+    public static void main( String[] args ) {
+        System.out.println( "Hello World!" );
+
+        ApplicationContext context = new ClassPathXmlApplicationContext("Spring.xml");
+        Dev dev = (Dev) context.getBean("dev");
+        System.out.println("dev comp="+dev.getComp().toString());
+        dev.build();
+    }
+}
+
+```
+
+```
+//output:
+Hello World!
+Default constructor dev.
+Default Constructor Desktop.
+Default constructor laptop.
+dev comp=Desktop{cpu=Intel Core i5-13400F, ram=Corsair Vengeance RGB Pro 16GB DDR4, Storage=Samsung 980 NVMe M.2 SSD 250GB}
+Java compiler running.
+dev working on code.
+
+Process finished with exit code 0
+```
+
+![Diagram:IoCSpringIfaceCompEg2.jpg](./IoCSpringIfaceCompEg2.jpg)
+
+```
+//Spring.xml
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- bean definitions here -->
+    <bean name="dev" class="com.prajwal.Dev">
+        <property name="com" ref="com"/>
+    </bean>
+
+    <bean name="com" class="com.prajwal.Laptop">
+        <property name="model" value="MacBook Air 13"/>
+        <property name="manufacturer" value="Apple"/>
+    </bean>
+
+    <bean name="desk1" class="com.prajwal.Desktop">
+        <property name="cpu" value="Intel Core i5-13400F"/>
+        <property name="ram" value="Corsair Vengeance RGB Pro 16GB DDR4"/>
+        <property name="storage" value="Samsung 980 NVMe M.2 SSD 250GB"/>
+    </bean>
+</beans>
+```
+
+```
+//App.java
+package com.prajwal;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+/**
+ * Hello world!
+ *
+ */
+public class App
+{
+    public static void main( String[] args ) {
+        System.out.println( "Hello World!" );
+
+        ApplicationContext context = new ClassPathXmlApplicationContext("Spring.xml");
+        Dev dev = (Dev) context.getBean("dev");
+        System.out.println("dev comp="+dev.getCom().toString());
+        dev.build();
+    }
+}
+```
+
+```
+//output:
+Hello World!
+Default constructor dev.
+Default constructor laptop.
+Default Constructor Desktop.
+dev comp=Laptop{model=MacBook Air 13, manufacturer=Apple}
+Java compiler running.
+dev working on code.
+
+Process finished with exit code 0
+```
+
+- **_<property name="com" ref="com"/>:_**
+- property name="com" -> looks for setter setCom().
+- ref="com" -> looks for bean with name com.
+- Finds:
+
+```
+<bean name="com" class="com.prajwal.Laptop"/>
+```
+
 - if we comment the <property name="com" ref="com">
 - Null pointerException
+
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- bean definitions here -->
+    <bean name="dev" class="com.prajwal.Dev">
+        <!--<property name="com" ref="com"/>-->
+        <!--Comment the property to cause nullpointerException-->
+    </bean>
+
+    <bean name="com" class="com.prajwal.Laptop">
+        <property name="model" value="MacBook Air 13"/>
+        <property name="manufacturer" value="Apple"/>
+    </bean>
+
+    <bean name="desk1" class="com.prajwal.Desktop">
+        <property name="cpu" value="Intel Core i5-13400F"/>
+        <property name="ram" value="Corsair Vengeance RGB Pro 16GB DDR4"/>
+        <property name="storage" value="Samsung 980 NVMe M.2 SSD 250GB"/>
+    </bean>
+</beans>
+```
+
 - Spring says it will not automatically wire -> user will have to tell me to do it.
