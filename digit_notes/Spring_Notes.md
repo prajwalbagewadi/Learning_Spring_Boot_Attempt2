@@ -5357,3 +5357,32 @@ dev working on code.
 
 Process finished with exit code 0
 ```
+
+- Concept:
+
+```
+<bean id="Dev" class="com.prajwal.Dev" autowire="byName">
+</bean>
+<bean id="com" class="com.prajwal.Laptop"/>
+<bean id="desk1" class="com.prajwal.Desktop"/>
+```
+
+```
+public class Dev {
+    private Computer com;
+    public void setCom(Computer com) {
+        this.com = com;
+    }
+    public Computer getCom() {
+        return this.com;
+    }
+}
+```
+
+- The Dev class setter (property) setCom -> "com" matches <bean id="com" class="com.prajwal.Laptop"/>
+- In byName, Spring strips set from setter name, lowercases it, and matches it with the bean id.
+
+![Diagram:IoCContainerbyName.jpg](./IoCContainerbyName.jpg)
+
+- The Spring will search Do we have any object/bean ("com") in the container.
+- IoC container, yes we have and it will connect using autowire="byName".
