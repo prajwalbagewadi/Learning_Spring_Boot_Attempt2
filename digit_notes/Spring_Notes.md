@@ -5359,6 +5359,7 @@ Process finished with exit code 0
 ```
 
 - Concept:
+- **_autowire="byName"_**
 
 ```
 <bean id="Dev" class="com.prajwal.Dev" autowire="byName">
@@ -5384,5 +5385,117 @@ public class Dev {
 
 ![Diagram:IoCContainerbyName.jpg](./IoCContainerbyName.jpg)
 
-- The Spring will search Do we have any object/bean ("com") in the container.
+- The Spring will search, Do we have any object/bean ("com") in the container.
 - IoC container, yes we have and it will connect using autowire="byName".
+
+- **_Confusion:_**
+
+```
+<bean id="com" class="com.prajwal.Laptop"></bean>
+<bean id="com" class="com.prajwal.Desktop"></bean>
+```
+
+```
+//Spring.xml
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- bean definitions here -->
+    <bean name="dev" class="com.prajwal.Dev" autowire="constructor">
+        <!--<property name="com" ref="com"/>-->
+        <!--Comment the property to cause nullpointerException-->
+        <constructor-arg name="laptop" ref="comp"/>
+    </bean>
+    <!--name="comp"-->
+    <bean name="comp" class="com.prajwal.Laptop">
+        <property name="model" value="MacBook Air 13 M4 Pro"/>
+        <property name="manufacturer" value="Apple"/>
+    </bean>
+    <!--name="comp"-->
+    <bean name="comp" class="com.prajwal.Laptop" autowire="constructor">
+        <constructor-arg name="model" value="MacBook Pro 14 M5"/>
+        <constructor-arg name="manufacturer" value="Apple"/>
+    </bean>
+    <!--name="comp"-->
+    <bean name="comp" class="com.prajwal.Desktop">
+        <property name="cpu" value="Intel Core i5-13400F"/>
+        <property name="ram" value="Corsair Vengeance RGB Pro 16GB DDR4"/>
+        <property name="storage" value="Samsung 980 NVMe M.2 SSD 250GB"/>
+    </bean>
+</beans>
+```
+
+- Exception in thread "main" org.springframework.beans.factory.parsing.BeanDefinitionParsingException: Configuration problem: Bean name 'comp' is already used in this <beans> element
+
+- ### We cannot use the same id twice in a container it must be unique.
+- Change:
+
+```
+<bean id="com" class="com.prajwal.Desktop"></bean>
+//to
+<bean id="com1" class="com.prajwal.Desktop"></bean>
+```
+
+- If you want to use Desktop:
+- **_autowire="byType"_**
+
+```
+<bean id="dev" class="com.prajwal.Dev" autowire="byType">
+</bean>
+```
+
+- Comment <!--<bean id="com" class="com.prajwal.Laptop"></bean>-->
+- byType: Is searching for the type of a computer -> Laptop or Desktop is a type of computer.
+
+- **_Confusion:_**
+
+```
+<bean id="dev" class="com.prajwal.Dev" autowire="byType">
+</bean>
+<bean id="com" class="com.prajwal.Laptop">
+</bean>
+<bean id="com1" class="com.prajwal.Desktop">
+</bean>
+```
+
+```
+//Spring.xml
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- bean definitions here -->
+    <bean name="dev" class="com.prajwal.Dev" autowire="byType">
+        <!--<property name="com" ref="com"/>-->
+        <!--Comment the property to cause nullpointerException-->
+        <!--<constructor-arg name="laptop" ref="comp"/>-->
+    </bean>
+
+    <bean name="comp" class="com.prajwal.Laptop">
+        <property name="model" value="MacBook Air 13 M4 Pro"/>
+        <property name="manufacturer" value="Apple"/>
+    </bean>
+
+    <bean name="comp2" class="com.prajwal.Laptop" autowire="constructor">
+        <constructor-arg name="model" value="MacBook Pro 14 M5"/>
+        <constructor-arg name="manufacturer" value="Apple"/>
+    </bean>
+
+    <bean name="comp1" class="com.prajwal.Desktop">
+        <property name="cpu" value="Intel Core i5-13400F"/>
+        <property name="ram" value="Corsair Vengeance RGB Pro 16GB DDR4"/>
+        <property name="storage" value="Samsung 980 NVMe M.2 SSD 250GB"/>
+    </bean>
+</beans>
+```
+
+- WARNING: Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'dev' defined in class path resource [Spring.xml]: Unsatisfied dependency expressed through bean property 'comp': No qualifying bean of type 'com.prajwal.Computer' available: expected single matching bean but found 3: comp,comp2,comp1
+  Exception in thread "main" org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'dev' defined in class path resource [Spring.xml]: Unsatisfied dependency expressed through bean property 'comp': No qualifying bean of type 'com.prajwal.Computer' available: expected single matching bean but found 3: comp,comp2,comp1
+
+- Error: Expected single matching bean found 3.
+- There are 3 beans claiming to be of type computer.
