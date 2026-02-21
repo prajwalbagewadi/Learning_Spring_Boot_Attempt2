@@ -5638,3 +5638,24 @@ dev working on code.
 
 Process finished with exit code 0
 ```
+
+- We have seen Spring and Spring Boot both are doing the same thing.
+- The difference is the configuration.
+- In the Normal Spring -> we use xml file "Spring.xml".
+- You need to mention everything if you want a bean, you need to mention. if you need autowiring you need to mention.
+- If you have an Idea you can get lost in the xml.
+
+- But in our Spring Boot project there we have not done any configuration.
+- In /resources/application.properties.
+- Except for the default line spring application.name = myApp
+
+- The config is done by using the annotations. And its easy to work with the annotations.
+- In normal Spring -> no Annotations everything is mentioned in xml file.
+- Like bean, autowire, primary.
+
+## In Spring Boot:
+
+- @Component //For Bean
+- Eg: public class Dev {}
+- @Autowired //For autowire attribute.
+- we have @Qualifier("laptop") //Exact equivalent of ref attribute in <property name="com" ref="laptop">
