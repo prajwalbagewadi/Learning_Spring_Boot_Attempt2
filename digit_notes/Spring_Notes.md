@@ -5499,3 +5499,88 @@ public class Dev {
 
 - Error: Expected single matching bean found 3.
 - There are 3 beans claiming to be of type computer.
+
+- Spring says it cannot select one. As Spring cannot be baised.
+- As Developers we can be baised.
+
+```
+<bean id="com" class="com.prajwal.Laptop"></bean>
+```
+
+- I want to choose laptop.
+- We can use the attribute primary="true" to do that.
+
+```
+<bean id="com" class="com.prajwal.laptop" primary="true"></bean>
+```
+
+- You can use the primary attribute in terms of confusion go with the primary attribute bean. Similar to '@Primary'.
+
+```
+//Spring.xml
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- bean definitions here -->
+    <bean name="dev" class="com.prajwal.Dev" autowire="byType">
+        <!--<property name="com" ref="com"/>-->
+        <!--Comment the property to cause nullpointerException-->
+        <!--<constructor-arg name="laptop" ref="comp"/>-->
+    </bean>
+
+    <bean name="comp" class="com.prajwal.Laptop" primary="true">
+        <property name="model" value="MacBook Air 13 M4 Pro"/>
+        <property name="manufacturer" value="Apple"/>
+    </bean>
+
+    <bean name="comp2" class="com.prajwal.Laptop" autowire="constructor">
+        <constructor-arg name="model" value="MacBook Pro 14 M5"/>
+        <constructor-arg name="manufacturer" value="Apple"/>
+    </bean>
+
+    <bean name="comp1" class="com.prajwal.Desktop">
+        <property name="cpu" value="Intel Core i5-13400F"/>
+        <property name="ram" value="Corsair Vengeance RGB Pro 16GB DDR4"/>
+        <property name="storage" value="Samsung 980 NVMe M.2 SSD 250GB"/>
+    </bean>
+</beans>
+```
+
+```
+//App.java
+package com.prajwal;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+/**
+ * Hello world!
+ *
+ */
+public class App {
+    public static void main( String[] args ) {
+        System.out.println( "Hello World!" );
+
+        ApplicationContext context = new ClassPathXmlApplicationContext("Spring.xml");
+        Dev dev = (Dev) context.getBean("dev");
+        System.out.println("dev comp="+dev.getComp().toString());
+        dev.build();
+    }
+}
+```
+
+```
+//output:
+Hello World!
+Default constructor dev.
+Default constructor laptop.
+Default Constructor Desktop.
+dev comp=Laptop{model=MacBook Air 13 M4 Pro, manufacturer=Apple}
+Java compiler running.
+dev working on code.
+
+Process finished with exit code 0
+```
