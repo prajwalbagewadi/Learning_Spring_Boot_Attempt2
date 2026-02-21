@@ -5650,12 +5650,31 @@ Process finished with exit code 0
 - Except for the default line spring application.name = myApp
 
 - The config is done by using the annotations. And its easy to work with the annotations.
-- In normal Spring -> no Annotations everything is mentioned in xml file.
+- In normal Spring -> no Annotations. Everything is mentioned in xml file.
 - Like bean, autowire, primary.
 
 ## In Spring Boot:
 
-- @Component //For Bean
+- '@Component' //For Bean
 - Eg: public class Dev {}
-- @Autowired //For autowire attribute.
-- we have @Qualifier("laptop") //Exact equivalent of ref attribute in <property name="com" ref="laptop">
+- '@Autowired' //For autowire attribute.
+- We have '@Qualifier("laptop")' //Exact equivalent of ref attribute in <property name="com" ref="laptop">
+- '@Primary' //For <bean primary="true"> attribute.
+
+```
+public class Laptop implements Computer {
+    public void compile() {
+        System.out.println("Compiling...");
+    }
+}
+```
+
+- We start IoC container in class.
+
+```
+public class MyAppApplication {
+    public static void main(String[] args) {
+        ApplicationContext context = SpringApplication.run(MyAppApplication.class, args) //Using this line we start the container
+    }
+}
+```
