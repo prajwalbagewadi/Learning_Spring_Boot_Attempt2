@@ -5584,3 +5584,57 @@ dev working on code.
 
 Process finished with exit code 0
 ```
+
+## App.java
+
+- Currently we are using context.getBean("dev"), where 'dev' refers to id or name attribute defined in bean tag.
+- What if mention the type of object we want.
+
+```
+public static void main( String[] args ) {
+        System.out.println( "Hello World!" );
+
+        ApplicationContext context = new ClassPathXmlApplicationContext("Spring.xml");
+        //Dev dev = (Dev) context.getBean("dev");
+        Dev dev = context.getBean(Dev.class); //byType
+        System.out.println("dev comp="+dev.getComp().toString());
+        dev.build();
+    }
+```
+
+```
+//App.java
+package com.prajwal;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+/**
+ * Hello world!
+ *
+ */
+public class App {
+    public static void main( String[] args ) {
+        System.out.println( "Hello World!" );
+
+        ApplicationContext context = new ClassPathXmlApplicationContext("Spring.xml");
+        //Dev dev = (Dev) context.getBean("dev");
+        Dev dev = context.getBean(Dev.class); //byType
+        System.out.println("dev comp="+dev.getComp().toString());
+        dev.build();
+    }
+}
+```
+
+```
+//output:
+Hello World!
+Default constructor dev.
+Default constructor laptop.
+Default Constructor Desktop.
+dev comp=Laptop{model=MacBook Air 13 M4 Pro, manufacturer=Apple}
+Java compiler running.
+dev working on code.
+
+Process finished with exit code 0
+```
