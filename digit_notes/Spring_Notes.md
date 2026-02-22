@@ -5693,3 +5693,37 @@ public class App {
 - We will focus on Spring boot from now.
 
 # Project
+
+- We are going to build a project and the project is a web project.
+
+- What ever we have learned till now is for the console project.
+- What ever we have used annotations and config, is for standalone project.
+- When you talk about web things are a bit different.
+
+- If you want to work on a web project and you are not using SpringBoot: Special about -> web -> hosted on Server.
+
+![Diagram:TypicalWebApp](./TypicalWebApp.jpg)
+
+- The App must be capable enough to accept the request from client over the internet. (Which is http request).
+- You can't run it using Java virtual machine (JVM) only.
+- But to run a webapp -> you need a Server.
+- A web server (Or a web container)
+- And what you use in java is (servlet).
+- And servlets run in -> web container.
+- And we use the software (tomcat).
+- We use tomcat to run the servlets.
+
+- Ultimately behind the scenes -> Spring -> uses Servlets -> That run on tomcat.
+
+- Spring: So if you want build a web app using spring -> behind the scenes it gets converted into servlet -> That run on tomcat.
+
+- Installing tomcat:
+- In a spring boot project(folder) -> spring boot says you don't have to worry -> It has tomcat embedded package inbuilt.
+
+- Next we will need somelayer to accept the request:
+- Controller Layer: To accept the request.
+- Service Layer: Business Logic.
+- Repo Layer: Handle DB connectivity.
+- (These are normal classes.)
+
+- **_Controller:_** is a Special class because it will accept the request from the client and also respond to it, and we need to understand how Controller works.
