@@ -5727,3 +5727,17 @@ public class App {
 - (These are normal classes.)
 
 - **_Controller:_** is a Special class because it will accept the request from the client and also respond to it, and we need to understand how Controller works.
+
+- We will focus on how to create the Controller and to achive that we need to first understand "Spring MVC" -> "Spring Boot MVC".
+
+- Till now we have worked with spring and spring boot but that was for console based / standalone apps.
+
+- Now we will focus on Web:
+  ![Diagram:TypicalWebApp2.jpg](./TypicalWebApp2.jpg)
+
+- Eg: Live Score App/ Live Score Checker.
+- You will get the Layout and Score Data seperate payloads.
+
+- But let say if your internet is not working -> That app will give you the layout but the app will be loading and cannot give you the data -> Because data is comming from the server.
+
+- That means App -> will already have the layout -> What you are going to send from server -> It just the data.
