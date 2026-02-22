@@ -5678,3 +5678,14 @@ public class MyAppApplication {
     }
 }
 ```
+
+- In case of Normal Spring -> we do.
+
+```
+public class App {
+    ApplicationContext context = new ClassPathXmlApplicationContext("filename.xml"); //To Start the container.
+}
+```
+
+- What ever your doing in SpringBoot Behind the Scenes it is using the Spring framework.
+- We will focus on Spring boot from now.
