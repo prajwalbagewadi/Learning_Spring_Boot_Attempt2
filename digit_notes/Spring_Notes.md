@@ -5741,3 +5741,13 @@ public class App {
 - But let say if your internet is not working -> That app will give you the layout but the app will be loading and cannot give you the data -> Because data is comming from the server.
 
 - That means App -> will already have the layout -> What you are going to send from server -> It just the data.
+
+- Same goes for the client:
+- In older days -> Servers sent Layout(Html+Css+Js) and Data(Json).
+- Server is responsible to generate both.
+
+- Nowdays we are doing -> we are using two different apps for Frontend and Backend.
+- So you use framework or library like (React) or (Angular Js).
+- In this you have the layout ready -> which will go to the client -> And then you will send the request for the data from the server.
+- And then Server will send the data.
+- And data can be Json or xml (represention).
