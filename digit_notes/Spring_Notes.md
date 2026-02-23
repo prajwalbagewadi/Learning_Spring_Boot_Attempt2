@@ -5755,3 +5755,9 @@ public class App {
 - So as backend you are only responsible for sending the data.
 - The client can be browser or mobile app.
 - Data can be sent in Json, XML formats. Json (JavaScript object notation) is simple to understand and represent.
+
+- We are concerned about building a backend how do we build a backend?
+
+## Web Controller:
+- This is important.
+- This has to be a special project. As we need the web features.
