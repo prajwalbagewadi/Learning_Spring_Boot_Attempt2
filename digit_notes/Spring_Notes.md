@@ -5760,7 +5760,7 @@ public class App {
 
 ## Web Controller:
 - This is important.
-- This has to be a special project. As we need the web features.
+- This has to be a special project because it is a web project, not a console project. Therefore we need the web features.
 
 - This a Spring Boot starter project, and it's dependencies are defined in pom.xml
 - You will not get the web features of default, you want the web features.
