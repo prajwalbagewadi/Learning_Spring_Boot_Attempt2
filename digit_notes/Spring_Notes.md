@@ -5751,3 +5751,7 @@ public class App {
 - In this you have the layout ready -> which will go to the client -> And then you will send the request for the data from the server.
 - And then Server will send the data.
 - And data can be Json or xml (represention).
+
+- So as backend you are only responsible for sending the data.
+- The client can be browser or mobile app.
+- Data can be sent in Json, XML formats. Json (JavaScript object notation) is simple to understand and represent.
