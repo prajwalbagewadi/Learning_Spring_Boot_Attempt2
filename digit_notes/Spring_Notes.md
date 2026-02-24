@@ -5853,3 +5853,33 @@ server started at port 8080. //user added code.
 - Who will or Who is the person Who will handle the request?
 - Thats where we have Controller ->
 - Controller class //layer -> who can handle your request.
+
+- com.prajwal.SimpleWebApp
+- new package - Controller
+- new Java class - HomeController
+
+```
+//HomeController.java
+package com.prajwal.SimpleWebApp.Controller;
+
+public class HomeController {
+    //In this class we can accept the request and response.
+    //To do the request and response we need a method.
+
+    public String greet() {
+        return "Welcome to simple web app!";
+        //Return-type as "String" as it returns a text.
+    }
+}
+```
+
+- We need to configure this normal class.
+- And tell Spring this is a controller.
+- Spring doesn't know this class is responsible to handle the request for the home page.
+
+- We use "@Controller" annotation: To denote the class is a controller (using annotation) similar to "@Component" as we have seen.
+
+- On a webapp you will have multiple requests.
+- For homepage, contact_us, add_to_cart, about_us.
+- On a webapp everything is a request -> Every request will have a different URL.
+- Eg: localhost:8080/about
