@@ -5759,10 +5759,97 @@ public class App {
 - We are concerned about building a backend how do we build a backend?
 
 ## Web Controller:
+
 - This is important.
 - This has to be a special project because it is a web project, not a console project. Therefore we need the web features.
 
-- This a Spring Boot starter project, and it's dependencies are defined in pom.xml
+- This is a Spring Boot starter project, and it's dependencies are defined in pom.xml
 - You will not get the web features of default, you want the web features.
 - Spring web is a separate part.
 - You can add these dependency in pom.xml
+
+- **_Steps:_**
+- Browser -> https://start.spring.io.
+- Create a new web project.
+- Maven
+- Java
+- 3.2.6 (current 4.0.3)
+- Group: com.prajwal
+- Artifact: SimpleWebApp
+- Jar
+- Java 21
+
+- Add Dependencies:
+- Spring web: for webapp library.
+- Spring Boot dev tools:
+- Every time make you make a change in server you have to restart your server.
+- Instead you can use "Live reload" using dev tools.
+- Generate
+
+- This is a web project -> In the normal world before Spring boot, if you want to run your webapp.
+- Basically you need to run a server (tomcat).
+- First run server in your machine.
+- And then you can run your project after configuration.
+
+- Now we have not done any coding still.
+- We will go to src/main/java/com.prajwal.SimpleWebApp/SimpleWebAppApplication.java
+- And run the file without any changes in code.
+
+```
+//SimpleWebAppApplication.java
+package com.prajwal.SimpleWebApp;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class SimpleWebAppApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(SimpleWebAppApplication.class, args);
+		System.out.println("server started at port 8080.");
+	}
+
+}
+```
+
+```
+//output:
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.0.3)
+
+2026-02-24T08:03:32.095+05:30  INFO 1080 --- [SimpleWebApp] [  restartedMain] c.p.S.SimpleWebAppApplication            : Starting SimpleWebAppApplication using Java 21.0.3 with PID 1080 (C:\Users\bagew\Desktop\Project_Ideas\spring24jan2026\Learning_Spring_Boot_Attempt2\digit_notes\web_projects\SimpleWebApp\SimpleWebApp\target\classes started by bagew in C:\Users\bagew\Desktop\Project_Ideas\spring24jan2026\Learning_Spring_Boot_Attempt2\digit_notes\web_projects\SimpleWebApp)
+2026-02-24T08:03:32.102+05:30  INFO 1080 --- [SimpleWebApp] [  restartedMain] c.p.S.SimpleWebAppApplication            : No active profile set, falling back to 1 default profile: "default"
+2026-02-24T08:03:32.239+05:30  INFO 1080 --- [SimpleWebApp] [  restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2026-02-24T08:03:32.239+05:30  INFO 1080 --- [SimpleWebApp] [  restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2026-02-24T08:03:33.792+05:30  INFO 1080 --- [SimpleWebApp] [  restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8080 (http)
+2026-02-24T08:03:33.821+05:30  INFO 1080 --- [SimpleWebApp] [  restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-02-24T08:03:33.821+05:30  INFO 1080 --- [SimpleWebApp] [  restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.18]
+2026-02-24T08:03:33.909+05:30  INFO 1080 --- [SimpleWebApp] [  restartedMain] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 1668 ms
+2026-02-24T08:03:34.608+05:30  INFO 1080 --- [SimpleWebApp] [  restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8080 (http) with context path '/'
+2026-02-24T08:03:34.619+05:30  INFO 1080 --- [SimpleWebApp] [  restartedMain] c.p.S.SimpleWebAppApplication            : Started SimpleWebAppApplication in 3.549 seconds (process running for 4.76)
+server started at port 8080. //user added code.
+2026-02-24T08:03:57.135+05:30  INFO 1080 --- [SimpleWebApp] [nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-02-24T08:03:57.135+05:30  INFO 1080 --- [SimpleWebApp] [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-02-24T08:03:57.137+05:30  INFO 1080 --- [SimpleWebApp] [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+```
+
+- Browser -> localhost:8080
+- Whitelabel Error Page. -> Says - 404
+- Cause: Because - we are sending a request for the home page.
+- But we have not handled the request.
+- How do we do that?
+
+- **_How to handle the Request:_**
+- We need someone on the server who can accept our request.
+- As there no one on the server side. To handle the request and return "Welcome" response.
+- Who will or Who is the person Who will handle the request?
+- Thats where we have Controller ->
+- Controller class //layer -> who can handle your request.
