@@ -5877,9 +5877,108 @@ public class HomeController {
 - And tell Spring this is a controller.
 - Spring doesn't know this class is responsible to handle the request for the home page.
 
-- We use "@Controller" annotation: To denote the class is a controller (using annotation) similar to "@Component" as we have seen.
+## @Controller
+
+- We use "@Controller" annotation: To denote the class is a controller (using annotation) similar to "@Component" as we had seen previously.
+
+```
+//HomeController.java
+package com.prajwal.SimpleWebApp.Controller;
+
+@Controller
+public class HomeController {
+    //In this class we can accept the request and response.
+    //To do the request and response we need a method.
+
+    public String greet() {
+        return "Welcome to simple web app!";
+        //Return-type as "String" as it returns a text.
+    }
+}
+```
 
 - On a webapp you will have multiple requests.
 - For homepage, contact_us, add_to_cart, about_us.
 - On a webapp everything is a request -> Every request will have a different URL.
 - Eg: localhost:8080/about
+
+- At this point we will just do for homepage.
+- As we want to send the request to the home page -> denoted by "/".
+
+- For every request we can create a different method that responds.
+
+- When ever someone requests '/'. We want the public String greet() {} method to be called.
+
+## @RequestMapping("URL"):
+
+- We use '@RequestMapping("/")' annotation to call the greet() method.
+
+```
+@RequestMapping("/")
+public String greet() {
+    return "hello";
+}
+```
+
+```
+//HomeController.java
+package com.prajwal.SimpleWebApp.Controller;
+
+@Controller
+public class HomeController {
+    //In this class we can accept the request and response.
+    //To do the request and response we need a method.
+
+    @RequestMapping("/")
+    public String greet() {
+        return "Welcome to simple web app!";
+        //Return-type as "String" as it returns a text.
+    }
+}
+```
+
+- **_Error:_**
+- Whitelabel Error Page
+
+```
+//output:
+Whitelabel Error Page
+This application has no explicit mapping for /error, so you are seeing this as a fallback.
+
+Wed Feb 25 08:21:08 IST 2026
+There was an unexpected error (type=Not Found, status=404).
+No static resource Welcome to simple web app!.
+org.springframework.web.servlet.resource.NoResourceFoundException: No static resource Welcome to simple web app! for request '/Welcome to simple web app!'.
+```
+
+- **_Codes:_**
+- Not Found.
+- No Static Resource.
+
+- **_Cause:_**
+- What your SpringBoot Web do when you call the greet() method and you return the String "Welcome to simple web app!".
+- But Spring assumes and it looks for a file called "Welcome to simple web app!".
+- But why file?
+
+- **_Keyrule:_**
+- In a Spring MVC web application, returning String means "View Name", not response text.
+- So When Spring sees:
+
+```
+@RequestMapping("/")
+public String greet() {
+    return "Welcome to simple web app!";
+    //Return-type as "String" as it returns a text.
+}
+```
+
+- In the old days servers used to Sending. View = Layout + Data.
+- And that layout is a page -> Welcome to simple web app!.html
+- So it is searching for page "Welcome to simple web app!.html"
+
+- In our project we don't have the page and we don't want to return the page, we need to return the text.
+- And to achive this.
+- Instead of using '@Controller'.
+- We can use '@RestController'.
+
+## @RestController:
