@@ -6035,7 +6035,7 @@ public class SimpleWebAppApplication {
 
 ```
 //output:
-Browser -> localhost:8080/
+Browser -> http://localhost:8080/
 Welcome to simple web app!
 ```
 
@@ -6044,3 +6044,69 @@ Welcome to simple web app!
 ## @ResponseBody:
 
 - '@ResponseBody' tells Spring to write the method's return value directly into the Http response body instead of treating it as a view name/html page.
+
+```
+//TestController.java
+package com.prajwal.SimpleWebApp.Controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+@Controller
+public class TestController {
+
+    @RequestMapping("/test")
+    @ResponseBody
+    public String respond() {
+        return "This is a message from @TestController <br> for successful response.";
+    }
+}
+```
+
+```
+//HomeController.java
+package com.prajwal.SimpleWebApp.Controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+//@Controller //Error Whitelabelpage
+@RestController //fix
+public class HomeController {
+    //In this class we can accept the request and response.
+    //To do the request and response we need a method.
+
+    @RequestMapping("/")
+    public String greet() {
+        return "Welcome to simple web app!";
+        //Return-type as "String" as it returns a text.
+    }
+}
+```
+
+```
+//SimpleWebAppApplication.java
+package com.prajwal.SimpleWebApp;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class SimpleWebAppApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(SimpleWebAppApplication.class, args);
+		System.out.println("server started at port 8080.");
+	}
+
+}
+```
+
+```
+//output:
+Browser -> http://localhost:8080/test
+This is a message from @TestController
+for successful response.
+```
