@@ -5981,4 +5981,19 @@ public String greet() {
 - Instead of using '@Controller'.
 - We can use '@RestController'.
 
+## Rest APIs:
+
+- Rest APIs is a concept where you return the data from the server to client.
+- Rest stands for (Representational State Transfer).
+- You basically transfer the state (data) from server to client and not the layout only the data.
+- And if you want RestApi you can use '@RestController'.
+
 ## @RestController:
+
+- '@RestController' is an annotation used to create REST APIs where methods return data directly in (JSON/String) instead of web pages.
+
+- Another way to say Spring, hey i am not looking for the page. Im looking for the body (data), you can use the annotation '@ResponseBody'.
+
+## @ResponseBody:
+
+- '@ResponseBody' tells Spring to write the method's return value directly into the Http response body instead of treating it as a view name/html page.
