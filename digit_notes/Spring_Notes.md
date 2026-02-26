@@ -6110,3 +6110,8 @@ Browser -> http://localhost:8080/test
 This is a message from @TestController
 for successful response.
 ```
+
+- Run the SimpleWebAppApplication.java to get the output String as response.
+
+- Basically what we are doing is we are returning the data and not the page.
+- But if you want to create pages. you can use JSP or Themblay. you create the pages and return them by mentioning there names.
