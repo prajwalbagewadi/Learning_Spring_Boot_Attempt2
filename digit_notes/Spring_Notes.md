@@ -5992,6 +5992,53 @@ public String greet() {
 
 - '@RestController' is an annotation used to create REST APIs where methods return data directly in (JSON/String) instead of web pages.
 
+```
+//HomeController.java
+package com.prajwal.SimpleWebApp.Controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+//@Controller //Error Whitelabelpage
+@RestController //fix
+public class HomeController {
+    //In this class we can accept the request and response.
+    //To do the request and response we need a method.
+
+    @RequestMapping("/")
+    public String greet() {
+        return "Welcome to simple web app!";
+        //Return-type as "String" as it returns a text.
+    }
+}
+
+```
+
+```
+//SimpleWebAppApplication.java
+package com.prajwal.SimpleWebApp;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class SimpleWebAppApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(SimpleWebAppApplication.class, args);
+		System.out.println("server started at port 8080.");
+	}
+
+}
+```
+
+```
+//output:
+Browser -> localhost:8080/
+Welcome to simple web app!
+```
+
 - Another way to say Spring, hey i am not looking for the page. Im looking for the body (data), you can use the annotation '@ResponseBody'.
 
 ## @ResponseBody:
