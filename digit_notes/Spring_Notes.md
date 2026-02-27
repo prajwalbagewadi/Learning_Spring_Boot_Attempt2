@@ -6115,3 +6115,73 @@ for successful response.
 
 - Basically what we are doing is we are returning the data and not the page.
 - But if you want to create pages. you can use JSP or Themblay. you create the pages and return them by mentioning there names.
+
+- But we have React (for pages/layout) we just want to return the data, the page is there in the react app.
+
+- SimpleController:
+
+```
+//HomeController.java
+package com.prajwal.SimpleRestApp.Controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+@Controller
+public class HomeController {
+
+    @RequestMapping("/")
+    @ResponseBody
+    public String greet() {
+        return "Hello from HomeController!";
+    }
+}
+```
+
+- RestController:
+
+```
+//RestTestController
+package com.prajwal.SimpleRestApp.Controller;
+
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class RestTestController {
+
+    @RequestMapping("/Rest")
+    public String response() {
+        return "Hello from RestTestController!";
+    }
+}
+```
+
+```
+//SimpleRestAppApplication.java
+package com.prajwal.SimpleRestApp;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class SimpleRestAppApplication {
+
+	public static void main(String[] args) {
+
+		SpringApplication.run(SimpleRestAppApplication.class, args);
+	}
+
+}
+```
+
+```
+//output:
+Browser -> http://localhost:8080/
+Hello from HomeController!
+Browser -> http://localhost:8080/Rest
+Hello from RestTestController!
+```
+
+- What if you want to do something else may be you want to return for the about page.
