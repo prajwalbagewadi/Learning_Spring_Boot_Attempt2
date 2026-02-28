@@ -6203,3 +6203,5 @@ public String about() {
 - And that's how you use spring web.
 
 - But if you see typical web app architecture.
+
+![diagram:Webapparch.jpg](./Webapparch.jpg)
