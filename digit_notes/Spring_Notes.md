@@ -6185,3 +6185,21 @@ Hello from RestTestController!
 ```
 
 - What if you want to do something else may be you want to return for the about page.
+- Requesting for /about
+- handling request.
+
+## @RequestMapping("/about"):
+
+- this maps to a method about().
+
+```
+@RequestMapping("/about")
+public String about() {
+    return "we dont teach, we educate!";
+}
+```
+
+- So that, how for different requests you can have different methods.
+- And that's how you use spring web.
+
+- But if you see typical web app architecture.
