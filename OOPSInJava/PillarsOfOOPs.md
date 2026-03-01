@@ -107,7 +107,30 @@ class Car {
   }
 }
 ```
+```
+class Car {
+  // Data members (hidden)
+  private String color;
+  private int wheels;
 
+  //public methods to access data
+  public void setColor(String color) {
+    this.color = color;
+  }
+  public String getColor() {
+    return this.color;
+  }
+
+  public void setWheels(String color) {
+    this.wheels = wheels;
+  }
+  public String getWheels() {
+    return this.wheels;
+  }
+
+  //Data is kept private, access is provided through public methods (getters/setters).
+}
+```
 ## Abstraction:
 - Abstraction refers to the act of representing essential features without including the background details or explanation.
 - It hides the implementation/unnecessary details and exposes only the necessary/essential features to the outside world.
@@ -123,8 +146,32 @@ class Car {
 - Abstract classes.
 - Interfaces.
 ```
+//Interface
+interface ATM {
+  void withdraw();
+  void deposit();
+}
+class BankATM implements ATM {
+  public void withdraw() {
+    System.out.println("Cash withdrawn.");
+  }
+  public void deposit() {
+    System.out.println("Cash deposited.");
+  }
+}
 ```
-
+```
+//Abstract class
+abstract class Vehicle {
+  abstract void start();
+}
+class Car extends Vehicle {
+  @Override
+  void start() {
+    System.out.println("car started.");
+  }
+}
+```
 ## Inheritance:
 - Inheritance is the process by which objects of one class acquire the properties of objects of another class.
 - The capability of a class to derive properties and characteristics from another class is called Inheritance.
