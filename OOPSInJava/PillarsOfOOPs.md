@@ -29,7 +29,7 @@
 - POP: Its memory requirement is less.
 - OOP: Its memory requirement is high.
 
-# Pillars Of OOP's:
+# Pillars of OOPs:
 - Class
 - Object
 - Encapsulation
@@ -37,4 +37,50 @@
 - Inheritance
 - Polymorphism
 
+## Class:
+- A class is a template or blueprint for creating objects.
+- A class is a user-defined data type that represents a
+blueprint/prototype for creating instances of objects.
+- It defines a set of attributes (data members) and methods
+(member functions).
+```
+class Car {
 
+  // properties/attributes (What it has)
+  String color;
+  int wheels;
+
+  // function/method (What it does)
+  void drive() {
+    System.out.println(color + "Car with" + wheels + "is driving"); 
+  }
+}
+```
+
+## Object:
+- An object is an instance of a class.
+- Objects are the basic run-time or real-world entities in an object-oriented system.
+-It may represent a person, a place, a bank, or other things.
+```
+class Car {
+
+  // properties/attributes (What it has)
+  String color;
+  int wheels;
+
+  // function/method (What it does)
+  void drive() {
+    System.out.println(color + "Car with" + wheels + "is driving"); 
+  }
+}
+```
+```
+Class Main {
+  public static void main(String[] args) {
+    Car c1 = new Car();
+    c1.color = red;
+    c1.wheels = 4;
+    c1.drive();
+  }
+}
+```
