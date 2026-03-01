@@ -84,3 +84,63 @@ Class Main {
   }
 }
 ```
+
+## Encapsulation:
+- Wrapping up of data and functions into single unit is known
+as encapsulation.
+- Encapsulation is a process of combining member functions and
+data members in a single unit. The purpose is to prevent access to the
+data directly and to hide "sensitive" data from users.
+- Encapsulation is the bundling of data members and
+methods(functions) into a single unit (class).
+```
+class Car {
+
+  // properties/attributes (What it has)
+  String color;
+  int wheels;
+
+  // function/method (What it does)
+  void drive() {
+    System.out.println(color + "Car with" + wheels + "is driving"); 
+  }
+}
+```
+
+## Abstraction:
+- Abstraction refers to the act of representing essential features without including the background details or explanation.
+- It hides the implementation/unnecessary details and exposes only the necessary/essential features to the outside world.
+- Insulation of the data from direct access by the program is called data/information hiding.
+- Examples:
+- ATM Machine:
+- Users perform the operations on the ATM Machine. Like cash withdrawal, money transfer, and retrieving statements, etc.
+- But we can't know internal details about ATM.
+- Bike/Car:
+- We know about how to ride or drive bike/car. But cannot know about how it works?
+- And also, we do not know the internal functionality of a bike/car.
+```
+```
+
+## Inheritance:
+- Inheritance is the process by which objects of one class acquire the properties of objects of another class.
+- The capability of a class to derive properties and characteristics from another class is called Inheritance.
+- Sub/Child/Derived class: The class that inherits properties from another class is called Sub class or a derived class.
+- Super/Parent/Base class: The class whose properties are inherited by a subclass is called the Base class or Super Class.
+- Inheritance is a mechanism that allows a class (derived or child class) to inherit properties and behaviours from another class (base or parent class).
+- Reusability is achieved through inheritance.
+
+### Types of Inheritance:
+- Single inheritance
+- Multilevel inheritance
+- Multiple inheritance
+- Hierarchical inheritance
+- Hybrid inheritance
+
+## Polymorphism:
+- Polymorphism is a Greek term that means the ability to take more than one form.
+- "Polymorphism" is the combination of "poly" = many, "morphism" = forms. ManyForms.
+- Polymorphism means the same entity (function or object) behaves differently in different scenarios.
+
+### Types of polymorphism:
+- Compile time: function overloading, function overriding.
+- Runtime: Virtual functions.
