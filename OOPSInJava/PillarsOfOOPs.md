@@ -86,11 +86,12 @@ Class Main {
 ```
 
 ## Encapsulation:
-- Wrapping up of data and functions into single unit is known
+- Wrapping up of data and functions into a single unit is known
 as encapsulation.
 - Encapsulation is a process of combining member functions and
 data members in a single unit. The purpose is to prevent access to the
 data directly and to hide "sensitive" data from users.
+- Implementation level (how to hide data using access modifiers)
 - Encapsulation is the bundling of data members and
 methods(functions) into a single unit (class).
 ```
@@ -110,7 +111,7 @@ class Car {
 ## Abstraction:
 - Abstraction refers to the act of representing essential features without including the background details or explanation.
 - It hides the implementation/unnecessary details and exposes only the necessary/essential features to the outside world.
-- Insulation of the data from direct access by the program is called data/information hiding.
+- Design level (what to expose).
 - Examples:
 - ATM Machine:
 - Users perform the operations on the ATM Machine. Like cash withdrawal, money transfer, and retrieving statements, etc.
@@ -118,6 +119,9 @@ class Car {
 - Bike/Car:
 - We know about how to ride or drive bike/car. But cannot know about how it works?
 - And also, we do not know the internal functionality of a bike/car.
+- Achieved using:
+- Abstract classes.
+- Interfaces.
 ```
 ```
 
@@ -132,7 +136,7 @@ class Car {
 ### Types of Inheritance:
 - Single inheritance
 - Multilevel inheritance
-- Multiple inheritance
+- Multiple inheritance (not supported in java but can be achieved through interfaces)
 - Hierarchical inheritance
 - Hybrid inheritance
 
@@ -142,5 +146,5 @@ class Car {
 - Polymorphism means the same entity (function or object) behaves differently in different scenarios.
 
 ### Types of polymorphism:
-- Compile time: function overloading, function overriding.
-- Runtime: Virtual functions.
+- Compile time: function overloading.
+- Runtime: function overriding, Dynamic method dispatch.
