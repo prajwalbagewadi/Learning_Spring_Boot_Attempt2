@@ -6205,3 +6205,64 @@ public String about() {
 - But if you see typical web app architecture.
 
 ![diagram:Webapparch.jpg](./Webapparch.jpg)
+
+- **_We have multiple layers here:_**
+- Controller. (for handling http request/response)
+- Service. (Business Logic and application rules)
+- Repo. (handling database operations and queries)
+
+- **_How do we create those things?_**
+- Hint: For each layer we will create different classes.
+- Service class.
+- Repo class.
+- Controller class.
+- Each layer/class will have different annotations.
+
+- Next there is no compulsion that you should put all the requests in one particular Controller.
+- You can have multiple Controllers.
+
+- Example: LoginController -> To handle login requests.
+
+```
+//LoginController.java
+package com.prajwal.SimpleRestApp.Controller;
+
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class LoginController {
+    @RequestMapping("/login")
+    public String login() {
+        return "login page demo.";
+    }
+}
+```
+
+```
+//output:
+browser -> http://localhost:8080/login
+login page demo.
+```
+
+- **_What do you think will this work?_**
+- **_And Why i think it should not work?_**
+- In general, we have multiple Controllers.
+- We will have multiple different requests.
+- Eg:
+- ("/") for Homepage.
+- ("/about") for Aboutpage.
+- ("/login") for Loginpage.
+
+- **_And how does SpringBoot Know?_**
+- For which request, we have to go to which controller? Confusing.
+- We can have 10 - 20 - 100 Controllers.
+- How does Spring framework knows which one to call?
+
+- First lets try to run the App:
+- The app runs. As anticipated.
+- **_So how is it working?_**
+- So what happens is. **_Spring MVC_**.
+- Spring Web -> Basically has something called "Front-Controller".
+
+- So when ever you send a request from the client.
