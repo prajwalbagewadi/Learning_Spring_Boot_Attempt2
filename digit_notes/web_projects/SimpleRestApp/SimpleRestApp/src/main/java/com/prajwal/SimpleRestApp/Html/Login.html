@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+  </head>
+  <body>
+    <form action="http://192.168.134.128:8080/login" method="get">
+      <pre>
+            Password:
+            <input type="password" name="pass"/>
+            <!--Spring Looks for a parameter named exactly pass in the request.-->
+            <!--Form field: name="pass"-->
+            <!--Query String: localhost:8080/login?pass=value-->
+            <!--If the name differs, Spring cannot bind automatically.-->
+            <button type="submit">Submit</button>
+        </pre>
+    </form>
+  </body>
+</html>

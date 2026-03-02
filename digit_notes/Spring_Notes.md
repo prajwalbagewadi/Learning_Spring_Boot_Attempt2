@@ -6266,3 +6266,65 @@ login page demo.
 - Spring Web -> Basically has something called "Front-Controller".
 
 - So when ever you send a request from the client.
+
+![Diagram:FrontController.jpg](./FrontController.jpg)
+
+- And the "Front-Controller" sees all the "request mappings" so it creates "RequestMappings" for all Controllers.
+- And it knows for which request it has to send it to which controller.
+- (Job of Front-Controller). Then the request is forwarded to specified/mapped controller.
+
+- **_What if you want to send data from the Client to Server?_**
+- Till now we have send data from the Server to client.
+- But what about Client to Server?
+- For that, Spring provides method parameters in @RequestMapping annotation to recieve data from the client request.
+
+```
+//LoginController.java
+package com.prajwal.SimpleRestApp.Controller;
+
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class LoginController {
+    @RequestMapping("/login")
+    public String login(String pass) { //data from client is accepted in arguments.
+        return "login page demo."+"clientData:"+pass;
+    }
+}
+```
+
+```
+//login.html
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+  </head>
+  <body>
+    <form action="http://192.168.134.128:8080/login" method="get">
+      <pre>
+            Password:
+            <input type="password" name="pass"/>
+            <!--Spring Looks for a parameter named exactly pass in the request.-->
+            <!--Form field: name="pass"-->
+            <!--Query String: localhost:8080/login?pass=value-->
+            <!--If the name differs, Spring cannot bind automatically.-->
+            <button type="submit">Submit</button>
+        </pre>
+    </form>
+  </body>
+</html>
+```
+
+```
+//output
+browser -> file:///C:/Users/bagew/Desktop/Project_Ideas/spring24jan2026/Learning_Spring_Boot_Attempt2/digit_notes/web_projects/SimpleRestApp/SimpleRestApp/src/main/java/com/prajwal/SimpleRestApp/Html/Login.html
+-> Type the password in the password field.
+-> 12345
+-> click the submit button.
+browser -> http://192.168.134.128:8080/login?pass=12345
+login page demo.clientData:12345
+```

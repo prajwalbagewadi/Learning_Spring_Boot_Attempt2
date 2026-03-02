@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class LoginController {
     @RequestMapping("/login")
-    public String login() {
-        return "login page demo.";
+    public String login(String pass) { //data from client is accepted in arguments.
+        return "login page demo."+"clientData:"+pass;
     }
 }
