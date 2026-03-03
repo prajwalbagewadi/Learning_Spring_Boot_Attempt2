@@ -6372,3 +6372,21 @@ class Flight {
     String arrival_airport; // Navi Mumbai Terminal: Gate:
 }
 ```
+
+- And if you think of any application you normally work with a entity.
+- And in the world of Java we represent that with the help of objects.
+- So if i want to return some details it can be one object or multiple objects.
+
+- In terms of a ecommerce app -> If you search for a particular product.
+- Eg: If you search for a laptop -> So it will give you a list of laptops and not one.
+
+- Now the Idea is how do you send that data from server to the client.
+- In which format.
+- We can't send normal text. On the client side if it is a react app.
+- They cannot accept normal text.
+- It will be difficult to convert to UI. Or read from text.
+
+- **_And thats why we use JSON format_**, we can use XML as well, but Json is the popular choice.
+- Returning the object -> The object will contain the data. -> Which will be returned to the client.
+
+## Creating a Controller for Searching Product:
