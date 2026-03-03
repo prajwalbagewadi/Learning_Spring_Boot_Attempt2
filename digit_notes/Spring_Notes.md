@@ -6304,7 +6304,7 @@ public class LoginController {
     <title>Login</title>
   </head>
   <body>
-    <form action="http://192.168.134.128:8080/login" method="get">
+    <form action="http://127.0.0.1:8080/login" method="get">
       <pre>
             Password:
             <input type="password" name="pass"/>
@@ -6325,6 +6325,6 @@ browser -> file:///C:/Users/bagew/Desktop/Project_Ideas/spring24jan2026/Learning
 -> Type the password in the password field.
 -> 12345
 -> click the submit button.
-browser -> http://192.168.134.128:8080/login?pass=12345
+browser -> http://127.0.0.1:8080/login?pass=12345
 login page demo.clientData:12345
 ```
