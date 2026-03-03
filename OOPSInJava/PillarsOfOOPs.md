@@ -217,6 +217,7 @@ class Car extends Vehicle {
 - Super/Parent/Base class: The class whose properties are inherited by a subclass is called the Base class or Super Class.
 - Inheritance is a mechanism that allows a class (derived or child class) to inherit properties and behaviours from another class (base or parent class).
 - Reusability is achieved through inheritance.
+- 'extends' keyword is used for inheritance.
 
 ### Types of Inheritance:
 
@@ -227,7 +228,7 @@ class Car extends Vehicle {
 - Hybrid inheritance
 
 - **_Single inheritance:_**
-- A -> B.
+  ![Diagram:Single.jpg](./inheritanceFigs/Single.jpg)
 
 ```
 //Single Inheritance
@@ -273,7 +274,7 @@ Emp:Prajwal working on Project:ofAshandSteel
 ```
 
 - **_Multilevel inheritance:_**
-- A -> B -> C.
+  ![Diagram:MultiLevel.jpg](./inheritanceFigs/MultiLevel.jpg)
 
 ```
 //Multilevel Inheritance
