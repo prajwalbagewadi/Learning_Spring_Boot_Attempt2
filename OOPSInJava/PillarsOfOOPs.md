@@ -226,16 +226,18 @@ class Car extends Vehicle {
 - Hierarchical inheritance
 - Hybrid inheritance
 
-- ***Single inheritance:***
+- **_Single inheritance:_**
+- A -> B.
+
 ```
 //Single Inheritance
 class Project {
     private String proj_name;
-    
+
     public void setProjName(String name) {
         this.proj_name = name;
     }
-    
+
     public String getProjName() {
         return this.proj_name;
     }
@@ -243,11 +245,11 @@ class Project {
 
 class Emp extends Project {
     private String emp_name;
-    
+
     public void setEmpName(String name) {
         this.emp_name = name;
     }
-    
+
     public String getEmpName() {
         return this.emp_name;
     }
@@ -269,6 +271,66 @@ public class Main
 Hello World
 Emp:Prajwal working on Project:ofAshandSteel
 ```
+
+- **_Multilevel inheritance:_**
+- A -> B -> C.
+
+```
+//Multilevel Inheritance
+class Dept {
+  private String dept_name;
+
+  public void setDeptName(String name) {
+        this.dept_name = name;
+    }
+
+    public String getDeptName() {
+        return this.dept_name;
+    }
+}
+
+class Project extends Dept {
+    private String proj_name;
+
+    public void setProjName(String name) {
+        this.proj_name = name;
+    }
+
+    public String getProjName() {
+        return this.proj_name;
+    }
+}
+
+class Emp extends Project {
+    private String emp_name;
+
+    public void setEmpName(String name) {
+        this.emp_name = name;
+    }
+
+    public String getEmpName() {
+        return this.emp_name;
+    }
+}
+
+public class Main
+{
+	public static void main(String[] args) {
+		System.out.println("Hello World");
+		Emp e1 = new Emp();
+	  e1.setEmpName("Prajwal");
+		e1.setProjName("MasterCard Transaction Processing");
+		e1.setDeptName("Software Development");
+		System.out.println("Emp:"+e1.getEmpName()+" working on Project:"+e1.getProjName()+"At Dept:"+e1.getDeptName());
+	}
+}
+
+//Output:
+26 ms | 41.4 MB
+Hello World
+Emp:Prajwal working on Project:MasterCard Transaction ProcessingAt Dept:Software Development
+```
+
 ## Polymorphism:
 
 - Polymorphism is a Greek term that means the ability to take more than one form.
