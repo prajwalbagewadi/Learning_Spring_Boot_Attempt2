@@ -6328,3 +6328,47 @@ browser -> file:///C:/Users/bagew/Desktop/Project_Ideas/spring24jan2026/Learning
 browser -> http://127.0.0.1:8080/login?pass=12345
 login page demo.clientData:12345
 ```
+
+```
+//Postman
+Get -> http://localhost:8080/login?pass=12345
+200 OK
+Body -> RAW -> login page demo.clientData:12345
+```
+
+- http://localhost:8080/login?pass=12345
+- This form of sending data to server is called 'query parameter' (also called URL parameter).
+- /login?pass=12345.
+- Everything after '?' is the query string.
+- format: key=value
+- multiple params: ?key1=val1&key2=val2.
+
+- **_Returning Complex data/User defined data(class) instead of normal text:_**
+- Returning data for Entity.
+- Eg: If you are building a ecommerce webapp. -> You want to return the products.
+- Product will have details like:
+
+```
+class Product {
+    int product_id;
+    String product_name;
+    double product_price;
+    String product_category;
+}
+```
+
+- Eg: Same goes for flight booking site. If you want to book a flight.
+- Flight will have details like:
+
+```
+class Flight {
+    String airline_name; //Air India Express
+    String flight_number; //IX 1463
+    String Source; //New Delhi
+    String destination; //Navi Mumbai
+    DateTime departure; //6.00 am Wed, 4Mar
+    String departure_airport; // New Delhi Terminal:1 Gate:D12
+    DateTime arrival; // 8:20 am Wed, 4Mar
+    String arrival_airport; // Navi Mumbai Terminal: Gate:
+}
+```
