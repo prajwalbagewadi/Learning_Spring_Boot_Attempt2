@@ -226,6 +226,49 @@ class Car extends Vehicle {
 - Hierarchical inheritance
 - Hybrid inheritance
 
+- ***Single inheritance:***
+```
+//Single Inheritance
+class Project {
+    private String proj_name;
+    
+    public void setProjName(String name) {
+        this.proj_name = name;
+    }
+    
+    public String getProjName() {
+        return this.proj_name;
+    }
+}
+
+class Emp extends Project {
+    private String emp_name;
+    
+    public void setEmpName(String name) {
+        this.emp_name = name;
+    }
+    
+    public String getEmpName() {
+        return this.emp_name;
+    }
+}
+
+public class Main
+{
+	public static void main(String[] args) {
+		System.out.println("Hello World");
+		Emp e1 = new Emp();
+	    e1.setEmpName("Prajwal");
+		e1.setProjName("ofAshandSteel");
+		System.out.println("Emp:"+e1.getEmpName()+" working on Project:"+e1.getProjName());
+	}
+}
+
+//Output:
+25 ms | 41.6 MB
+Hello World
+Emp:Prajwal working on Project:ofAshandSteel
+```
 ## Polymorphism:
 
 - Polymorphism is a Greek term that means the ability to take more than one form.
