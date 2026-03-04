@@ -6390,3 +6390,65 @@ class Flight {
 - Returning the object -> The object will contain the data. -> Which will be returned to the client.
 
 ## Creating a Controller for Searching Product:
+
+```
+//ProductController.java
+package com.example.Ecommerce.Controller;
+
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class ProductController {
+    @RequestMapping("/getproduct")
+    public String getProducts() {
+        return "getproduct controller";
+    }
+}
+```
+
+```
+//output:
+browser -> http://localhost:8080/getproduct
+getproduct controller
+```
+
+- **_Create Data:_**(Dummy)
+- To create Data we need to first create product class.
+- create package Model -> Product.java
+
+```
+//Product.java
+package com.example.Ecommerce.Model;
+
+public class Product {
+    private String prodId;
+    private String prodName;
+
+    private String category;
+    private String prodDescription;
+
+    private double price;
+    private double mrp;
+    private int discountPercentage;
+
+    private boolean inStock;
+    private int stockQuantity;
+    private float rating;
+    private int totalRating;
+
+
+}
+```
+
+## Model:
+
+- Represents a real object (User,Product,Order,Student,etc.)
+- Contains fields (variables) + getters/setters
+- is used to transfer data between layers (Controller <-> Service <-> Repository)
+- Think of it as a data container.
+
+## Lombok:
+
+- What is Lombok?
+- Why do we use Lombok?
