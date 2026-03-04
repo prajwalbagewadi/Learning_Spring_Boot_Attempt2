@@ -6452,3 +6452,6 @@ public class Product {
 
 - What is Lombok?
 - Why do we use Lombok?
+- When you use a private variable, we have to create getter/setter, constructor for private variables.
+- Instead of creating getter/setter, constructor we can use Lombok library.
+- Which will help me to create getter/setter, constructor behind the scenes easily.
