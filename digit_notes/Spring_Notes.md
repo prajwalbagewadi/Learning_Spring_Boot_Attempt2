@@ -6450,8 +6450,109 @@ public class Product {
 
 ## Lombok:
 
-- What is Lombok?
-- Why do we use Lombok?
-- When you use a private variable, we have to create getter/setter, constructor for private variables.
-- Instead of creating getter/setter, constructor we can use Lombok library.
+- **_What is Lombok?_**
+- Lombok is a java library that reduces boilerplate code by automatically generating code at compile time.
+- It generates:
+- Getters and Setters
+- Constructors
+- toString()
+- equals() & hashCode()
+- Builder pattern code.
+- Behind the scenes, lombok writes the code during compilation, so you don't see it in your .java file but it exists in the .class file.
+
+- **_Why do we use Lombok?_**
+- Without lombok:
+
+```
+class User {
+    private String name;
+    private int age;
+
+    public User(String name,int age) {
+        this.name = name;
+        this.age = age;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+    public String getName() {
+        return this.name;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+    public String getAge() {
+        return this.age;
+    }
+
+}
+```
+
+- 💡 Too much repetitive code (boilerplate).
+- With lombok:
+
+```
+import lombok.*;
+
+@Data
+@AllArgsConstructor
+class User {
+    private String name;
+    private int age;
+}
+```
+
+- Clean, readable, less code.
+- When we use a private variable, in Java. we usually have to create getter/setter, constructor manually.
+- Instead of writing getter/setter, constructors ourselves, we can use Lombok library, which automatically generates getters, setters, constructors, and other methods behind the scenes at compile time.
 - Which will help me to create getter/setter, constructor behind the scenes easily.
+
+- **_Where Lombok is mostly used?_**
+- Spring Boot / Spring MVC.
+- Model / Entity / DTO classes.
+
+- **_Lombok Annotations:_**
+- @Getter - Generates getters
+- @Setter - Generates setters
+- @NoArgsConstructor - Generates no-argument constructor.
+- @AllArgsConstructor - Generates all-argument constructor.
+- @RequiredArgsConstructor - Constructor for final field.
+- @ToString - Generates toString()
+- @EqualsAndHashCode - Generates equals() and hashCode()
+- @Data - Combines getter, setter, constructor, toString, equals, hashCode
+- @Builder - Builder pattern.
+- equals(): is used to compare to content (state) of two objects, not their memory location.
+
+```
+obj1.equals(obj2);
+```
+
+- hashCode(): returns as integer value that represents the object.
+- When you store objects in 'HashSet' or use them as keys in 'HashMap'.
+-
+
+```
+//To be worked on
+class Student {
+    int id;
+
+    Student(int id) {
+        this.id = id;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Student s = (Student) o;
+        return id == s.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return id;
+    }
+}
+```
