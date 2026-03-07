@@ -6658,7 +6658,64 @@ Is s1 equal to s3? false
 ```
 
 - Observe how s1 equals to s2 is false, where both Objects have same states/properties
-- equals()
+- equals() method checks reference equality (memory address of objects)
+- equals() method must be overriden to check state equality.
+
+```
+//working on code equals override
+import java.util.*;
+import java.lang.Object.*;
+
+class Temp {}
+
+class Stud extends Object{
+  int id;
+  String name;
+
+  public Stud(int id, String name) {
+    this.id = id;
+    this.name = name;
+  }
+  
+  
+  @Override
+  public boolean equals(Object o) {
+    if(this == o) {
+      System.out.println("Both objects have same memory location.");
+    }
+    if(this == null) {
+      System.out.println("object passed is null.");
+      return true;
+    }
+    if(this.getClass() != o.getClass()) {
+      System.out.println("Both objects do not belong to the same Class");
+      return false;
+    }
+    return false;
+  }
+
+}
+
+public class Main {
+    public static void main(String[] args) {
+      System.out.println("Hello, World!");
+
+      Stud s1 = new Stud(1,"a");
+      Stud s2 = new Stud(1,"a");
+      Stud s3 = new Stud(2,"b");
+
+      System.out.println("hashCode for s1: "+s1.hashCode());
+      System.out.println("hashCode for s2: "+s2.hashCode());
+      System.out.println("hashCode for s3: "+s3.hashCode());
+      
+      System.out.println("Is s1 equal to null? "+s1.equals(null));
+      System.out.println("Is s1 equal to s1? "+s1.equals(s1));
+      System.out.println("Is s1 equal to s2? "+s1.equals(s2));
+      System.out.println("Is s1 equal to s3? "+s1.equals(s3));
+    }
+}
+
+```
 
 ```
 //To be worked on
