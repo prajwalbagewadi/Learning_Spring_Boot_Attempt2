@@ -6676,8 +6676,8 @@ class Stud extends Object{
     this.id = id;
     this.name = name;
   }
-  
-  
+
+
   @Override
   public boolean equals(Object o) {
     if(this == o) {
@@ -6707,7 +6707,7 @@ public class Main {
       System.out.println("hashCode for s1: "+s1.hashCode());
       System.out.println("hashCode for s2: "+s2.hashCode());
       System.out.println("hashCode for s3: "+s3.hashCode());
-      
+
       System.out.println("Is s1 equal to null? "+s1.equals(null));
       System.out.println("Is s1 equal to s1? "+s1.equals(s1));
       System.out.println("Is s1 equal to s2? "+s1.equals(s2));
@@ -6715,6 +6715,72 @@ public class Main {
     }
 }
 
+```
+
+- Overriding equals() method.
+
+```
+//working on code equals override
+import java.util.*;
+import java.lang.Object.*;
+
+
+class Stud extends Object{
+  int id;
+  String name;
+
+  public Stud(int id, String name) {
+    this.id = id;
+    this.name = name;
+  }
+
+
+  @Override
+  public boolean equals(Object o) {
+    boolean result = false;
+    //checks refernce (memoery location) of calling Object and o.
+    if(this == o) {
+      result = true;
+    }
+    //checks if o is null or calling object has the same class as o.
+    if(o == null || this.getClass() != o.getClass()) {
+      result = false;
+    }
+    Stud s = (Stud) o; //type casts from type Object to Stud.
+    // checks object states
+    if(this.id == s.id && this.name.equals(s.name)){
+      result = true;
+      /*
+        optimial code:
+        Student s = (Student) o;
+        return id == s.id; //returns boolean value if calling object id matches s (id).
+      */
+    }
+    return result;
+  }
+
+}
+
+public class Main {
+    public static void main(String[] args) {
+      System.out.println("Hello, World!");
+
+      Stud s1 = new Stud(1,"a");
+      Stud s2 = new Stud(1,"a");
+      Stud s3 = new Stud(2,"b");
+
+      System.out.println("s1 equals s2: "+s1.equals(s2));
+      System.out.println("s1 equals s3: "+s1.equals(s3));
+      System.out.println("s2 equals s3: "+s2.equals(s3));
+    }
+}
+
+//Output:
+24 ms | 41.3 MB
+Hello, World!
+s1 equals s2: true
+s1 equals s3: false
+s2 equals s3: false
 ```
 
 ```
