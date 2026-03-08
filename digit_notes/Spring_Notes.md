@@ -6785,6 +6785,7 @@ s2 equals s3: false
 
 - Overriding **_hashCode()_** method:
 - hashCode(): Method generates hashvalue based on the objects states/properties, help decide the which bucket the objects goes to in HashMap, HashSet and HashTable.
+- **_Bucket:_**
 
 ```
 //To be worked on
