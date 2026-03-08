@@ -6717,7 +6717,7 @@ public class Main {
 
 ```
 
-- Overriding equals() method.
+- Overriding **_equals()_** method.
 
 ```
 //working on code equals override
@@ -6782,6 +6782,9 @@ s1 equals s2: true
 s1 equals s3: false
 s2 equals s3: false
 ```
+
+- Overriding **_hashCode()_** method:
+- hashCode(): Method generates hashvalue based on the objects states/properties, help decide the which bucket the objects goes to in HashMap, HashSet and HashTable.
 
 ```
 //To be worked on
