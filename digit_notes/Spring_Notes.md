@@ -6784,8 +6784,81 @@ s2 equals s3: false
 ```
 
 - Overriding **_hashCode()_** method:
-- hashCode(): Method generates hashvalue based on the objects states/properties, help decide the which bucket the objects goes to in HashMap, HashSet and HashTable.
+- hashCode() method by default generates a hash value based on objects memory location
+- When we override hashCode() method, it generates hash value based on the objects states/properties, which help decide the bucket where the objects goes to in HashMap, HashSet and HashTable in java.
+
+```
+//error code
+import java.util.*;
+import java.lang.Object.*;
+
+
+class Stud extends Object{
+  int id;
+  String name;
+
+  public Stud(int id, String name) {
+    this.id = id;
+    this.name = name;
+  }
+
+
+  @Override
+  public boolean equals(Object o) {
+    boolean result = false;
+    //checks refernce (memoery location) of calling Object and o.
+    if(this == o) {
+      result = true;
+    }
+    //checks if o is null or calling object has the same class as o.
+    if(o == null || this.getClass() != o.getClass()) {
+      result = false;
+    }
+    Stud s = (Stud) o; //type casts from type Object to Stud.
+    // checks object states
+    if(this.id == s.id && this.name.equals(s.name)){
+      result = true;
+      /*
+        optimial code:
+        Student s = (Student) o;
+        return id == s.id; //returns boolean value if calling object id matches s (id).
+      */
+    }
+    return result;
+  }
+
+  @Override
+  public int hashCode() {
+     return Object.hash(this.id,this.name);
+  }
+}
+
+public class Main {
+    public static void main(String[] args) {
+      System.out.println("Hello, World!");
+
+      Stud s1 = new Stud(1,"a");
+      Stud s2 = new Stud(1,"a");
+      Stud s3 = new Stud(2,"b");
+
+      System.out.println("s1 equals s2: "+s1.equals(s2));
+      System.out.println("s1 equals s3: "+s1.equals(s3));
+      System.out.println("s2 equals s3: "+s2.equals(s3));
+
+      System.out.println("hashCode for s1: "+s1.hashCode());
+      System.out.println("hashCode for s2: "+s2.hashCode());
+      System.out.println("hashCode for s3: "+s3.hashCode());
+    }
+}
+
+```
+
 - **_Bucket:_**
+- Bucket = index in the internal array (sort of index). Where an object is stored based on its hashCode().
+- How it is calculated: bucket = hashCode % arraySize;
+- eg: 25 % 16 = 9 -> object goes to bucket 9.
+- In java, hashCode() decides the bucket and equals() checks the object inside that bucket.
+- HashMap, HashSet and HashTable are = array of buckets where each bucket can hold multiple entries.
 
 ```
 //To be worked on
