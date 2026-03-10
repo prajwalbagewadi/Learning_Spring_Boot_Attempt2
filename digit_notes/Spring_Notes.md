@@ -6787,8 +6787,13 @@ s2 equals s3: false
 - hashCode() method by default generates a hash value based on objects memory location
 - When we override hashCode() method, it generates hash value based on the objects states/properties, which help decide the bucket where the objects goes to in HashMap, HashSet and HashTable in java.
 
+- hashCode() cannot directly return multiple properties like id and name. It must return a single int hash value.
+- It can generate a hash using a single property.
+- If 'equals()' uses multiple properties like id and name.
+- hashCode() should also include those properties.
+- Which can be achived using the 'Objects.hash(p1,p2)' method in java.
+
 ```
-//error code
 import java.util.*;
 import java.lang.Object.*;
 
@@ -6829,7 +6834,7 @@ class Stud extends Object{
 
   @Override
   public int hashCode() {
-     return Object.hash(this.id,this.name);
+     return Objects.hash(this.id,this.name);
   }
 }
 
@@ -6851,6 +6856,15 @@ public class Main {
     }
 }
 
+//Output:
+25 ms | 41.3 MB
+Hello, World!
+s1 equals s2: true
+s1 equals s3: false
+s2 equals s3: false
+hashCode for s1: 1089
+hashCode for s2: 1089
+hashCode for s3: 1121
 ```
 
 - **_Bucket:_**
@@ -6859,6 +6873,66 @@ public class Main {
 - eg: 25 % 16 = 9 -> object goes to bucket 9.
 - In java, hashCode() decides the bucket and equals() checks the object inside that bucket.
 - HashMap, HashSet and HashTable are = array of buckets where each bucket can hold multiple entries.
+- Bucket makes the **_searching very fast_** almost O(1), because java directly jumps to the bucket instead of checking every object.
+- Buckets for HashmMap, HashSet and HashTable cannot be seen directly as. Buckets are internal implementation details.
+- Java only lets you interact with the Keys and values, not the internal array structure.
+
+```
+import java.util.Objects;
+import java.lang.Object;
+
+class Stud {
+  int id;
+  String name;
+
+  public Stud(int id,String name) {
+    this.id = id;
+    this.name = name;
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(this.id,this.name);
+  }
+
+  public int getBucket(int hashCode, int arrSize) {
+    //Bucket = hashCode % arrSize
+    return hashCode % arrSize;
+  }
+}
+
+public class Main {
+  public static void main(String[] args) {
+    System.out.println("hello world.");
+
+    //array size 3.
+    int size=3;
+
+    Stud s1 = new Stud(1,"a");
+    Stud s2 = new Stud(1,"a");
+    Stud s3 = new Stud(2,"b");
+
+    System.out.println("hashCode for s1: "+s1.hashCode());
+    System.out.println("hashCode for s2: "+s2.hashCode());
+    System.out.println("hashCode for s3: "+s3.hashCode());
+
+    //buckets
+    System.out.println("bucket for s1: "+s1.getBucket(s1.hashCode(),size));
+    System.out.println("bucket for s2: "+s2.getBucket(s2.hashCode(),size));
+    System.out.println("bucket for s3: "+s3.getBucket(s3.hashCode(),size));
+  }
+}
+
+//Output:
+26 ms | 41.3 MB
+hello world.
+hashCode for s1: 1089
+hashCode for s2: 1089
+hashCode for s3: 1121
+bucket for s1: 0
+bucket for s2: 0
+bucket for s3: 2
+```
 
 ```
 //To be worked on
@@ -6883,3 +6957,9 @@ class Student {
     }
 }
 ```
+
+- Continuation from Line: 6510.
+
+## Add Depenendency pom.xml:
+
+- Google -> Mvnrepo.
