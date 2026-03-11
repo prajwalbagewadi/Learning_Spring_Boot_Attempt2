@@ -6967,3 +6967,26 @@ class Student {
 - Save and reload pom.xml
 
 - '@Data' annotation will give you lombok functionality.
+
+```
+@Data //will give lombok functionality
+public class Product {
+  private int product_id;
+  private String product_name;
+  private double product_price;
+}
+```
+- Back to the Product Controller -> This is where you can return Data (product data).
+- We have talked about the 3 layers.
+- Controller.
+- Service.
+- Repository.
+- If a Controller wants the data. -> It will not ask the data from the database directly.
+- It will ask the data from the 'Service layer'.
+- This is where we introduce new layers.
+- Because you should not be writing any business logic inside the Controller.
+- Controller is just for accepting the client request and responding to the client. -> And not to do any 'Business logic'.
+
+- This is where we introduce 'ProductService' class.
+- Which will have the logic for returning the data to the Product Controller class.
+
