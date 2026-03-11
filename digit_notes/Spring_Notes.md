@@ -6962,4 +6962,8 @@ class Student {
 
 ## Add Depenendency pom.xml:
 
-- Google -> Mvnrepo.
+- Google Search > Mvnrepo > Project Lombok.
+- Add the dependency in <dependencies>
+- Save and reload pom.xml
+
+- '@Data' annotation will give you lombok functionality.
