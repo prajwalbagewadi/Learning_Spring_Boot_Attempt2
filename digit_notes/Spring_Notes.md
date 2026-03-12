@@ -6990,3 +6990,24 @@ public class Product {
 - This is where we introduce 'ProductService' class.
 - Which will have the logic for returning the data to the Product Controller class.
 
+```
+public class ProductService {
+  // will contain the logic for returning data to ProductController.
+  
+}
+```
+- We will create different packages 📦. To group all Controller, Services and Models.
+
+## Concept of MVC:
+- Model, View, Controller.
+- Is a software design pattern used in organize code in apps (especially web apps).
+- So that each part has clear responsibilities.
+- This makes programs easier to maintain and scale.
+- This design pattern seperates the application into three parts:
+- Model (data).
+- View (UI).
+- Controller (handles user requests).
+
+- Controller accepts the requests from the client and responds to it (Product Controller)
+- View is basically responsible for returning UI pages. But in our case we are not returning pages, we are returning data. But is still considered as a part of MVC.
+- Model represents data. class Product representing the data.
