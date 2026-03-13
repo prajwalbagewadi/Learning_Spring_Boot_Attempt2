@@ -7011,3 +7011,20 @@ public class ProductService {
 - Controller accepts the requests from the client and responds to it (Product Controller)
 - View is basically responsible for returning UI pages. But in our case we are not returning pages, we are returning data. But is still considered as a part of MVC.
 - Model represents data. class Product representing the data.
+
+## Creating New Packages:
+- Controller: HomeController, ProductController, LoginController.
+- Service: ProductService.
+- Model: Product.
+- refactor appropriately.
+
+## Service class (ProductService):
+```
+//To be worked 
+public class ProductService {
+  public List<Product> getProducts() {
+    return null;
+  }
+}
+```
+  
