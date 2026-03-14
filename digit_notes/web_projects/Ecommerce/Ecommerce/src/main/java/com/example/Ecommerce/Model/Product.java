@@ -1,8 +1,10 @@
 package com.example.Ecommerce.Model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data //Will provide Lombok functionality
+@AllArgsConstructor
 public class Product {
     private String prodId;
     private String prodName;

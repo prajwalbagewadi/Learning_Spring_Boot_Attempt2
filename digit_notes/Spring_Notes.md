@@ -7076,3 +7076,21 @@ public class ProductService {
 - Collection List (Interface) is used to store products temporarily.
 - List is an (Interface) in java from java.util.List; While ArrayList is a class that implements it.
 - Using List gives you flexibility. So later if you want to change the implementation, you can do it easily.
+
+```
+package com.example.Ecommerce.Service;
+
+import com.example.Ecommerce.Model.Product;
+
+import java.util.List;
+
+public class ProductService {
+    //Contains the logic for returning Data to ProductController.
+
+    public List<Product> getProducts() {
+        return null;
+    }
+}
+```
+
+## Dummy data (Adding dummy to Service):
