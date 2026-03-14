@@ -7072,6 +7072,7 @@ public class ProductService {
 
 ```
 
-//Collection List (Interface) is used to store products temporarily.
-//List is an (Interface) in java from java.util.List; While ArrayList is a class that implements it.
-//Using List gives you flexibility. So later if you want to change the implementation, you can do it easily.
+- We will use collection interface to temporarily store Products (data).
+- Collection List (Interface) is used to store products temporarily.
+- List is an (Interface) in java from java.util.List; While ArrayList is a class that implements it.
+- Using List gives you flexibility. So later if you want to change the implementation, you can do it easily.
