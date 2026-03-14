@@ -1,5 +1,8 @@
 package com.example.Ecommerce.Model;
 
+import lombok.Data;
+
+@Data //Will provide Lombok functionality
 public class Product {
     private String prodId;
     private String prodName;
@@ -15,6 +18,5 @@ public class Product {
     private int stockQuantity;
     private float rating;
     private int totalRating;
-
 
 }

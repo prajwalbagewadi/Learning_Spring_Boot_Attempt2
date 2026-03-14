@@ -6976,6 +6976,33 @@ public class Product {
   private double product_price;
 }
 ```
+
+```
+package com.example.Ecommerce.Model;
+
+import lombok.Data;
+
+@Data //Will provide Lombok functionality
+public class Product {
+    private String prodId;
+    private String prodName;
+
+    private String category;
+    private String prodDescription;
+
+    private double price;
+    private double mrp;
+    private int discountPercentage;
+
+    private boolean inStock;
+    private int stockQuantity;
+    private float rating;
+    private int totalRating;
+
+}
+
+```
+
 - Back to the Product Controller -> This is where you can return Data (product data).
 - We have talked about the 3 layers.
 - Controller.
@@ -6993,12 +7020,14 @@ public class Product {
 ```
 public class ProductService {
   // will contain the logic for returning data to ProductController.
-  
+
 }
 ```
+
 - We will create different packages 📦. To group all Controller, Services and Models.
 
 ## Concept of MVC:
+
 - Model, View, Controller.
 - Is a software design pattern used in organize code in apps (especially web apps).
 - So that each part has clear responsibilities.
@@ -7013,18 +7042,36 @@ public class ProductService {
 - Model represents data. class Product representing the data.
 
 ## Creating New Packages:
+
 - Controller: HomeController, ProductController, LoginController.
 - Service: ProductService.
 - Model: Product.
 - refactor appropriately.
 
 ## Service class (ProductService):
+
 ```
-//To be worked 
+//ProductService.java
 public class ProductService {
   public List<Product> getProducts() {
     return null;
   }
 }
 ```
-  
+
+```
+//ProductService.java
+package com.example.Ecommerce.Service;
+
+import java.util.List;
+
+public class ProductService {
+    //Contains the logic for returning Data to ProductController.
+
+   }
+
+```
+
+//Collection List (Interface) is used to store products temporarily.
+//List is an (Interface) in java from java.util.List; While ArrayList is a class that implements it.
+//Using List gives you flexibility. So later if you want to change the implementation, you can do it easily.
