@@ -7271,16 +7271,49 @@ public class ProductService {
 - Annotations:
 - @RestController -> for REST APIs.
 - @Controller -> for MVC views (HTML pages)
+- Eg:
+
+```
+//To be worked.
+import org.springframework.web.bind.annotations.RestController;
+
+@RestController
+public class ProductController {
+
+}
+```
+
 - Common request mapping annotations:
 - @GetMapping
 - @PostMapping
 - @PutMapping
 - @DeleteMapping
 - @RequestMapping
+- Eg:
+
+```
+//To be worked.
+@GetMapping("/products")
+public List<Product> getProducts() {
+    return productService.getProducts();
+}
+```
+
 - **_2. Service Layer_**
 - Contains business logic.
 - Annotation:
 - @Service
+
+```
+//To be worked.
+import org.springframework.stereotype.Service;
+
+@Service
+public class ProductService {
+
+}
+```
+
 - This layer usually calls the repository.
 - **_3. Repository Layer_**
 - Handles database operations.
@@ -7289,5 +7322,69 @@ public class ProductService {
 - Eg:
 
 ```
+//To be worked.
+//ProductRepo.java
+package com.example.Ecommerce.Repository;
+
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface ProductRepo {
+}
+```
+
+- usually it extends.
 
 ```
+//To be worked.
+//ProductRepo.java
+package com.example.Ecommerce.Repository;
+
+import com.example.Ecommerce.Model.Product;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface ProductRepo extends JpaRepository<Product, Integer>{
+}
+```
+
+- JpaRepository<Product, Integer> is an Interface in Spring Data JPA that helps you perform database operations automatically without writing SQL.
+- It belongs to Spring Data JPA used in Spring Boot.
+- JpaRepository interface already contains built-in database methods like:
+- save()
+- findAll()
+- findById()
+- deleteById()
+- So you don't need to write SQL queries.
+- Product -> Is the Entity (Model class).
+- Integer -> Is the data type of the primary key (@Id).
+- **_4. Model Layer_**
+- Represents database entities or data objects.
+- Annotation:
+- @Entity
+- Eg:
+
+```
+//To be worked.
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+
+@Entity
+public class Product {
+    @Id
+    private int id;
+    private String name;
+    private double price;
+}
+```
+
+- Other useful annotations:
+- @Table
+- @Column
+- @Id
+- @GeneratedValue
+
+- Ultimately they are the same because @Service is a specialization of @Component behind the scenes.
+
+## Removing @Data and @AllArgsConstructor:
