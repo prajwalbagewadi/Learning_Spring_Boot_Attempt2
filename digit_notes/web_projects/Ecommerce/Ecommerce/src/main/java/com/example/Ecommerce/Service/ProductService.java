@@ -1,14 +1,17 @@
 package com.example.Ecommerce.Service;
 
 import com.example.Ecommerce.Model.Product;
+import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.List;
 
+@Service //Converts simple java class to a Service layer class
 public class ProductService {
     //Contains the logic for returning Data to ProductController.
 
     public List<Product> getProducts() {
+        //List of Products
         List<Product> products =  Arrays.asList(
                 new Product("G006","Kissan Mixed Fruit Jam","groceries","Kissan Mixed Fruit Jam , With Real Fruit Ingredients, 200 g",67.00,80.00,16,true,1500,4.4f,4193),
                 new Product("G001","Daawat Biryani Basmati Rice","groceries","Daawat Biryani Basmati Rice, 5 Kg| World s Longest Rice Grain expands 24mm* | Tasty, Non-sticky & Rich Aroma |Naturally Aged",989.00,1245.00,21,true,800,4.0f,2452),
