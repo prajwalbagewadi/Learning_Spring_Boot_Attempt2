@@ -7528,6 +7528,23 @@ public class ProductController {
 }
 ```
 
+```
+//output:
+browser -> http://localhost:8086/getproduct
+[
+  {
+    "prod_id": 1,
+    "prod_name": "Kitkat",
+    "prod_price": 10
+  },
+  {
+    "prod_id": 2,
+    "prod_name": "Lays",
+    "prod_price": 20
+  }
+]
+```
+
 - No Lombok error encountered yet.
 
 - Adding Getters and Setters.
@@ -7581,3 +7598,29 @@ public class Product {
     }
 }
 ```
+
+- Error
+
+```
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2026-03-16T13:17:01.254+05:30 ERROR 20664 --- [Ecommerce] [  restartedMain] o.s.b.d.LoggingFailureAnalysisReporter   :
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Parameter 0 of constructor in com.example.Ecommerce.Model.Product required a bean of type 'int' that could not be found.
+
+Action:
+
+Consider defining a bean of type 'int' in your configuration.
+
+Process finished with exit code 0
+```
+
+- **_Error:_** Spring is trying to create a Product bean but cannot supply constructor values (int, String, double) because of @Component on the Product class.
+- **_Model_** classes are Plain Old Java Objects **_(POJOs)_** used to hold data, so they are not managed by the Spring Container.
+- We don't create beans of Model classes because models represent data objects that are created many times with different values, while Spring beans are single managed instances meant for application logic.
+- **_POJO_** is a simple Java class used to hold data without depending on any framework.
