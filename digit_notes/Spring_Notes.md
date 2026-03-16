@@ -7548,7 +7548,9 @@ browser -> http://localhost:8086/getproduct
 - No Lombok error encountered yet.
 
 - Adding Getters and Setters.
+- Product.java -> RightClick -> generate Getter Setter.
 - Adding Constructor.
+- Product.java -> RightClick -> generate Constructor.
 
 ```
 //Product.java
@@ -7624,3 +7626,12 @@ Process finished with exit code 0
 - **_Model_** classes are Plain Old Java Objects **_(POJOs)_** used to hold data, so they are not managed by the Spring Container.
 - We don't create beans of Model classes because models represent data objects that are created many times with different values, while Spring beans are single managed instances meant for application logic.
 - **_POJO_** is a simple Java class used to hold data without depending on any framework.
+- Now the Lombok error solves.
+
+## @Service Annotation for Service classes:
+
+```
+public class ProductService {
+
+}
+```
