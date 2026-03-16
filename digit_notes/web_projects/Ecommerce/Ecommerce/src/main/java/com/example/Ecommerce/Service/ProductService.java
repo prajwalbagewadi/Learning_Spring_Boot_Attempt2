@@ -21,7 +21,8 @@ public class ProductService {
                 new Product2("G005","GEMINI REF SUNFLOWER OIL","groceries","GEMINI REF SUNFLOWER OIL 840g-840ML Pouch",159.00,192.00,17,true,2500,4.4f,2554)
         );
         List<Product> products = Arrays.asList(
-          new Product()
+          new Product(1,"Kitkat",10.00d),
+          new Product(2,"Lays",20.00d)
         );
         return products;
     }

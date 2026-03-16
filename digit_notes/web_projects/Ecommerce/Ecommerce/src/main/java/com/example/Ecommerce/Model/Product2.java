@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 
 @Data //Will provide Lombok functionality
 @AllArgsConstructor //Creates a Lombok Constructor with all args for me.
-@Component //Converts Simple class to a Bean class
+//@Component //Converts Simple class to a Bean class
 public class Product2 {
     private String prodId;
     private String prodName;
