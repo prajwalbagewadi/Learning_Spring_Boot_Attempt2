@@ -16,8 +16,8 @@ public class ProductController {
 //        return "getproduct controller";
 //    }
 
-    @RequestMapping("/getproduct")
-    public List<Product> getProducts() {
+    @RequestMapping("/products")
+    public List<Product> showProducts() {
         return productService.getProducts();
     }
 }

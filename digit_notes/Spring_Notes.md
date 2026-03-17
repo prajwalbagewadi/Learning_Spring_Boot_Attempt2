@@ -7631,7 +7631,51 @@ Process finished with exit code 0
 ## @Service Annotation for Service classes:
 
 ```
+import com.example.Ecommerce.Model.Product;
+import org.springframework.stereotype.Service;
+import java.util.Arrays;
+import java.util.List;
+@Service
 public class ProductService {
+    public List<Product> getProducts() {
+        List<Product> products = Arrays.asList(
+            //Adding Product
+            new Product(1,"Kitkat",10.00),
+            new Product(2,"Lays",20.00),
+            new Product(3,"Cornato",40.00)
+        );
+        return products;
+    }
+}
+```
+- Adding Product - new Product(1,"Kitkat",10.00),
+- All logic is contained in the service class. And nothing is in the Controller.
 
+- Now what Controller will do to get the data from the Service?
+- Adding @RestController annotation : is used to create REST APIs in Spring Boot that return data (JSON) instead of views.
+```
+@RestController
+public class ProductController {
+    @Autowired //works bytype
+    ProductService productService //obj will be created by Spring 
+    public List<Product> showProducts() {
+        return productService.getProducts();
+    }
+}
+```
+- @Autowired annotation: is used to automatically inject dependencies (objects) managed by Spring into a class.
+- The ProductService object will be created in Spring container.
+- Because of the "@Service" -> Which works behind the scenes as "@Component".
+- And adding HTTP requests (URLs).
+- @RequestMapping is used to map HTTP requests (URLs) to specific controller methods in Spring Boot.
+```
+@RestController
+public class ProductController {
+    @Autowired //works bytype
+    ProductService productService //obj will be created by Spring 
+    @RequestMapping("/products")
+    public List<Product> showProducts() {
+        return productService.getProducts();
+    }
 }
 ```
