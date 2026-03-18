@@ -7648,34 +7648,177 @@ public class ProductService {
     }
 }
 ```
+
 - Adding Product - new Product(1,"Kitkat",10.00),
 - All logic is contained in the service class. And nothing is in the Controller.
 
 - Now what Controller will do to get the data from the Service?
 - Adding @RestController annotation : is used to create REST APIs in Spring Boot that return data (JSON) instead of views.
+
 ```
 @RestController
 public class ProductController {
     @Autowired //works bytype
-    ProductService productService //obj will be created by Spring 
+    ProductService productService //obj will be created by Spring
     public List<Product> showProducts() {
         return productService.getProducts();
     }
 }
 ```
+
 - @Autowired annotation: is used to automatically inject dependencies (objects) managed by Spring into a class.
 - The ProductService object will be created in Spring container.
 - Because of the "@Service" -> Which works behind the scenes as "@Component".
 - And adding HTTP requests (URLs).
 - @RequestMapping is used to map HTTP requests (URLs) to specific controller methods in Spring Boot.
+
 ```
 @RestController
 public class ProductController {
     @Autowired //works bytype
-    ProductService productService //obj will be created by Spring 
+    ProductService productService //obj will be created by Spring
     @RequestMapping("/products")
     public List<Product> showProducts() {
         return productService.getProducts();
     }
 }
 ```
+
+- Running app: Browser and Postman.
+
+```
+//ProductController.java
+package com.example.Ecommerce.Controller;
+
+import java.util.List;
+import com.example.Ecommerce.Model.Product;
+import com.example.Ecommerce.Service.ProductService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class ProductController {
+    @Autowired
+    private ProductService productService;
+//    @RequestMapping("/getproduct")
+//    public String getProducts() {
+//        return "getproduct controller";
+//    }
+
+    @RequestMapping("/products")
+    public List<Product> showProducts() {
+        return productService.getProducts();
+    }
+}
+```
+
+```
+//output:
+browser -> http://localhost:8086/products
+[
+  {
+    "prod_id": 1,
+    "prod_name": "Kitkat",
+    "prod_price": 10
+  },
+  {
+    "prod_id": 2,
+    "prod_name": "Lays",
+    "prod_price": 20
+  }
+]
+```
+
+```
+//output:
+postman -> Get -> http://localhost:8086/products -> send
+[
+    {
+        "prod_id": 1,
+        "prod_name": "Kitkat",
+        "prod_price": 10.0
+    },
+    {
+        "prod_id": 2,
+        "prod_name": "Lays",
+        "prod_price": 20.0
+    }
+]
+```
+
+## Adding default Constructor:
+
+- Adding a default constructor to Model Product.java
+
+```
+public class Product {
+    private int prod_id; //prodId
+    private String prod_name; //prodName
+    private double prod_price; //prodPrice
+
+    public Product() {} //Default constructor
+
+    public Product(int pid, String pname, double pprice) {
+        //parameterized constructor
+        this.prod_id = pid;
+        this.prod_name = pname;
+        this.prod_price = pprice;
+    }
+}
+```
+
+```
+//Product.java
+package com.example.Ecommerce.Model;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import org.springframework.stereotype.Component;
+
+//@Data //Will provide Lombok functionality
+//@AllArgsConstructor //Creates a Lombok Constructor with all args for me.
+//@Component //Converts the Simple class to Bean class.
+public class Product {
+    private int prod_id;
+    private String prod_name;
+    private double prod_price;
+
+    public Product(int prod_id, String prod_name, double prod_price) {
+        this.prod_id = prod_id;
+        this.prod_name = prod_name;
+        this.prod_price = prod_price;
+    }
+
+
+    public int getProd_id() {
+        return prod_id;
+    }
+
+    public void setProd_id(int prod_id) {
+        this.prod_id = prod_id;
+    }
+
+    public String getProd_name() {
+        return prod_name;
+    }
+
+    public void setProd_name(String prod_name) {
+        this.prod_name = prod_name;
+    }
+
+    public double getProd_price() {
+        return prod_price;
+    }
+
+    public void setProd_price(double prod_price) {
+        this.prod_price = prod_price;
+    }
+}
+```
+
+## Fetching Single Product:
+
+- Basically now we are fetching (all) from server.
+- But what if you want to fetch one particular product.
+- Or what if you want to add new product in the list.
