@@ -7822,3 +7822,36 @@ public class Product {
 - Basically now we are fetching (all) from server.
 - But what if you want to fetch one particular product.
 - Or what if you want to add new product in the list.
+
+## Postman testing:
+
+- Rest API -> And work with data.
+
+![Diagram:POSTMANDIAGSERVER.jpg](./POSTMANDIAGSERVER.jpg)
+
+- Sending data from client to the server and receiving data from the server to the client.
+- What we are doing here is we are sending data from server to client.
+- But we do certian other things as well.
+- We send data from client to server -> To store something in DB.
+- Basically we are fetching data from the server or Storing it on the server. (send or store)
+- Next what if you want to update or delete certian things.
+- Eg: If i want to delete prod 103. -> Or may be i want update the price of prod 103.
+- These things you can do with Sometype of Request (special request).
+- Now RestApi uses a protocol called 'HTTP'.
+- And it has certian methods to work with.
+- So basically your 'RESTAPI' -> 'HTTP' -> Uses http protocol -> Which has certian methods to work with.
+
+## CRUD Operations using HTTP Methods.
+
+- 'Get' - Method to fetch something.
+- 'Post' - Method to store something on the server.
+- 'Put' - Method to update something on the server.
+- 'Delete' - Method to remove something from the server.
+- We have other methods as well but these are most normally used methods.
+
+- We use 'CRUD' short for Create Read Update Delete.
+- Create -> with 'POST'.
+- Read -> with 'GET'.
+- Update -> with 'PUT'.
+- Delete -> with 'DELETE'.
+- Methods.
