@@ -7855,3 +7855,27 @@ public class Product {
 - Update -> with 'PUT'.
 - Delete -> with 'DELETE'.
 - Methods.
+
+- Rest uses HTTP and we are going to use this by default when you pass the 'URL' in the browser.
+- It sends the 'GET' request. (we have done)
+- By default, @RequestMapping("/") can handle GET requests.
+
+- But what about -> 'POST', 'PUT', 'Delete'.
+- Now this is not something you can do in your browser.
+- You cannot simply use the browser address bar to change the methods.
+
+- Now this is where we have to use certian 'API Tools' to do that ->
+- Not one tool -> we have multiple tools.
+
+- One of the tools is 'Postman'. If you know one tool it is easy to explore others as well.
+
+- How exactly we are going to hit the 'URL'(In Postman).
+- In address bar.
+- GET -> http://localhost:8086/products
+- Click on -> Send.
+- You can see other methods apart from 'GET' method. If you expand the options by clicking on 'GET'.
+- When you click on send.
+- It will send the request and you will get the response.
+
+- Eg: GET -> http://localhost:8086/products -> send.
+- It will send the request and you will get the response back.
