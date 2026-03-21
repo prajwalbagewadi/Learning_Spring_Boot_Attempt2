@@ -7879,3 +7879,25 @@ public class Product {
 
 - Eg: GET -> http://localhost:8086/products -> send.
 - It will send the request and you will get the response back.
+
+- Apart from response you also will get a status code "200 OK".
+- There are different status codes.
+- HTTP Status code series:
+- 100 - Informational:
+- Request recieved, continuing process.
+- Eg: 100 Continue
+- 200 - Success:
+- Request successfully processed.
+- Eg: 200 OK, 201 Created
+- 300 - Redirection:
+- Further action needed, redirected.
+- Eg: 301 Moved Permanently, 302 Found
+- 400 - Client Error:
+- Error from client side.
+- Eg: 400 Bad Request, 404 Not Found
+- 500 - Server Error:
+- Error from server side.
+- Eg: 500 Internal Server Error, 503 Service Unavailable
+- There are different status code options available in the service of 100, 200, 300, 400, 500.
+- If you have seen one of the most famous code. Which you will get is "404" -> For resource not found.
+- So that is a part of -> This status code it comes under 400 series. (This status code belongs to the 400 (client error) series).
