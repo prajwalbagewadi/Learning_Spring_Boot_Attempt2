@@ -7954,3 +7954,10 @@ Connection          |    keep-alive
 http://localhost:8086/products/prod_id
 http://localhost:8086/products/102
 ```
+
+- Say you want the product with the Id 102.
+- Can we do that -> We simply say /102.
+- This is simply how you also build your RESTAPIs.
+- /products -> URL for all products.
+- /prod_id -> The id of the product which you want to fetch '102'.
+- And when you say send -> It should only fetch one record.
