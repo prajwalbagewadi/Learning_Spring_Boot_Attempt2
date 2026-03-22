@@ -7961,3 +7961,27 @@ http://localhost:8086/products/102
 - /products -> URL for all products.
 - /prod_id -> The id of the product which you want to fetch '102'.
 - And when you say send -> It should only fetch one record.
+
+- GET - http://localhost:8086/products/102 -> Send
+- Error:
+
+```
+ "timestamp": "2026-03-22T10:55:48.958Z",
+    "status": 404,
+    "error": "Not Found",
+    "trace": "org.springframework.web.servlet.resource.NoResourceFoundException: No static resource products/102 for request '/products/102'.
+```
+
+- How do we solve this -> I want to return one product (data).
+- I want to hit this url '/products/102'
+
+- Now to achive that we have to create one more method.
+
+```
+public class ProductController {
+
+}
+```
+
+- To accept this '/products/id' URL.
+- RequestMapping("/products") -> Will accept and respond only to '/products' and not the '/products/102'
