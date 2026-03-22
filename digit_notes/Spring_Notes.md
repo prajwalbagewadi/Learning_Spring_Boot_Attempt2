@@ -7985,3 +7985,7 @@ public class ProductController {
 
 - To accept this '/products/id' URL.
 - RequestMapping("/products") -> Will accept and respond only to '/products' and not the '/products/102'
+
+- This time we are not going to return the list of products.
+- We are going to return only one product.
+- Because we are accessing the unique field -> Which is product_id.
