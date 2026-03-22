@@ -7901,3 +7901,56 @@ public class Product {
 - There are different status code options available in the service of 100, 200, 300, 400, 500.
 - If you have seen one of the most famous code. Which you will get is "404" -> For resource not found.
 - So that is a part of -> This status code it comes under 400 series. (This status code belongs to the 400 (client error) series).
+
+- If something is wrong with the web resources -> It will send you status code of 400 series.
+- If something is wrong with the server -> It will go for 500 series.
+- If everything is going well it will go into 200 series.
+
+- And we have a response time. Which is 20 milliseconds.
+- And we have the size of data. Which we are getting back '321 B' -Bytes.
+- And this is your data:
+
+```
+//data
+[
+    {
+        "prod_id": 1,
+        "prod_name": "Kitkat",
+        "prod_price": 10.0
+    },
+    {
+        "prod_id": 2,
+        "prod_name": "Lays",
+        "prod_price": 20.0
+    }
+]
+```
+
+- Apart from body.
+- You will also recieve Headers from the server.
+- This is the header:
+
+```
+Key                 |   Value
+---------------------------------------------------------
+Content-Type        |    application/json
+Transfer-Encoding   |    chunked
+Date                |    Sun, 22 Mar 2026 08:30:29 GMT
+Keep-Alive          |    timeout=60
+Connection          |    keep-alive
+```
+
+- Content-Type (type of data) -> JSON -> You are getting.
+- That means you can also ask for 'XML' data if you want.
+- But by default it is JSON (Data format).
+- You can the Body data format by clicking on. JSON -> Dropdown -> textformat or other formats.
+
+- This is what we have done to get the data.
+- But what about. If you want to lets say -> Get one product, and not all. -> One.
+- Some thing like this ->
+
+```
+//Eg:
+http://localhost:8086/products/prod_id
+http://localhost:8086/products/102
+```
