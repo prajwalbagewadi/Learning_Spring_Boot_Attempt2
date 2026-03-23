@@ -26,4 +26,7 @@ public class ProductService {
         );
         return products;
     }
+
+    public Product getProductById(int prodId) {
+    }
 }

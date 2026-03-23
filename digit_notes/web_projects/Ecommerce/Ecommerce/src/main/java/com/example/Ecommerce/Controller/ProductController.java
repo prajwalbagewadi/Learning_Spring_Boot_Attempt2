@@ -20,4 +20,8 @@ public class ProductController {
     public List<Product> showProducts() {
         return productService.getProducts();
     }
+
+    public Product getProductById(int prodId) {
+        return productService.getProductById(prodId);
+    }
 }
