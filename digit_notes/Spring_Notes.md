@@ -8084,4 +8084,45 @@ public class ProductService {
 - This method will do the actual work.
 - Now how do you get your data.
 - Which is in the list (ArrayList)
-- Answer is (JavaSteamAPI).
+- Answer is (JavaStreamAPI).
+
+//Confusion need to work:
+
+## JavaStreamAPI
+
+- Java Stream API is a Java 8 feature that allows processing of collections and arrays in a functional and declarative way using a pipeline of operations (Source, intermediate, and terminal).
+- Stream API is a way to process data from collections (List, Set, etc.) in a clean functional style.
+- Instead of writing loops, you describle what you want, not how to do it.
+- Stream: A Stream is a sequence of elements used to perform operations on data from collections.
+- **_Old way (imperative style)_**
+
+```
+//Example
+for(User user: users) {
+    if(user.isActive()) {
+        System.out.println(user.getName());
+    }
+}
+```
+
+- You control how it runs (Loop, Condition, etc).
+- **_Stream way (declarative style)_**
+
+```
+//Example
+users.stream()
+    .filter(User::isActive)
+    .forEach(u -> System.out.println(u.getName()));
+```
+
+- You just say:
+- Filter active users.
+- Print them.
+- '.filter(User::isActive)
+- isActive() is a method with no parameter and boolean return type
+- filter() needs a function that returns boolean.
+- User::isActive means it is a method reference (short form of lambda)
+- Equivalent lambda filter(user -> user.isActive()).
+- Why are we not using () parenthesis in User::isActive?
+- Because we are passing the method, not calling it immediately.
+- Java will automatically call it for each element in the stream.
