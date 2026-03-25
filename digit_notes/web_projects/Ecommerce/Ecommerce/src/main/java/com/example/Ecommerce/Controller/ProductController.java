@@ -4,6 +4,7 @@ import java.util.List;
 import com.example.Ecommerce.Model.Product;
 import com.example.Ecommerce.Service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,7 +22,8 @@ public class ProductController {
         return productService.getProducts();
     }
 
-    public Product getProductById(int prodId) {
+    @RequestMapping("/products/{prodId}")
+    public Product getProductById(@PathVariable int prodId) {
         return productService.getProductById(prodId);
     }
 }

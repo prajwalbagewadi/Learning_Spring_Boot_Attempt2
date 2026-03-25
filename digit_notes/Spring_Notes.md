@@ -8008,8 +8008,8 @@ public Product getProductById(int prodId) {
 }
 ```
 
-- Unforunately we dont have this method in the service layer.
-- We need to click on the error and create the method.
+- Unforunately we dont have this method (getProductById()) in the service layer.
+- We need to click on the error code line and create the method.
 
 ```
 //ProductController.java
@@ -8037,7 +8037,7 @@ public class ProductController {
     }
 
     public Product getProductById(int prodId) {
-        return productService.getProductById(prodId);
+        return productService.getProductById(prodId); //Click to create method.
     }
 }
 ```
@@ -8075,6 +8075,7 @@ public class ProductService {
         return products;
     }
 
+    //We got the method here.
     public Product getProductById(int prodId) {
     }
 }
@@ -8126,3 +8127,161 @@ users.stream()
 - Why are we not using () parenthesis in User::isActive?
 - Because we are passing the method, not calling it immediately.
 - Java will automatically call it for each element in the stream.
+
+## Java Stream API Notes:
+
+## ProductService.java class:
+
+```
+//ProductService.java
+package com.example.Ecommerce.Service;
+
+import com.example.Ecommerce.Model.Product2;
+import com.example.Ecommerce.Model.Product;
+import org.springframework.stereotype.Service;
+
+import java.util.Arrays;
+import java.util.List;
+
+@Service //Converts simple java class to a Service layer class
+public class ProductService {
+    //Contains the logic for returning Data to ProductController.
+
+    public List<Product> getProducts() {
+        //List of Products
+        List<Product2> products2 =  Arrays.asList(
+                new Product2("G006","Kissan Mixed Fruit Jam","groceries","Kissan Mixed Fruit Jam , With Real Fruit Ingredients, 200 g",67.00,80.00,16,true,1500,4.4f,4193),
+                new Product2("G001","Daawat Biryani Basmati Rice","groceries","Daawat Biryani Basmati Rice, 5 Kg| World s Longest Rice Grain expands 24mm* | Tasty, Non-sticky & Rich Aroma |Naturally Aged",989.00,1245.00,21,true,800,4.0f,2452),
+                new Product2("G003","ABHI EGGS","groceries","ABHI EGGS Gold+ Brown Eggs Box (Pack of 6)",105.00,115.00,9,true,200,4.1f,586),
+                new Product2("G004","Fortune Sugar","groceries","Fortune Sugar, 1 kg",58.00,75.00,23,true,3000,4.5f,6005),
+                new Product2("G005","GEMINI REF SUNFLOWER OIL","groceries","GEMINI REF SUNFLOWER OIL 840g-840ML Pouch",159.00,192.00,17,true,2500,4.4f,2554)
+        );
+        List<Product> products = Arrays.asList(
+          new Product(1,"Kitkat",10.00d),
+          new Product(2,"Lays",20.00d)
+        );
+        return products;
+    }
+
+
+    public Product getProductById(int prodId) {
+        // It has to do the actual work.
+        // Now how do you get your data (Product).
+        // Which is in the List (ArrayList).
+        // Java Stream API (Have to work on notes).
+        // return products.
+        // stream() -> filters the products
+        // based on the condition -> p.getProdId == prodId
+        return products.stream()
+                    .filter(p -> p.getProdId == prodId)
+                    .findFirst()
+                    .get();
+        // Or you can use a normal For loop
+    }
+}
+```
+
+- **_Code:_**
+
+```
+//ProductService.java
+package com.example.Ecommerce.Service;
+
+import com.example.Ecommerce.Model.Product2;
+import com.example.Ecommerce.Model.Product;
+import org.springframework.stereotype.Service;
+
+import java.util.Arrays;
+import java.util.List;
+
+@Service //Converts simple java class to a Service layer class
+public class ProductService {
+    //Contains the logic for returning Data to ProductController.
+
+    //List of Products
+     private List<Product2> products2 =  Arrays.asList(
+            new Product2("G006","Kissan Mixed Fruit Jam","groceries","Kissan Mixed Fruit Jam , With Real Fruit Ingredients, 200 g",67.00,80.00,16,true,1500,4.4f,4193),
+            new Product2("G001","Daawat Biryani Basmati Rice","groceries","Daawat Biryani Basmati Rice, 5 Kg| World s Longest Rice Grain expands 24mm* | Tasty, Non-sticky & Rich Aroma |Naturally Aged",989.00,1245.00,21,true,800,4.0f,2452),
+            new Product2("G003","ABHI EGGS","groceries","ABHI EGGS Gold+ Brown Eggs Box (Pack of 6)",105.00,115.00,9,true,200,4.1f,586),
+            new Product2("G004","Fortune Sugar","groceries","Fortune Sugar, 1 kg",58.00,75.00,23,true,3000,4.5f,6005),
+            new Product2("G005","GEMINI REF SUNFLOWER OIL","groceries","GEMINI REF SUNFLOWER OIL 840g-840ML Pouch",159.00,192.00,17,true,2500,4.4f,2554)
+    );
+    private List<Product> products = Arrays.asList(
+            new Product(1,"Kitkat",10.00d),
+            new Product(2,"Lays",20.00d)
+    );
+
+    public List<Product> getProducts() {
+        return products;
+    }
+
+    public Product getProductById(int prodId) {
+        // JavaStreamAPI
+        return products.stream()
+                .filter(p -> p.getProd_id() == prodId)
+                .findFirst()
+                .get();
+        // Or you can use a normal For loop.
+    }
+}
+```
+
+```
+//ProductController.java
+package com.example.Ecommerce.Controller;
+
+import java.util.List;
+import com.example.Ecommerce.Model.Product;
+import com.example.Ecommerce.Service.ProductService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class ProductController {
+    @Autowired
+    private ProductService productService;
+//    @RequestMapping("/getproduct")
+//    public String getProducts() {
+//        return "getproduct controller";
+//    }
+
+    @RequestMapping("/products")
+    public List<Product> showProducts() {
+        return productService.getProducts();
+    }
+
+    @RequestMapping("/products/{prodId}")
+    public Product getProductById(@PathVariable int prodId) {
+        return productService.getProductById(prodId);
+    }
+}
+```
+
+- **_/products/{prodId}_**:
+- {prodId} -> Dynamic value from the URL.
+- **_@PathVariable_**:
+- @PathVariable is used to extract values from the URL path and bind them to method parameters in Spring Boot.
+- @PathVariable -> Extracts value form URL into method parameter.
+- Best practice is to use @GetMapping.
+
+```
+//output:
+- browser -> http://localhost:8086/products/1
+{
+  "prod_id": 1,
+  "prod_name": "Kitkat",
+  "prod_price": 10
+}
+
+- Postman -> GET -> http://localhost:8086/products/1 -> Send
+{
+    "prod_id": 1,
+    "prod_name": "Kitkat",
+    "prod_price": 10.0
+}
+200 OK
+13 ms
+216 B
+```
