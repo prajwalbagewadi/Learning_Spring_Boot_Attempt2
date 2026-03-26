@@ -8285,3 +8285,36 @@ public class ProductController {
 13 ms
 216 B
 ```
+
+## Stream Syntax
+
+```
+public Product getProductById(int prodId) {
+    // JavaStreamAPI
+    return products.stream()
+        .filter(p -> p.getProd_id() == prodId)
+        .findFirst()
+        .get();
+    // Or you can use a normal For loop.
+}
+```
+
+- products -> object for list of items.
+- filter() -> filter the products(list).
+- p -> p is variable representing each element in the stream.
+- filter(p -> p.getProd_id() == prodId) -> filter evaluates the condition for each element in the list and filter the products based on the result.
+- findFirst() -> returns the firsy matching element in the stream that matches the condition and stops further processing of the stream.
+- get() -> is used to extract the values from an Optional.
+- **_Optional:_**
+- Why get() extracts Optional ?
+- findFirst() does Not return object directly. It returns Optional<Product>.
+- Optional is container (box) that may or may not contain a value.
+- Value present -> box has something. ✅
+- Value not present -> empty box. ❌
+- Why Optional -> To avoid : NullPointerException.
+- Example:
+
+```
+Optional<String> name = Optional.of("Prajwal");
+Optional<String> empty = Optional.empty();
+```
