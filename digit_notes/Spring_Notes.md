@@ -8318,3 +8318,40 @@ public Product getProductById(int prodId) {
 Optional<String> name = Optional.of("Prajwal");
 Optional<String> empty = Optional.empty();
 ```
+
+- Because Stream has no idea -> We have unique Product Id.
+- Stream says, i will filter this but there might be chance that you get multiple occurences.
+- So 'findFirst()' -> returns the first occurence.
+
+- For Stream video in description.
+
+## Back to Controller:
+
+- In the controller. We are asking the service to get us the Product.
+- Run -> localhost:8090/products/103 (browser) -> error 404 (Not Found).
+
+- What is missing here?
+- We are missing the @RequestMapping("").
+
+- **_ProductController:_**
+
+```
+@RequestMapping("/products/103")
+```
+
+- We are passing the hard coded product Id (103).
+- We are not going search 103 always.
+- We may search for 102 or 110 etc. Next.
+- We dont want it to be static.
+- We want this to be dynamic.
+
+```
+@RequestMapping("/products/{prodId}")
+```
+
+- {prodId} -> variable name.
+- /products/{prodId} -> helps us to insert dynamic values in the URL.
+- What Spring will do is. Whatever is comming in the browser.
+- Which is /products/103. (103)
+- It will store this 103 -> in {prodId} -> in /products/{prodId}. It will map it.
+- And that will be later mapped to -> public Product getProductById(int prodId) {}.
