@@ -8335,6 +8335,10 @@ Optional<String> empty = Optional.empty();
 
 - **_ProductController:_**
 
+## RequestMapping("/url"):
+
+- @RequestMapping is used to map HTTP requests (URL) to a method in a Spring Boot Controller.
+
 ```
 @RequestMapping("/products/103")
 ```
@@ -8349,9 +8353,115 @@ Optional<String> empty = Optional.empty();
 @RequestMapping("/products/{prodId}")
 ```
 
+## {prodId}
+
 - {prodId} -> variable name.
 - /products/{prodId} -> helps us to insert dynamic values in the URL.
 - What Spring will do is. Whatever is comming in the browser.
 - Which is /products/103. (103)
 - It will store this 103 -> in {prodId} -> in /products/{prodId}. It will map it.
 - And that will be later mapped to -> public Product getProductById(int prodId) {}.
+
+## @PathVariable
+
+- @PathVariable is used to extract values from the URL path and bind them to method parameters.
+
+- We have to use (@PathVariable int ProdId) beacause we have to match URL {prodId} to method argument prodId.
+
+- Run app:
+
+```
+//ProductService:
+package com.example.Ecommerce.Service;
+
+import com.example.Ecommerce.Model.Product2;
+import com.example.Ecommerce.Model.Product;
+import org.springframework.stereotype.Service;
+
+import java.util.Arrays;
+import java.util.List;
+
+@Service //Converts simple java class to a Service layer class
+public class ProductService {
+    //Contains the logic for returning Data to ProductController.
+
+    //List of Products
+     private List<Product2> products2 =  Arrays.asList(
+            new Product2("G006","Kissan Mixed Fruit Jam","groceries","Kissan Mixed Fruit Jam , With Real Fruit Ingredients, 200 g",67.00,80.00,16,true,1500,4.4f,4193),
+            new Product2("G001","Daawat Biryani Basmati Rice","groceries","Daawat Biryani Basmati Rice, 5 Kg| World s Longest Rice Grain expands 24mm* | Tasty, Non-sticky & Rich Aroma |Naturally Aged",989.00,1245.00,21,true,800,4.0f,2452),
+            new Product2("G003","ABHI EGGS","groceries","ABHI EGGS Gold+ Brown Eggs Box (Pack of 6)",105.00,115.00,9,true,200,4.1f,586),
+            new Product2("G004","Fortune Sugar","groceries","Fortune Sugar, 1 kg",58.00,75.00,23,true,3000,4.5f,6005),
+            new Product2("G005","GEMINI REF SUNFLOWER OIL","groceries","GEMINI REF SUNFLOWER OIL 840g-840ML Pouch",159.00,192.00,17,true,2500,4.4f,2554)
+    );
+    private List<Product> products = Arrays.asList(
+            new Product(1,"Kitkat",10.00d),
+            new Product(2,"Lays",20.00d)
+    );
+
+    public List<Product> getProducts() {
+        return products;
+    }
+
+    public Product getProductById(int prodId) {
+        // JavaStreamAPI
+        return products.stream()
+                .filter(p -> p.getProd_id() == prodId)
+                .findFirst()
+                .get();
+        // Or you can use a normal For loop.
+    }
+}
+```
+
+```
+//ProductController:
+package com.example.Ecommerce.Controller;
+
+import java.util.List;
+import com.example.Ecommerce.Model.Product;
+import com.example.Ecommerce.Service.ProductService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class ProductController {
+    @Autowired
+    private ProductService productService;
+//    @RequestMapping("/getproduct")
+//    public String getProducts() {
+//        return "getproduct controller";
+//    }
+
+    @RequestMapping("/products")
+    public List<Product> showProducts() {
+        return productService.getProducts();
+    }
+
+    //Inserting dynamic values in URL
+    @RequestMapping("/products/{prodId}")
+    //Extract values from the URL and Bind them to method argument.
+    public Product getProductById(@PathVariable int prodId) {
+        return productService.getProductById(prodId);
+    }
+}
+```
+
+```
+//output:
+Postman
+GET -> http://localhost:8086/products/1 -> Send
+{
+    "prod_id": 1,
+    "prod_name": "Kitkat",
+    "prod_price": 10.0
+}
+
+GET -> http://localhost:8086/products/2 -> Send
+{
+    "prod_id": 2,
+    "prod_name": "Lays",
+    "prod_price": 20.0
+}
+```
