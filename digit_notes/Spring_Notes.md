@@ -8130,6 +8130,8 @@ users.stream()
 
 ## Java Stream API Notes:
 
+## Fetching A Single Product From the List:
+
 ## ProductService.java class:
 
 ```
@@ -8464,4 +8466,124 @@ GET -> http://localhost:8086/products/2 -> Send
     "prod_name": "Lays",
     "prod_price": 20.0
 }
+
+//Error
+GET -> http://localhost:8086/products/3 -> Send
+{
+    "timestamp": "2026-03-28T16:01:57.320Z",
+    "status": 500,
+    "error": "Internal Server Error",
+    "trace": "java.util.NoSuchElementException: No value
 ```
+
+## ProductService.java
+
+- Business logic.
+
+```
+public Product getProductById(int prodId) {
+    return products.stream()
+        .filter(p -> p.getProdId() == prodId)
+        .findFirst()
+        .orElse(new Product(101, "noItem", 0)); //Dummy Product
+}
+```
+
+- What will do is if id is not found eg '3' -> is not there in list -> we will return with 'noItem'.
+
+```
+//ProductService.java
+package com.example.Ecommerce.Service;
+
+import com.example.Ecommerce.Model.Product2;
+import com.example.Ecommerce.Model.Product;
+import org.springframework.stereotype.Service;
+
+import java.util.Arrays;
+import java.util.List;
+
+@Service //Converts simple java class to a Service layer class
+public class ProductService {
+    //Contains the logic for returning Data to ProductController.
+
+    //List of Products
+     private List<Product2> products2 =  Arrays.asList(
+            new Product2("G006","Kissan Mixed Fruit Jam","groceries","Kissan Mixed Fruit Jam , With Real Fruit Ingredients, 200 g",67.00,80.00,16,true,1500,4.4f,4193),
+            new Product2("G001","Daawat Biryani Basmati Rice","groceries","Daawat Biryani Basmati Rice, 5 Kg| World s Longest Rice Grain expands 24mm* | Tasty, Non-sticky & Rich Aroma |Naturally Aged",989.00,1245.00,21,true,800,4.0f,2452),
+            new Product2("G003","ABHI EGGS","groceries","ABHI EGGS Gold+ Brown Eggs Box (Pack of 6)",105.00,115.00,9,true,200,4.1f,586),
+            new Product2("G004","Fortune Sugar","groceries","Fortune Sugar, 1 kg",58.00,75.00,23,true,3000,4.5f,6005),
+            new Product2("G005","GEMINI REF SUNFLOWER OIL","groceries","GEMINI REF SUNFLOWER OIL 840g-840ML Pouch",159.00,192.00,17,true,2500,4.4f,2554)
+    );
+    private List<Product> products = Arrays.asList(
+            new Product(1,"Kitkat",10.00d),
+            new Product(2,"Lays",20.00d)
+    );
+
+    public List<Product> getProducts() {
+        return products;
+    }
+
+    public Product getProductById(int prodId) {
+        // JavaStreamAPI
+//        return products.stream()
+//                .filter(p -> p.getProd_id() == prodId)
+//                .findFirst()
+//                .get();
+        return products.stream()
+                .filter(p -> p.getProd_id() == prodId)
+                .findFirst()
+                .orElse(new Product(0, "noItem",0));
+        // Or you can use a normal For loop.
+    }
+}
+```
+
+```
+//ProductController.java
+package com.example.Ecommerce.Controller;
+
+import java.util.List;
+import com.example.Ecommerce.Model.Product;
+import com.example.Ecommerce.Service.ProductService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class ProductController {
+    @Autowired
+    private ProductService productService;
+//    @RequestMapping("/getproduct")
+//    public String getProducts() {
+//        return "getproduct controller";
+//    }
+
+    @RequestMapping("/products")
+    public List<Product> showProducts() {
+        return productService.getProducts();
+    }
+
+    @RequestMapping("/products/{prodId}")
+    public Product getProductById(@PathVariable int prodId) {
+        return productService.getProductById(prodId);
+    }
+}
+```
+
+```
+//output
+Postman
+GET -> http://localhost:8086/products/3 -> Send
+{
+    "prod_id": 0,
+    "prod_name": "noItem",
+    "prod_price": 0.0
+}
+```
+
+- Now we are fetching the data/prodId.
+
+## Creating a product and adding it to the list:
+
+- Next we want to send the data and Store that in this List<Product> products

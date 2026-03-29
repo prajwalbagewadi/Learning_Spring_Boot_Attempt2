@@ -30,10 +30,14 @@ public class ProductService {
 
     public Product getProductById(int prodId) {
         // JavaStreamAPI
+//        return products.stream()
+//                .filter(p -> p.getProd_id() == prodId)
+//                .findFirst()
+//                .get();
         return products.stream()
                 .filter(p -> p.getProd_id() == prodId)
                 .findFirst()
-                .get();
+                .orElse(new Product(0, "noItem",0));
         // Or you can use a normal For loop.
     }
 }
