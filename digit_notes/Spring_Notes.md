@@ -8587,3 +8587,29 @@ GET -> http://localhost:8086/products/3 -> Send
 ## Creating a product and adding it to the list:
 
 - Next we want to send the data and Store that in this List<Product> products
+
+## ProductService.java
+
+```
+public void addProduct(Product prod) {
+    products.add(prod);
+}
+```
+
+## ProductController.java
+
+```
+public void add(Product prod) {
+
+}
+```
+
+- On the client side you will be sending JSON.
+- As it reaches the server side. It will be automatically getting converted to object format.
+- Infact.
+- Even while sending List of Products or a single product from the server side. We are sending the object format.
+- And what you are receiving at the client side is JSON.
+- Who is doing that. Someone is converting the data from Java Object -> Json and from Json -> Java Object.
+- And for that you have got a library.
+- When you add Spring web (dependency).
+- You by default get one library 'Jackson'.
