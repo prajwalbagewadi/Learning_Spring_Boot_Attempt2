@@ -8614,4 +8614,11 @@ public void add(Product prod) {
 - When you add Spring web (dependency).
 - You by default get one library 'Jackson'.
 
-## 
+## Jackson
+
+- Jackson is a Java library used to:
+- Convert Java object -> Json (Serialization)
+- Convert Json -> Java object (Deserialization)
+- Spring boot uses Jackson by default behind the scenes.
+
+- \*\*
