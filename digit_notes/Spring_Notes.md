@@ -8621,4 +8621,74 @@ public void add(Product prod) {
 - Convert Json -> Java object (Deserialization)
 - Spring boot uses Jackson by default behind the scenes.
 
-- \*\*
+- **_How It Works:_**
+- **_Json -> Java Object (Deserialization)_**
+- When you send this request:
+
+```
+//Json
+{
+    "id":1,
+    "name":"Lays",
+    "price":10
+}
+```
+
+- Jackson automatically converts it into
+
+```
+Product product;
+```
+
+- Because of:
+
+```
+@PostMapping("/products/addProduct")
+public String addProduct(@RequestBody Product product) {
+    return service.addProduct(product);
+}
+```
+
+- **_Java Object -> Json (Serialization):_**
+- If you return a Product:
+
+```
+@RequestMapping("/products/{id}")
+public Product getProduct(@PathVariable int id) {
+    return service.getProduct(id);
+}
+```
+
+- Jackson converts it into:
+
+```
+{
+    "id":1,
+    "name":"Lays",
+    "price":10
+}
+```
+
+- **_Important Rules:_**
+- Getters and Setters are required.
+- Jackson uses them:
+
+```
+public int getId() { return id; }
+public void setId(int id) { this.id = id; }
+```
+
+- Default Construct required.
+
+```
+public Product() {}
+```
+
+- Without this -> Deserialization fails.
+
+- Field names must match Json keys
+
+```
+"id" -> id
+"name" -> name
+```
