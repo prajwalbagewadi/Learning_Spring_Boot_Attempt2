@@ -8692,3 +8692,36 @@ public Product() {}
 "id" -> id
 "name" -> name
 ```
+
+- **_Code:_**
+
+```
+//Controller
+public void addProduct(Product prod) {
+    service.addProduct(prod);
+}
+```
+
+- If you observe we are not doing anything in the Controller.
+- Controller's job is to accept the request.
+- If you want to do certian things. We ask Service to do that.
+- you don't do it in the Controller.
+
+- We have to do the Mapping as well for 'Adding the Product'.
+
+```
+@RequestMapping("/products")
+```
+
+- **_Problem:_**
+- But here is the problem if you see.
+
+```
+@RequestMapping("/products")
+```
+
+```
+public List<Product> getProducts() {}
+```
+
+- Looks same as.
