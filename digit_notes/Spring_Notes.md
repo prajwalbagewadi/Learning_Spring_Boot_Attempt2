@@ -8725,3 +8725,19 @@ public List<Product> getProducts() {}
 ```
 
 - Looks same as.
+
+```
+@RequestMapping("/products")
+public void addProduct(Product prod) {}
+```
+
+- That means for 2 different methods. We are using the same URL -> Will it work ?
+- It will not work. As Spring will get confused.
+- And that's where we can use the different methods -> GET, POST, PUT, DELETE.
+- Remember POST, GET methods.
+- Every method we have used till now.
+
+```
+@RequestMapping("/products")
+@RequestMapping("/products/{prod_id}")
+```
