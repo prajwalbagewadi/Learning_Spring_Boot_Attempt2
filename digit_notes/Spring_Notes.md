@@ -8732,12 +8732,28 @@ public void addProduct(Product prod) {}
 ```
 
 - That means for 2 different methods. We are using the same URL -> Will it work ?
-- It will not work. As Spring will get confused.
+- It will not work. As Spring will get confused seeing the same URL.
 - And that's where we can use the different methods -> GET, POST, PUT, DELETE.
 - Remember POST, GET methods.
+- But we have not used those methods.
 - Every method we have used till now.
 
 ```
 @RequestMapping("/products")
 @RequestMapping("/products/{prod_id}")
 ```
+
+- @RequestMapping("/") is a GET request. We have not mentioned it (GET).
+- Why it worked as GET (even without mentioning)?
+
+```
+@RequestMapping("/products")
+@RequestMapping("/products/{prod_id}")
+```
+
+- These worked as GET requests by default in your case because:
+- When you open the request in browser / hit URL directly.
+- Browser sends it as a GET request automatically.
+- So Spring handles it as GET request.
+- @RequestMapping itself is not GET method.
+- @RequestMapping supports All HTTP Methods (GET, POST, PUT, DELETE) by default.
