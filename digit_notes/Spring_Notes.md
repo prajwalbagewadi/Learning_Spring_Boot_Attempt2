@@ -8757,3 +8757,35 @@ public void addProduct(Product prod) {}
 - So Spring handles it as GET request.
 - @RequestMapping itself is not GET method.
 - @RequestMapping supports All HTTP Methods (GET, POST, PUT, DELETE) by default.
+- Its because by default in the case '@RequestMapping("/products")' is acting as HTTP GET method/request.
+
+- If you want to use something else (some other method). We have to metion that.
+
+```
+@RequestMapping("/products", mention the method type)
+```
+
+- By default, '@RequestMapping' supports all HTTP methods, but if you want to restrict it (GET, POST, PUT, DELETE) you must specify the method attribute.
+
+- Syntax for all HTTP methods using @RequestMapping
+
+1. GET (Fetch data):
+
+```
+@RequestMapping(value = "/products", method = RequestMethod.GET)
+public List<Product> getProducts() {
+    return productService.getAllProducts();
+}
+```
+
+2. POST (Create data):
+
+```
+@RequestMapping(value = "/addProduct", method = RequestMethod.POST)
+public String addProduct(@RequestBody Product product) {
+    productService.addProduct(product);
+    return "Product added";
+}
+```
+
+## Connecting MYSQL database to the Spring Boot app:
