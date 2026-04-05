@@ -3,13 +3,14 @@ package com.example.Ecommerce.Model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.stereotype.Component;
-
+import jakarta.persistence.*;
 
 //@Data //Will provide Lombok functionality
 //@AllArgsConstructor //Creates a Lombok Constructor with all args for me.
 //@Component //Converts the Simple class to Bean class.
-
+@Entity
 public class Product {
+    @Id
     private int prod_id;
     private String prod_name;
     private double prod_price;
