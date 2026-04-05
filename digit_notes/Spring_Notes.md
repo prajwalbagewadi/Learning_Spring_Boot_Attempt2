@@ -8789,3 +8789,73 @@ public String addProduct(@RequestBody Product product) {
 ```
 
 ## Connecting MYSQL database to the Spring Boot app:
+
+- Create Database in MYSQL
+- Run this command in WorkBench:
+
+```
+Create database your_db_name;
+```
+
+- Add Queries in SQL workbench:
+
+```
+//create database.
+create database Product;
+
+// list the databases to verify the database is created.
+show databases;
+
+//select the database to create table and execute the queries on the selected db.
+use Product;
+
+//create table in the db.
+create Table Products(prod_id int primary key, prod_name varchar(100), prod_price decimal(10,2));
+
+//verify the table is created.
+select * from Products;
+
+//insert record in the table.
+insert into Products values (1, "kitkat", 10.00);
+
+//verify the record is created in db.
+select * from Products;
+
+//update database record (alter)
+update Products set prod_name = "English Oven Fruit Bread", prod_price = 24.00 where prod_id = 1;
+
+//verify the record is updated.
+select * from Products;
+```
+
+- Add dependency to 'pom.xml' file:
+
+```
+<!-- Source: https://mvnrepository.com/artifact/com.mysql/mysql-connector-j -->
+<dependency>
+	<groupId>com.mysql</groupId>
+	<artifactId>mysql-connector-j</artifactId>
+	<version>8.3.0</version>
+	<scope>compile</scope>
+</dependency>
+```
+
+- Add Environment Properties to 'application.properties' file:
+
+```
+spring.datasource.url=jdbc:mysql://localhost:3306/{DB_Name}
+spring.datasource.username=root
+spring.datasource.password=Password123$
+
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+```
+
+```
+<!-- Source: https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-jpa -->
+<dependency>
+	<groupId>org.springframework.boot</groupId>
+	<artifactId>spring-boot-starter-data-jpa</artifactId>
+	<version>3.5.11</version>
+	<scope>compile</scope>
+</dependency>
+```
