@@ -8788,6 +8788,33 @@ public String addProduct(@RequestBody Product product) {
 }
 ```
 
+3. PUT (Update data):
+
+```
+@RequestMapping(value = "/products/{id}", method = RequestMethod.PUT)
+public String updataProduct(@PathVariable int id, @RequestBody Product product) {
+    productService.updateProduct(id, product);
+    return "Product updated";
+}
+```
+
+4. DELETE (Delete data):
+
+```
+@RequestMapping(value = "/products/{id}", method = RequestMethod.DELETE)
+public String deleteProduct(@PathVariable int id) {
+    productService.deleteProduct(id);
+    return "Product deleted";
+}
+```
+
+- Shortcut (Recommended in mordern Spring Boot):
+- Instead of writing @RequestMapping with method, we usually use specialized annotations:
+- @GetMapping
+- @PostMapping
+- @PutMapping
+- @DeleteMapping
+
 ## Connecting MYSQL database to the Spring Boot app:
 
 - Create Database in MYSQL
