@@ -4,6 +4,7 @@ import com.example.Ecommerce.Model.Product2;
 import com.example.Ecommerce.Model.Product;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -19,11 +20,14 @@ public class ProductService {
             new Product2("G004","Fortune Sugar","groceries","Fortune Sugar, 1 kg",58.00,75.00,23,true,3000,4.5f,6005),
             new Product2("G005","GEMINI REF SUNFLOWER OIL","groceries","GEMINI REF SUNFLOWER OIL 840g-840ML Pouch",159.00,192.00,17,true,2500,4.4f,2554)
     );
-    private List<Product> products = Arrays.asList(
+//    private List<Product> products = Arrays.asList(
+//            new Product(1,"Kitkat",10.00d),
+//            new Product(2,"Lays",20.00d)
+//    );
+    private List<Product> products = new ArrayList<Product>(Arrays.asList(
             new Product(1,"Kitkat",10.00d),
             new Product(2,"Lays",20.00d)
-    );
-
+    ));
     public List<Product> getProducts() {
         return products;
     }
@@ -39,5 +43,10 @@ public class ProductService {
                 .findFirst()
                 .orElse(new Product(0, "noItem",0));
         // Or you can use a normal For loop.
+    }
+
+    public String addProduct(Product product) {
+        products.add(product);
+        return product.toString()+"\n"+"Product added successfully";
     }
 }

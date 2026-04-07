@@ -4,9 +4,7 @@ import java.util.List;
 import com.example.Ecommerce.Model.Product;
 import com.example.Ecommerce.Service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class ProductController {
@@ -26,4 +24,10 @@ public class ProductController {
     public Product getProductById(@PathVariable int id) {
         return productService.getProductById(id);
     }
+
+    @RequestMapping(value = "/products", method = RequestMethod.POST)
+    public String addProduct(@RequestBody Product product) {
+        return productService.addProduct(product);
+    }
+
 }
