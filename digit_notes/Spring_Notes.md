@@ -8808,12 +8808,47 @@ public String deleteProduct(@PathVariable int id) {
 }
 ```
 
+- Or you can use some specialized annotations:
 - Shortcut (Recommended in mordern Spring Boot):
 - Instead of writing @RequestMapping with method, we usually use specialized annotations:
 - @GetMapping
 - @PostMapping
 - @PutMapping
 - @DeleteMapping
+
+- So what do we use instead of @RequestMapping -> We can use say '@GetMapping' for GET method.
+
+```
+@GetMapping("/products")
+```
+
+```
+@GetMapping("/products/{id}")
+```
+
+- And for 'POST' -> instead of @RequestMapping -> We are going to use '@PostMapping'.
+
+```
+@PostMapping("/products")
+```
+
+```
+@PostMapping("/products/{id}")
+```
+
+- Now these two mappings.
+
+```
+@GetMapping("/products")
+```
+
+- And.
+
+```
+@PostMapping("/products")
+```
+
+- Are different is because of there HTTP methods are different.
 
 ## Connecting MYSQL database to the Spring Boot app:
 
