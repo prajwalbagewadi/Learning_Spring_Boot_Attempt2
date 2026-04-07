@@ -20,12 +20,13 @@ public class ProductController {
         return productService.getProducts();
     }
 
-    @RequestMapping("/products/{id}")
+    @RequestMapping("/products/{id}") //default GET method
     public Product getProductById(@PathVariable int id) {
         return productService.getProductById(id);
     }
 
-    @RequestMapping(value = "/products", method = RequestMethod.POST)
+    //@RequestMapping(value = "/products", method = RequestMethod.POST)
+    @PostMapping("/products")
     public String addProduct(@RequestBody Product product) {
         return productService.addProduct(product);
     }

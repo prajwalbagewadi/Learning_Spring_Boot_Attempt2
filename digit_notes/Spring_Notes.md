@@ -8848,7 +8848,139 @@ public String deleteProduct(@PathVariable int id) {
 @PostMapping("/products")
 ```
 
-- Are different is because of there HTTP methods are different.
+- Are different, is because of there HTTP methods are different.
+- The URL '/products' looks the same. -> But the HTTP methods are different
+
+```
+//ProductService.java
+package com.example.Ecommerce.Service;
+
+import com.example.Ecommerce.Model.Product2;
+import com.example.Ecommerce.Model.Product;
+import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+@Service //Converts simple java class to a Service layer class
+public class ProductService {
+    //Contains the logic for returning Data to ProductController.
+
+    //List of Products
+     private List<Product2> products2 =  Arrays.asList(
+            new Product2("G006","Kissan Mixed Fruit Jam","groceries","Kissan Mixed Fruit Jam , With Real Fruit Ingredients, 200 g",67.00,80.00,16,true,1500,4.4f,4193),
+            new Product2("G001","Daawat Biryani Basmati Rice","groceries","Daawat Biryani Basmati Rice, 5 Kg| World s Longest Rice Grain expands 24mm* | Tasty, Non-sticky & Rich Aroma |Naturally Aged",989.00,1245.00,21,true,800,4.0f,2452),
+            new Product2("G003","ABHI EGGS","groceries","ABHI EGGS Gold+ Brown Eggs Box (Pack of 6)",105.00,115.00,9,true,200,4.1f,586),
+            new Product2("G004","Fortune Sugar","groceries","Fortune Sugar, 1 kg",58.00,75.00,23,true,3000,4.5f,6005),
+            new Product2("G005","GEMINI REF SUNFLOWER OIL","groceries","GEMINI REF SUNFLOWER OIL 840g-840ML Pouch",159.00,192.00,17,true,2500,4.4f,2554)
+    );
+//    private List<Product> products = Arrays.asList(
+//            new Product(1,"Kitkat",10.00d),
+//            new Product(2,"Lays",20.00d)
+//    );
+    private List<Product> products = new ArrayList<Product>(Arrays.asList(
+            new Product(1,"Kitkat",10.00d),
+            new Product(2,"Lays",20.00d)
+    ));
+    public List<Product> getProducts() {
+        return products;
+    }
+
+    public Product getProductById(int prodId) {
+        // JavaStreamAPI
+//        return products.stream()
+//                .filter(p -> p.getProd_id() == prodId)
+//                .findFirst()
+//                .get();
+        return products.stream()
+                .filter(p -> p.getProd_id() == prodId)
+                .findFirst()
+                .orElse(new Product(0, "noItem",0));
+        // Or you can use a normal For loop.
+    }
+
+    public String addProduct(Product product) {
+        products.add(product);
+        return this.getProductById(product.getProd_id()).toString()+"\n"+"Product added successfully";
+    }
+}
+```
+
+```
+//ProductController.java
+package com.example.Ecommerce.Controller;
+
+import java.util.List;
+import com.example.Ecommerce.Model.Product;
+import com.example.Ecommerce.Service.ProductService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+public class ProductController {
+    @Autowired
+    private ProductService productService;
+//    @RequestMapping("/getproduct")
+//    public String getProducts() {
+//        return "getproduct controller";
+//    }
+
+    @RequestMapping("/products")
+    public List<Product> showProducts() {
+        return productService.getProducts();
+    }
+
+    @RequestMapping("/products/{id}") //default GET method
+    public Product getProductById(@PathVariable int id) {
+        return productService.getProductById(id);
+    }
+
+    //@RequestMapping(value = "/products", method = RequestMethod.POST)
+    @PostMapping("/products")
+    public String addProduct(@RequestBody Product product) {
+        return productService.addProduct(product);
+    }
+
+}
+```
+
+```
+//output:
+Postman -> POST -> http://localhost:8086/products ->
+Body:
+{
+    "prod_id":5,
+    "prod_name":"Del Monte Classic Blend Tomato Ketchup",
+    "prod_price":67.00
+}
+-> Send
+5 Del Monte Classic Blend Tomato Ketchup 67.0
+Product added successfully
+
+GET -> http://localhost:8086/products -> Send
+[
+    {
+        "prod_id": 1,
+        "prod_name": "Kitkat",
+        "prod_price": 10.0
+    },
+    {
+        "prod_id": 2,
+        "prod_name": "Lays",
+        "prod_price": 20.0
+    },
+    {
+        "prod_id": 5,
+        "prod_name": "Del Monte Classic Blend Tomato Ketchup",
+        "prod_price": 67.0
+    }
+]
+```
+
+- Now the Controller and Service is done -> Now lets try to work with the Client side:
+
+## Client Side (for the POST method request):
 
 ## Connecting MYSQL database to the Spring Boot app:
 

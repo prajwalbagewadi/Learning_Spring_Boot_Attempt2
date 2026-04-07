@@ -47,6 +47,6 @@ public class ProductService {
 
     public String addProduct(Product product) {
         products.add(product);
-        return product.toString()+"\n"+"Product added successfully";
+        return this.getProductById(product.getProd_id()).toString()+"\n"+"Product added successfully";
     }
 }
