@@ -8982,6 +8982,36 @@ GET -> http://localhost:8086/products -> Send
 
 ## Client Side (for the POST method request):
 
+- Now for the POST request. We can't simply use the browser's address bar.
+- You can create a React app. Using which you can send this data.
+- Other wise you can also create a form. But again you will have to do it in Javascript.
+- You have to do some more coding to achive that.
+- But we are not going to do that we will simply use Postman.
+
+- Restart the app.
+- Observe the Error:
+
+```
+//output
+Postman
+POST -> http://localhost:8086/products ->
+Body:
+{
+    "prod_id":5,
+    "prod_name":"Del Monte Classic Blend Tomato Ketchup",
+    "prod_price":67.00
+}
+-> Send
+{
+    "timestamp": "2026-04-08T02:28:36.444Z",
+    "status": 500,
+    "error": "Internal Server Error",
+
+- Server:
+85+05:30 ERROR 4508 --- [Ecommerce] [nio-8086-exec-1] o.a.c.c.C.[.[.[/].[dispatcherServlet]    : Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: java.lang.UnsupportedOperationException] with root cause
+java.lang.UnsupportedOperationException
+```
+
 ## Connecting MYSQL database to the Spring Boot app:
 
 - Create Database in MYSQL
