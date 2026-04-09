@@ -9003,14 +9003,34 @@ Body:
 }
 -> Send
 {
-    "timestamp": "2026-04-08T02:28:36.444Z",
+    "timestamp": "2026-04-09T03:11:33.339Z",
     "status": 500,
     "error": "Internal Server Error",
+    "trace": "java.lang.UnsupportedOperationException\r\n\tat java.base/java.util.AbstractList.add(AbstractList.java:155)\r\n\tat java.base/java.util.AbstractList.add(AbstractList.java:113)\r\n\tat com.example.Ecommerce.Service.ProductService.addProduct(ProductService.java:49)\r\n\tat com.example.Ecommerce.Controller.ProductController.addProduct(ProductController.java:31)\r\n\tat java.base/jdk.internal.reflect.
+
 
 - Server:
 85+05:30 ERROR 4508 --- [Ecommerce] [nio-8086-exec-1] o.a.c.c.C.[.[.[/].[dispatcherServlet]    : Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: java.lang.UnsupportedOperationException] with root cause
 java.lang.UnsupportedOperationException
 ```
+
+- This Error is caused because of how we have defined the List to store the Products.
+- The Error states that the add operation is not supported 'UnsupportedOperationException' -> On 'AbstractList.add'.
+
+- One more thing we are not sending any data? -> 'We are sending the Json statement quoted from notes'.
+- So basically we have to send that data as well in the HTTP Request Body.
+- In Postman:
+- Goto -> Body (Below the Request URL) -> Select (raw) -> JSON (Add the product).
+
+```
+{
+    "prod_id":5,
+    "prod_name":"Del Monte Classic Blend Tomato Ketchup",
+    "prod_price":67.00
+}
+```
+
+- Press -> Send.
 
 ## Connecting MYSQL database to the Spring Boot app:
 
