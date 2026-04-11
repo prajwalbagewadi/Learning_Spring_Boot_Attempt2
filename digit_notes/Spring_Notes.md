@@ -9144,6 +9144,11 @@ GET -> http://localhost:8086/products -> Send
 ]
 ```
 
+- Send http Request (JSON data) observe that app is working properly.
+- But we have not got any response because in the 'ProductController' we are using void. Which is not a response data.
+- But if you observe the Postman response. You will see the 'Status code': it says '200'. How do we verify this.
+- The way you can verify that is by sending a request. For the GET method. To get all the products.
+
 ## Connecting MYSQL database to the Spring Boot app:
 
 - Create Database in MYSQL
