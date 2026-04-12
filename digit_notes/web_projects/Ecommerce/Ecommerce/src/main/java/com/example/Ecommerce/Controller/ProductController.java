@@ -28,6 +28,7 @@ public class ProductController {
     //@RequestMapping(value = "/products", method = RequestMethod.POST)
     @PostMapping("/products")
     public String addProduct(@RequestBody Product product) {
+        System.out.println(product);
         return productService.addProduct(product);
     }
 

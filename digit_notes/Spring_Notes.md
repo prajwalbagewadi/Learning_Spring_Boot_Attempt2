@@ -9144,10 +9144,53 @@ GET -> http://localhost:8086/products -> Send
 ]
 ```
 
-- Send http Request (JSON data) observe that app is working properly.
-- But we have not got any response because in the 'ProductController' we are using void. Which is not a response data.
-- But if you observe the Postman response. You will see the 'Status code': it says '200'. How do we verify this.
-- The way you can verify that is by sending a request. For the GET method. To get all the products.
+- Send -> http Request (JSON data) observe that app is working properly.
+- But we have not got any response back because in the 'ProductController' we are using void. Which will not send any response data back.
+- But if you observe the Postman response. You will see the 'Status code': it says '200' (Successful). How do we verify this.
+- The way you can verify that is by sending a request. For getting all the products. Using GET Method.
+- 'GET -> localhost:8090/products -> Send'.
+- Note: i am not getting any errors. but there is error in notes.
+- Ok -> it is not working you got Zero. (0,null,0).
+- What is wrong -> Lets check the Controller.
+- Lets print what ever you are getting on the Server side.
+
+```
+//ProductController.java
+//@RequestMapping(value = "/products", method = RequestMethod.POST)
+    @PostMapping("/products")
+    public String addProduct(@RequestBody Product product) {
+        System.out.println(product);
+        return productService.addProduct(product);
+    }
+```
+
+- My bad -> I taught we are using Lombok.
+- Which we are not using that.
+- We should have added 'toString()' method.
+- Because in Lombok. You get that by default in Lombok.
+- Generate -> 'toString()'
+
+```
+//Product.java
+@Override
+public String toString(){
+    return prod_id + " " + prod_name + " " + prod_price;
+}
+```
+
+- Restart the app.
+- Postman: POST -> localhost:8090/products
+
+```
+//Body JSON
+{
+    "prod_id":5,
+    "prod_name":"Del Monte Classic Blend Tomato Ketchup",
+    "prod_price":67.00
+}
+```
+
+-> Send.
 
 ## Connecting MYSQL database to the Spring Boot app:
 
