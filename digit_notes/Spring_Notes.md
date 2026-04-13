@@ -9192,6 +9192,74 @@ public String toString(){
 
 -> Send.
 
+- Note: I am getting the output properly on Server Side. But Notes show error.
+- And this is what we are getting on the Server Side.
+
+```
+//Actual on Server Side
+5 Del Monte Classic Blend Tomato Ketchup 67.0
+```
+
+```
+//Notes show error
+{
+    prod_id=0,
+    prod_name='null',
+    prod_price=0
+}
+```
+
+- That means what you are sending from the client is not actually getting received on the server side.
+- Its Because to achive that we have to use one annotation '@RequestBody'
+
+## @RequestBody annotation:
+
+- '@RequestBody' annotation takes JSON (or other data) sent from the client and converts it into a java object automatically (for Spring Boot app).
+
+- Example:
+
+```
+//Client sends
+//Json
+{
+    "name":"prajwal",
+    "age":25
+}
+```
+
+```
+//Controller
+//Java
+@PostMapping("/user")
+public String addUser(@RequestBody User user) {
+    return "User:" + user.getName();
+}
+```
+
+```
+//UserClass
+//Java
+public class User {
+    private String name;
+    private int age;
+
+    //getters and setters
+    public String getName() {
+        return this.name;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getAge() {
+        return this.age;
+    }
+    public void setAge() {
+        this.age = age;
+    }
+}
+```
+
 ## Connecting MYSQL database to the Spring Boot app:
 
 - Create Database in MYSQL
