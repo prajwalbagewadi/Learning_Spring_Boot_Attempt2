@@ -9278,6 +9278,10 @@ Product {prodId=104, prodName=AcRemote, price=2000}
 - The only problem is we are using a list in the code.
 - It is not storing in the database.
 - The movement we Stop or Restart the app, we will lose our data.
+- Now that we know how to use GET, POST
+- We also kown how to get data by Product Id using Filter.
+
+## PUT and DELETE method:
 
 ## Connecting MYSQL database to the Spring Boot app:
 
