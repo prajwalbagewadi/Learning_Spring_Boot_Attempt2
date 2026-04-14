@@ -9260,6 +9260,25 @@ public class User {
 }
 ```
 
+- Now since you are sending a body from client to server.
+- We use this annotation '@RequestBody'.
+- '@RequestBody' maps the incoming request data from the client and maps it to the Product object.
+- Send.
+- Same status code (200).
+- On the Server side if you see the console.
+
+```
+Product {prodId=104, prodName=AcRemote, price=2000}
+```
+
+- You are getting the data. Which you are sending from the client.
+- Postman.
+- GET -> localhost:8090/products -> Send
+- And you see we got data of Product 104 added in the List.
+- The only problem is we are using a list in the code.
+- It is not storing in the database.
+- The movement we Stop or Restart the app, we will lose our data.
+
 ## Connecting MYSQL database to the Spring Boot app:
 
 - Create Database in MYSQL
