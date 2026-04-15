@@ -9279,9 +9279,52 @@ Product {prodId=104, prodName=AcRemote, price=2000}
 - It is not storing in the database.
 - The movement we Stop or Restart the app, we will lose our data.
 - Now that we know how to use GET, POST
+- **_'GET' Method/Request -> Is for the Read Operation._**
+- **_'POST' Method/Request -> Is for the Create/Add Operation._**
 - We also kown how to get data by Product Id using Filter.
 
+- What we have done till now is basically is mostly done with in the Controller Itself.
+- We are sending request to get all products -> Which we are getting on the Browser or API Client (Postman).
+- We are also able to fetch one Single Product details.
+- OR We are able to add new product in the List.
+- And That we have done with the help of Postman (Client Side).
+- GET -> /products -> Send.
+- And we get 3 products available in the List.
+- **_Problem:_**
+- Every Time you restart your app -> you will lose all the data (Products) in the List.
+- As they are currently stored in the Tempory memory and not in the Database for Persistent storage.
+
+```
+//Postman
+POST -> /products -> Body {
+  "prod_id":1,
+  "prod_name":"KitKat",
+  "prod_price":10.00
+} -> Send
+```
+
+- Will add Product to the List residing in the Program 'Temp Storage' from the Postman (client side).
+
 ## PUT and DELETE method:
+
+- Now lets try to update something.
+- Example updating prod_price from 10.00 to 20.00
+- How do we do that. -> For the Update.
+- We have to change the type of request to 'PUT'.
+- **_'PUT' -> Is used for the Update Opertation._**
+- If we try to update a product price using the Postman client.
+
+```
+//Postman
+PUT -> /products -> Body {
+    //JSON
+    //Existing Product
+    "prod_id":1,
+    "prod_name":"KitKat",
+    "prod_price":10.00 -> 20.00
+}
+-> Send
+```
 
 ## Connecting MYSQL database to the Spring Boot app:
 
