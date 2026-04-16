@@ -9326,6 +9326,28 @@ PUT -> /products -> Body {
 -> Send
 ```
 
+- This will cause a 'Error' and will not work because we don't have any method that is accepting 'PUT' request.
+- **_Error: Method not allowed_**
+
+- ProductController:
+
+```
+//ProductController.java
+public void updateProduct(@RequestBody Product prod) {
+    service.updateProduct(prod);
+    //create a method in ProductService class
+}
+```
+
+- ProductService:
+
+```
+//ProductService.java
+public void updateProduct(Product prod) {
+
+}
+```
+
 ## Connecting MYSQL database to the Spring Boot app:
 
 - Create Database in MYSQL
