@@ -9348,6 +9348,35 @@ public void updateProduct(Product prod) {
 }
 ```
 
+- The tricky part when it comes to updating a Product.
+- Is Doing it manually. -> With the help of 'List<E>'.
+- Its tricky.
+
+- In the normal world -> We store this data in Database.
+- Now because of a module called 'Spring Data JPA' -> It becomes very easy.
+- Which we will see later.
+
+- **_ Updating in List Manually:_**
+
+```
+public void updateProduct(Product prod) {
+    int index = 0;
+    for(int i = 0; i < products.size(); i++) {
+        //ilterate through list.
+        if(products.get(i).getProdId() == prod.getProdId()) {
+            //Check if i'th product id == argument product id.
+            index = i;
+            //Assign i value to index.
+        }
+    }
+    products.set(index,prod);
+    //set() method is used to update a element in the List
+}
+```
+
+- Basically, we are updating an existing resource.
+- It replaces -> the old data/object with the new data/object.
+
 ## Connecting MYSQL database to the Spring Boot app:
 
 - Create Database in MYSQL
