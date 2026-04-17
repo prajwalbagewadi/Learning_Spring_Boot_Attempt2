@@ -9376,6 +9376,7 @@ public void updateProduct(Product prod) {
 
 - Basically, we are updating an existing resource.
 - It replaces -> the old data/object with the new data/object.
+- Let's try.
 
 ## Connecting MYSQL database to the Spring Boot app:
 

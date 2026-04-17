@@ -49,4 +49,15 @@ public class ProductService {
         products.add(product);
         return this.getProductById(product.getProd_id()).toString()+"\n"+"Product added successfully";
     }
+
+    public String updateProduct(Product product) {
+        int index = 0;
+        for(Product p : products) {
+            if(p.getProd_id() == product.getProd_id()) {
+                index = p.getProd_id();
+            }
+        }
+        products.set(index, product);
+        return this.getProductById(product.getProd_id()).toString()+"\n"+"Product updated successfully";
+    }
 }
