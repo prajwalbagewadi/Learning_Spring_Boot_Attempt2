@@ -52,9 +52,14 @@ public class ProductService {
 
     public String updateProduct(Product product) {
         int index = 0;
-        for(Product p : products) {
-            if(p.getProd_id() == product.getProd_id()) {
-                index = p.getProd_id();
+//        for(Product p : products) {
+//            if(p.getProd_id() == product.getProd_id()) {
+//                index = p.getProd_id();
+//            }
+//        }
+        for(int i = 0; i < products.size(); i++) {
+            if(products.get(i).getProd_id() == product.getProd_id()) {
+                index = i;
             }
         }
         products.set(index, product);
