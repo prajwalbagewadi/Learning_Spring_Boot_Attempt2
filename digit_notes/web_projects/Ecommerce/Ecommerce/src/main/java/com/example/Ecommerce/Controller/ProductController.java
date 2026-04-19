@@ -20,7 +20,8 @@ public class ProductController {
         return productService.getProducts();
     }
 
-    @RequestMapping("/products/{id}") //default GET method
+//    @RequestMapping("/products/{id}") //default GET method
+    @GetMapping("/products/{id}")
     public Product getProductById(@PathVariable int id) {
         return productService.getProductById(id);
     }
@@ -34,6 +35,7 @@ public class ProductController {
 
     @PutMapping("/products")
     public String updateProduct(@RequestBody Product product) {
+        System.out.println("Product received in update Method:"+product.toString()+"\n");
         return productService.updateProduct(product);
     }
 }

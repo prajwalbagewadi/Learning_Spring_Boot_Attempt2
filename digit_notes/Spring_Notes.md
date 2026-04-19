@@ -9685,6 +9685,93 @@ public String updateProduct(@RequestBody Product product) {
 }
 ```
 
+## Delete Method:
+
+- Basically for 'Deleting a Product' we have to send a 'Delete' request.
+- Question ariese how are we going to delete a Product.
+- This -> localhost:8086/products.
+- We will have to give the request a Product Id 'prodId(102)'.
+- And we will have to delete it.
+
+```
+Delete -> localhost:8086/products/102 -> Send
+```
+
+```
+//Postman:
+Delete -> localhost:8086/products/2 -> Send
+{
+    "timestamp": "2026-04-19T10:39:40.706Z",
+    "status": 405,
+    "error": "Method Not Allowed",
+    "trace": "org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'DELETE' is not supported\r\n\tat org.springframework.web.servlet.mvc.method.RequestMappingInfoHandlerMapping.
+```
+
+- Error: 'Method not allowed' -> Mapping not done yet.
+
+```
+//ProductController.java
+@DeleteMapping("/products/{id}") //passing the product ID to delete.
+public String deleteProduct(@PathVariable int prodId) { // prodId should match with Products in the List, else we will have product Name in the @PathVariable.
+    //We will not delete Product from the Controller.
+    //We will have to forward the request to Service.
+}
+
+```
+
+## @PathVariable vs @RequestParam
+
+- **_@PathVariable:_**
+- Used to get values from URL path.
+- Typically used identify a specific resource.
+- Example:
+
+```
+@GetMapping("/products/{id}")
+public String getProduct(@PathVariable int id) {
+    return "Product By Id:"+service.getProduct(id);
+}
+```
+
+- URL:
+
+```
+/products/101
+```
+
+- Used for:
+- IDs
+- Mandatory values
+- RESTful APIs
+
+- **_@RequestParam:_**
+- Used to get values from query parameters
+- Optional or additional data (filters,Search,etc.)
+- Example:
+
+```
+@GetMapping("/products")
+public String getProduct(@RequestParam String name) {
+    return "Product By Name:"+service.getProduct(name);
+}
+```
+
+- URL:
+
+```
+/products?name=phone
+```
+
+- Used for:
+- Filtering
+- Searching
+- Optional inputs
+- Study query params
+
+```
+http://localhost:8080/products?name=phone&price=10000
+```
+
 ## Connecting MYSQL database to the Spring Boot app:
 
 - Create Database in MYSQL
