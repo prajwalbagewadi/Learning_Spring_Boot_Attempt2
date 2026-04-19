@@ -9654,6 +9654,37 @@ GET -> http://localhost:8086/products -> Send
 ]
 ```
 
+- Notes Error:
+- Error: unsupported media type.
+- Debug code line:
+
+```
+@PutMapping("/products")
+public String updateProduct(@RequestBody Product product) {
+    System.out.println("Update method product received:"+product.toString()+"\n");
+    return productService.updateProduct(product);
+}
+```
+
+- Resend the previous 'PUT' request.
+- The method 'updateProduct()' is not getting called.
+- Error Body -> Type text -> to Json.
+- Send -> 200 ok
+- GET -> /products -> Send
+
+```
+{
+    "prod_id": 5,
+    "prod_name": "Del Monte Classic Blend Tomato Ketchup",
+    "prod_price": 67.0
+}
+{
+    "prod_id": 5,
+    "prod_name": "Del Monte Classic Blend Tomato Ketchup",
+    "prod_price": 70.0 <- Updated
+}
+```
+
 ## Connecting MYSQL database to the Spring Boot app:
 
 - Create Database in MYSQL
