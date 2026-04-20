@@ -9712,10 +9712,16 @@ Delete -> localhost:8086/products/2 -> Send
 ```
 //ProductController.java
 @DeleteMapping("/products/{id}") //passing the product ID to delete.
-public String deleteProduct(@PathVariable int prodId) { // prodId should match with Products in the List, else we will have product Name in the @PathVariable.
+public String deleteProduct(@PathVariable int prodId) { // prodId s matches with Products in the List, else we will have product Name in the @PathVariable.
     //We will not delete Product from the Controller.
+    return productService.deleteProduct(prodId)
     //We will have to forward the request to Service.
 }
+/*
+- Note:
+- (@PathVariable int prodId) should match URL '/products/{prodId}.
+- Other wise we have metion the name used in (@PathVariable int name_used) in URL '/products/{name_used}'
+*/
 
 ```
 
@@ -9766,10 +9772,30 @@ public String getProduct(@RequestParam String name) {
 - Filtering
 - Searching
 - Optional inputs
-- Study query params
 
 ```
+//Study query params URL remaining
 http://localhost:8080/products?name=phone&price=10000
+```
+
+- **_Method to delete Product in Service_**
+
+```
+public String deleteProduct(int prodId) {
+    //We need index to remove the product
+    int index = 0;
+    for(int i = 0; i < products.size(); i++) {
+        if(products.get(i).getProd_id() == prodId) {
+            index = i;
+        }
+    }
+    if(index == 0) {
+        return "Product not found."
+        exit;
+    }
+    products.remove(index);
+    return "Product" + prodId + "removed successful."
+}
 ```
 
 ## Connecting MYSQL database to the Spring Boot app:
