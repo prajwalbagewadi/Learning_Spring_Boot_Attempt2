@@ -65,4 +65,17 @@ public class ProductService {
         products.set(index, product);
         return this.getProductById(product.getProd_id()).toString()+"\n"+"Product updated successfully";
     }
+
+    public String deleteProduct(int id) {
+        int index = 0;
+        Product tempProduct;
+        for(int i = 0; i < products.size(); i++) {
+            if(products.get(i).getProd_id() == id) {
+                index = i;
+            }
+        }
+        tempProduct = products.get(index);
+        products.remove(index);
+        return tempProduct.toString()+"\n"+"Product deleted successfully";
+    }
 }

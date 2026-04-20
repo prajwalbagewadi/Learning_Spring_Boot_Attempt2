@@ -38,4 +38,10 @@ public class ProductController {
         System.out.println("Product received in update Method:"+product.toString()+"\n");
         return productService.updateProduct(product);
     }
+
+    @DeleteMapping("/products/{id}")
+    public String deleteProduct(@PathVariable int id) {
+        System.out.println("Product ID received in Delete Method:"+id+"\n");
+        return productService.deleteProduct(id);
+    }
 }
