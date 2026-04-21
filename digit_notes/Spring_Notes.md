@@ -9798,6 +9798,17 @@ public String deleteProduct(int prodId) {
 }
 ```
 
+- Code for Delete request reaming to add.
+
+- As you can observe that, we have used the same logic to find the index.
+- May be we can create a separate method to 'getIndex()', a common method.
+- Repeating the same code violates the 'Dry Principle'.
+- So what we are doing is getting the index for a particular Product id.
+- We are running a loop to check if the Product I'd given in arguments matches with any of the product IDs in the List.
+- If it matches then remove(index) [remove the Product at that index].
+- ***One of the Problem:***
+- What if the ID you are passing in the arguments is not found. 
+
 ## Connecting MYSQL database to the Spring Boot app:
 
 - Create Database in MYSQL
