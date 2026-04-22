@@ -9977,12 +9977,13 @@ GET -> http://localhost:8086/products -> Send
 - **_One of the Problem:_**
 - What if the ID you are passing in the arguments is not found.
 - In that case 'It will delete the first element from the List'
-- ***Reason:***
+- **_Reason:_**
 - We have initialzed the 'index = 0'.
-- If the element is not found the for loop completes it's execution, but fails to update 'index = 0'. 
+- If the element is not found the for loop completes it's execution, but fails to update 'index = 0'.
 - As a result of this the first element present at 0 index gets deleted.
-- ***Resolution:***
+- **_Resolution:_**
 - Set the initial value of index to 'index = 999999', to a larger then size() of the List.
+
 ```
 //Java
 public String deleteProduct(int prodId) {
@@ -9995,6 +9996,33 @@ public String deleteProduct(int prodId) {
  products.remove(index);
 }
 ```
+
+- Technically you should 'return' by saying 'item not found'.
+- But for now, i want to keep it simple.
+- So we are here to understand how SpringBoot and SpringMVC works.
+- How the Layers work.
+- run app;
+
+```
+//Postman
+GET -> localhost:8090/products -> Send
+// Shows 3 products.
+DELETE -> localhost:8090/products/102 -> Send
+200 ok
+```
+
+- Now lets send the 'GET' request again to see how many data items (products), we have.
+- We want to see only 2 products.
+
+```
+//Postman
+- GET -> localhost:8090/products -> Send
+// 102 is deleted, we only have two products {101, 103}
+```
+
+- So that now we have achieve 'CRUD' operations.
+- Create(POST), Read(GET), Update(PUT), Delete(DELETE).
+- Done 'GET, POST, PUT, DELETE'.
 
 ## Connecting MYSQL database to the Spring Boot app:
 
