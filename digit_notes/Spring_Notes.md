@@ -9986,7 +9986,7 @@ GET -> http://localhost:8086/products -> Send
 ```
 //Java
 public String deleteProduct(int prodId) {
- int index = 99 //init index to ID does not exist
+ int index = 99 //init index to larger then List size().
  for( int i = 0; i < products.size(); i++) {
   if( products.get(i).getProd_Id() == prodId) {
            index = i;
