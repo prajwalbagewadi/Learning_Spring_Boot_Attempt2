@@ -9976,6 +9976,25 @@ GET -> http://localhost:8086/products -> Send
 - If it matches then remove(index) [remove the Product at that index].
 - **_One of the Problem:_**
 - What if the ID you are passing in the arguments is not found.
+- In that case 'It will delete the first element from the List'
+- ***Reason:***
+- We have initialzed the 'index = 0'.
+- If the element is not found the for loop completes it's execution, but fails to update 'index = 0'. 
+- As a result of this the first element present at 0 index gets deleted.
+- ***Resolution:***
+- Set the initial value of index to 'index = 999999', to a larger then size() of the List.
+```
+//Java
+public String deleteProduct(int prodId) {
+ int index = 99 //init index to ID does not exist
+ for( int i = 0; i < products.size(); i++) {
+  if( products.get(i).getProd_Id() == prodId) {
+           index = i;
+  }
+ }
+ products.remove(index);
+}
+```
 
 ## Connecting MYSQL database to the Spring Boot app:
 
