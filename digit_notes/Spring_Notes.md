@@ -10024,6 +10024,36 @@ DELETE -> localhost:8090/products/102 -> Send
 - Create(POST), Read(GET), Update(PUT), Delete(DELETE).
 - Done 'GET, POST, PUT, DELETE'.
 
+## Spring Data JPA:
+- Spring Data JPA is a part of the Spring ecosystem.
+- That simplifies Database access in java applications by reducing the amount of boilerplate code, needed to interact with relational Database.
+- Using JPA (Java Persistence API).
+
+### JPA(Java Persistence API):
+- JPA (Java Persistence API) is a 'Java Specification'.
+- That defines how Java objects are mapped to relational Database tables.
+- And how data is stored, retrieved and managed.
+
+- ***Key idea:***
+- Instead of writing a SQL query.
+```
+//sql
+SELECT * FROM users;
+```
+- You work with Java objects.
+```
+//Java
+userRepository.findAll();
+```
+- JPA handles converting objects <-> database records.
+
+- ***Important Point:***
+- JPA is not a framework.
+- It's a Specification (interface/standard).
+- Implementations of JPA include:
+- Hibernate (most popular).
+- EclipseLink.
+
 ## Connecting MYSQL database to the Spring Boot app:
 
 - Create Database in MYSQL
