@@ -10062,6 +10062,17 @@ userRepository.findAll();
 
 ![Diagram:GeneralArch_SpringDataJPA](./GeneralArch_SpringDataJPA.jpg)
 
+- 'ProductController' -> Handles requests and has multiple 'Mapping'.
+- If you want to do some work.
+- (Logical work) -> That will be forwarded to.
+- 'ProductService' -> Now it's job is to provide Service, to process the data, or if you want to calculate something, or do some processing. Every thing will be done in the 'Service Layer'.
+
+- ***What if you want to work with Databases ?***
+- We have not worked with Databases yet.
+- We have hardcoded the values In the 'List'.
+- Which is not good Idea (in the ProductService (ServiceLayer)).
+- We want to store data in the Database.
+
 ## Connecting MYSQL database to the Spring Boot app:
 
 - Create Database in MYSQL
