@@ -10091,6 +10091,25 @@ userRepository.findAll();
 - Now if you go back to the 'old days' -> The way you work with the 'Repository Layer'.
 - Is the 'JDBC' method.
 
+## JDBC (Java Database Connectivity):
+
+- Basically we have to use 'JDBC'.
+- Using 'JDBC' we can connect the java code with the Database.
+- **_And to achive the connectivity we have 7 steps:_**
+
+1. Load the Driver (Software to interact with DB).
+2. Connect with the Database ("localhost:3036/username/password").
+3. We have to create a query:
+
+- When we talk about DBMS 'Relational Database'.
+- We use 'SQL' Structured Query Language is used to communicate with the Database.
+
+4. Execute the query.
+5. Database returns some result.
+6. We have to process the result, and Display.
+
+- All this code {JDBC + 7 steps} -> This will be done in the 'Repository Layer'.
+
 ## Connecting MYSQL database to the Spring Boot app:
 
 - Create Database in MYSQL
@@ -10100,7 +10119,7 @@ userRepository.findAll();
 Create database your_db_name;
 ```
 
-- Add Queries in SQL workbench:
+- Add Queries inSQL workbench:
 
 ```
 //create database.
