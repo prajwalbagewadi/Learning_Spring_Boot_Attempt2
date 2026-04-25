@@ -10067,11 +10067,29 @@ userRepository.findAll();
 - (Logical work) -> That will be forwarded to.
 - 'ProductService' -> Now it's job is to provide Service, to process the data, or if you want to calculate something, or do some processing. Every thing will be done in the 'Service Layer'.
 
-- ***What if you want to work with Databases ?***
+- **_What if you want to work with Databases ?_**
 - We have not worked with Databases yet.
 - We have hardcoded the values In the 'List'.
 - Which is not good Idea (in the ProductService (ServiceLayer)).
 - We want to store data in the Database.
+- We have to use some DBMS (Database Management System) like H2, PostgreSQL or MySQL.
+- Till now we have Controller and Service Layers -> They are doing there Job.
+- And now we want to talk with the Database.
+- And now thats where we have to with the new layer called as 'Repository Layer'.
+- **_Repository Layer:_**
+- Now the job of Repository layer is to connect your app with the Database.
+
+- **_Example:_**
+- Lets say if a client says -> Hey, you know I want all the Products.
+- Request goes to the 'Controller' -> Says ok, You want all the Products.
+- 'Controller' says -> It will go ask the 'Service Layer'.
+- It will go to the 'Service layer'.
+- Till this point we are hard coding values in the app.
+
+- But now what we want is, i want this data (List) to be comming from the Database.
+- And to do that we have to do the coding in the 'Repository Layer'.'Repository'.
+- Now if you go back to the 'old days' -> The way you work with the 'Repository Layer'.
+- Is the 'JDBC' method.
 
 ## Connecting MYSQL database to the Spring Boot app:
 
