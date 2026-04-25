@@ -10109,6 +10109,19 @@ userRepository.findAll();
 6. We have to process the result, and Display.
 
 - All this code {JDBC + 7 steps} -> This will be done in the 'Repository Layer'.
+- Now things got a bit simpler with the help of 'Spring JDBC' -> Inside Spring framework.
+- We can use this -> It will help you to -> Reduce the number of code lines you have
+- It will make your code more standard.
+- Reduce the number of bugs.
+- It will help you with the JDBC template, its good.
+
+- But what if you want to make it more easy:
+- Ultimately if you want to just send data from your 'Service layer' to 'Database layer'.
+- Because what we are doing in this app is just mostly 'CRUD' right.
+- If you just want to use -> Create, Read, Update, Delete.
+- We can use some easy way to do that -> And that some thing/Way can be done with 'ORM'.
+
+## ORM Concept (Object Relational Mapping):
 
 ## Connecting MYSQL database to the Spring Boot app:
 
