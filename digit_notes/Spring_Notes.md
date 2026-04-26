@@ -10184,14 +10184,47 @@ id | name | price
 ```
 //Java
 import org.springframework.data.jpa.repository.JpaRepository;
-```
 
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
 }
-}
+```
+
+3. Use in Service
 
 ```
+//Java
+@Autowired
+private ProductRepository repo;
+
+public List<Product> getAllProducts() {
+    return repo.findAll();
+}
+```
+
+- **_What ORM Handles for you_**
+- _Without ORM_:
+- Write SQL manually.
+- Convert ResultSet -> Object.
+- Handle DB connections.
+- _With ORM_
+- Auto SQL generation.
+- Object <-> Table mapping.
+- CRUD operations ready.
+
+- **_Key Annotations in ORM (JPA)_**
+- '@Entity' -> marks class as table
+- '@Id' -> primary key
+- '@GeneratedValue' -> auto increment
+- '@Column' -> customize column
+- '@Table' -> table name
+- '@OneToMany', '@ManyToOne' - relationships
+
+- **_Real-Life Analogy_**
+- Think of ORM like a translator:
+- You speak Java.
+- Database speaks SQL.
+- ORM translates both sides automatically.
 
 ## Connecting MYSQL database to the Spring Boot app:
 
