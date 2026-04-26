@@ -10123,18 +10123,91 @@ userRepository.findAll();
 
 ## ORM Concept (Object Relational Mapping):
 
+- ORM is a concept in Software Engineering.
+- Where you work with Java Objects, and ORM automatically converts these objects into Database tables and rows and (Vice Versa)
+- So instead of writing SQL like:
+
+```
+SELECT * FROM products;
+```
+
+- You just write Java:
+
+```
+productRepository.findAll();
+```
+
+- **_ORM in Spring Boot_**
+- In Spring Boot, ORM is mainly handled using:
+- Spring Data JPA.
+- Hibernate (default implementation of JPA).
+
+- **_What is JPA?_**
+- JPA (Java Persistence API) is a specification (rules) or (Interface in Java).
+- It defines how ORM should work.
+- It does NOT provide implementation
+- Hibernate is the actual tool that implements JPA.
+
+- **_How ORM Works (Simpple Flow)_**
+
+1. You create a Java class (Entity).
+2. ORM maps it to a table.
+3. Each object = one row.
+
+- **_Example_**
+
+1. Entity Class
+
+```
+//Java
+import jakarta.persistence.*;
+
+@Entity
+public class Product {
+    @Id
+    @GeneratedValue
+    private Long id;
+
+    private String name;
+    private double price;
+}
+```
+
+- This becomes a table:
+
+```
+id | name | price
+```
+
+2. Repository
+
+```
+//Java
+import org.springframework.data.jpa.repository.JpaRepository;
+```
+
+public interface ProductRepository extends JpaRepository<Product, Long> {
+
+}
+}
+
+```
+
 ## Connecting MYSQL database to the Spring Boot app:
 
 - Create Database in MYSQL
 - Run this command in WorkBench:
 
 ```
+
 Create database your_db_name;
+
 ```
 
 - Add Queries inSQL workbench:
 
 ```
+
 //create database.
 create database Product;
 
@@ -10148,24 +10221,26 @@ use Product;
 create Table Products(prod_id int primary key, prod_name varchar(100), prod_price decimal(10,2));
 
 //verify the table is created.
-select * from Products;
+select \* from Products;
 
 //insert record in the table.
 insert into Products values (1, "kitkat", 10.00);
 
 //verify the record is created in db.
-select * from Products;
+select \* from Products;
 
 //update database record (alter)
 update Products set prod_name = "English Oven Fruit Bread", prod_price = 24.00 where prod_id = 1;
 
 //verify the record is updated.
-select * from Products;
+select \* from Products;
+
 ```
 
 - Add dependency to 'pom.xml' file:
 
 ```
+
 <!-- Source: https://mvnrepository.com/artifact/com.mysql/mysql-connector-j -->
 <dependency>
 	<groupId>com.mysql</groupId>
