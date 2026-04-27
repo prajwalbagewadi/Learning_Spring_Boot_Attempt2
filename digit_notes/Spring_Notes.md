@@ -10123,6 +10123,16 @@ userRepository.findAll();
 
 ## ORM Concept (Object Relational Mapping):
 
+- We have objects, in the Java world.
+- Everything is a object -> If you want to talk about 'Laptops', anything you want represent -> Even humans.
+- Everything in the Java world is a object.
+- Because it is a Object-oriented programming language.
+- If I wanted to represent 'my mouse' -> that represented as an object.
+- The way you create objects in Java is with the help of class.
+
+- The first thing you do is create a class -> Which is a 'blueprint' and then from that class you create a object.
+
+
 - ORM is a concept in Software Engineering.
 - Where you work with Java Objects, and ORM automatically converts these objects into Database tables and rows and (Vice Versa)
 - So instead of writing SQL like:
