@@ -10132,6 +10132,19 @@ userRepository.findAll();
 
 - The first thing you do is create a class -> Which is a 'blueprint' and then from that class you create a object.
 
+![Diagram:Objectfig.jpg](./Objectfig.jpg)
+
+- When you say data, What data we have -> Eg: Product -> Id, Name, Price (This is the Java world).
+- In the Database world we have a table ->
+  Structure (R-DBMS).
+
+```
+Table Name
+         Col_Name_1  |  Col_Name_2  |  Col_Name_3
+        -----------------------------------------
+    Row ->  Data     |     Data     |    Data
+        // Each Object from Java world. Will be a Row in DBMS world.
+```
 
 - ORM is a concept in Software Engineering.
 - Where you work with Java Objects, and ORM automatically converts these objects into Database tables and rows and (Vice Versa)
