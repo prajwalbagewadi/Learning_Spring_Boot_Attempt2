@@ -10146,6 +10146,31 @@ Table Name
         // Each Object from Java world. Will be a Row in DBMS world.
 ```
 
+![Diagram:JworldToRDBMSworldMapping.jpg](./JworldToRDBMSworldMapping.jpg)
+
+- If you want to map Java world to RDBMS world -> You can do thats -> ORM.
+- How do we map it -> Simple -> Eg:-
+
+```
+                     -> pid = 101
+Java Object  -> Data -> pname = "iphone"
+                     -> price = 50000.00
+
+// -> I want to Store this data in the table.
+```
+
+- Ofcourse you can write the SQL queries.
+
+```
+//SQL
+insert into products values (101,"iphone",50000.00)
+//Insert Query
+```
+
+- But what if you dont want to write the queries? -> You just need Java dont need SQL.
+- Can we do that yes -> with ORM.
+- ORM (says) -> Give me the Object. -> Its my responsibility -> To store that in Database.
+
 - ORM is a concept in Software Engineering.
 - Where you work with Java Objects, and ORM automatically converts these objects into Database tables and rows and (Vice Versa)
 - So instead of writing SQL like:
