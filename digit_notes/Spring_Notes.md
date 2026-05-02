@@ -10164,8 +10164,27 @@ Java Object  -> Data -> pname = "iphone"
 ```
 //SQL
 insert into products values (101,"iphone",50000.00)
-//Insert Query
+//Insert Query.
 ```
+
+- \*\* Write from here.
+- But what if you dont want to write the queries? -> You just need Java and dont need SQL.
+- Can we do that? -> Yes -> With ORM.
+- ORM says -> Give me the Object -> Its my responsibility to store that in Database.
+- So it will Basically translate your 'Java Object' into 'SQL Query', and then you can save that in Database.
+- So your object -> Data -> Becomes one Row in SQL table.
+
+```
+Product table
+    id   |  pname  |  price
+---------|---------|---------
+   101   |  iphone |  50000
+```
+
+- If you have multiple objects multiple rows.
+- The Question still remains who is responsible to create the table.
+- Who is responsible to specify the number of columns.
+- Who is responsible to name the columns are we going to do it?
 
 - But what if you dont want to write the queries? -> You just need Java dont need SQL.
 - Can we do that yes -> with ORM.
