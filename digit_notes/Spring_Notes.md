@@ -10167,7 +10167,6 @@ insert into products values (101,"iphone",50000.00)
 //Insert Query.
 ```
 
-- \*\* Write from here.
 - But what if you dont want to write the queries? -> You just need Java and dont need SQL.
 - Can we do that? -> Yes -> With ORM.
 - ORM says -> Give me the Object -> Its my responsibility to store that in Database.
@@ -10185,6 +10184,37 @@ Product table
 - The Question still remains who is responsible to create the table.
 - Who is responsible to specify the number of columns.
 - Who is responsible to name the columns are we going to do it?
+
+- \*\* Write from here.
+- What if, i say we dont have to do it.
+- Someone else will take care of it.
+- And Who is that someone else -> 'ORM Tool'.
+
+- That tool is it a magican to know everything(No).
+- See the thing is, the table name.
+- We can get the table name from the class name.
+
+```
+class Product {    //-> Table name Product
+
+}
+```
+
+- What about the columns -> each class property/Variable becomes a column.
+
+![Diagram:ORMColmapping.jpg](./ORMColmapping.jpg)
+
+- What ever class properties/variables names you have you make them into columns names.
+- What about the rows:
+- Each object of the class is = one row in the table.
+- If you have 10 objects of 10 different products you will get 10 rows in the table.
+- Thats how you basically do the mapping and how it is responsible to do all those things for you, is the 'ORM Tool'.
+- Eg: Hibernate, EclipseLink -> famous hibernate.
+- Full fledged ORM Too, -> 'Hibernate'.
+- But in the video we talked about 'Spring Data JPA' and not Hibernate right Why so?
+- The thing is Hibernate is a good tool.
+- But lets say in future you need to move to some other tool.
+- You basically have to do lot of changes to your code.
 
 - But what if you dont want to write the queries? -> You just need Java dont need SQL.
 - Can we do that yes -> with ORM.
