@@ -10215,6 +10215,15 @@ class Product {    //-> Table name Product
 - The thing is Hibernate is a good tool.
 - But lets say in future you need to move to some other tool.
 - You basically have to do lot of changes to your code.
+- It is because all these tools don't follow the same Standards or may be they are.
+- But how are they following the same Standard.
+- So what we got is 'JPA' Java Persistence API.
+- 'JPA' is just basically set of Standards, and Hibernate implements those Standards, most of the ORM tools implement these Standards.
+- So in future if you want to move from Hibernate to EclipseLink it will be easier.
+- Imagine if you know how to drive a car. -> It is easier to drive other cars. It is because they follow the same Standards.
+- That is why we have something called 'JPA'.
+
+
 
 - But what if you dont want to write the queries? -> You just need Java dont need SQL.
 - Can we do that yes -> with ORM.
