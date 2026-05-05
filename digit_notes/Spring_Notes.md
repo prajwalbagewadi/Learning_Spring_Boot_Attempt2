@@ -10185,7 +10185,6 @@ Product table
 - Who is responsible to specify the number of columns.
 - Who is responsible to name the columns are we going to do it?
 
-- \*\* Write from here.
 - What if, i say we dont have to do it.
 - Someone else will take care of it.
 - And Who is that someone else -> 'ORM Tool'.
@@ -10223,7 +10222,16 @@ class Product {    //-> Table name Product
 - Imagine if you know how to drive a car. -> It is easier to drive other cars. It is because they follow the same Standards.
 - That is why we have something called 'JPA'.
 
-
+- In the world of Spring -> Now since spring is a big project.
+- Its has got lot of modules inside, it they get a special tool/Module called -> 'Spring Data JPA'(It deals with data).
+- But we want to use 'JPA'?
+- And when we use it -> the Storing of the Data in the Database becomes easier.
+- Why 'JPA' is so important -> With the help of 'Spring Data JPA'.
+- We can store the data -> Which we are creating and storing in the Service layer into the database.
+- Which database we are going to use -> 'H2';
+- Which is a inbuilt database. -> Easy to use, Easy to setup.
+- And for learning purpose its a good tool.
+- 'H2' and 'Spring Data JPA' -> To store the data in the database and to fetch data.
 
 - But what if you dont want to write the queries? -> You just need Java dont need SQL.
 - Can we do that yes -> with ORM.
