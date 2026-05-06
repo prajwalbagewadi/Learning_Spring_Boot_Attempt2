@@ -10233,6 +10233,19 @@ class Product {    //-> Table name Product
 - And for learning purpose its a good tool.
 - 'H2' and 'Spring Data JPA' -> To store the data in the database and to fetch data.
 
+- Now lets implement 'Spring Data JPA' in this Project. -> The Ultimate Aim is to basically store this Data/List in the Database and also fetch from it.
+
+- Now we have a Controller for all the different requests -> GET, POST, PUT, DELETE.
+- Basically the request goes to the Service and then from Service.
+- Basically we have done the Hardcoding of the values and that we are getting.
+- And now we want to work with Database.
+- _What are the things we need?_
+- The first thing we need it is the database.
+- H2 -> Database.
+- H2Driver -> Connector.
+- We have to create a 'Repository Layer'. -> Which will make it work..
+
+
 - But what if you dont want to write the queries? -> You just need Java dont need SQL.
 - Can we do that yes -> with ORM.
 - ORM (says) -> Give me the Object. -> Its my responsibility -> To store that in Database.
