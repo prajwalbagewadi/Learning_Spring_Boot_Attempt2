@@ -10243,8 +10243,22 @@ class Product {    //-> Table name Product
 - The first thing we need it is the database.
 - H2 -> Database.
 - H2Driver -> Connector.
-- We have to create a 'Repository Layer'. -> Which will make it work..
+- We have to create a 'Repository Layer'. -> Which will make it work.
 
+![Diagram:archforH2.jpg](./archforH2.jpg)
+
+- 1st thing we need to get is 'H2', 'H2 Driver' and 'Spring Data JPA', Capability.
+- How do we add Spring Data JPA Capability.
+- So if you want to add a feature in your project or any external libraires you have to do that with the help of 'POM.xml' file.
+- What we have added till now is 'Web', 'Devtools'.
+- We need to get Spring Data JPA and H2.
+
+- If you remember how we created this Spring Boot Project:
+- Browser -> start.spring.io
+- We have to specify -> Add dependencies and the Project details.
+- By default you only get the 'Spring-Boot-Starter(MVNrepo)', and not even the Web.
+- For that -> Add Dependency -> Spring Web -> You will get 'Spring-starter-web(MVNrepo)'.
+- To work with JPA.
 
 - But what if you dont want to write the queries? -> You just need Java dont need SQL.
 - Can we do that yes -> with ORM.
