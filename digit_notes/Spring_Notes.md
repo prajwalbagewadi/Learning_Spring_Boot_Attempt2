@@ -10258,7 +10258,20 @@ class Product {    //-> Table name Product
 - We have to specify -> Add dependencies and the Project details.
 - By default you only get the 'Spring-Boot-Starter(MVNrepo)', and not even the Web.
 - For that -> Add Dependency -> Spring Web -> You will get 'Spring-starter-web(MVNrepo)'.
-- To work with JPA.
+- To work with JPA:
+- Add dependency -> Spring Data JPA. -> Add
+- Add dependency -> H2 -> DB driver -> Add
+- If you click on Explore -> Not just driver it will also give you a "Runtime".
+- Basically it will give you the "H2-Database".
+- See H2 is a in-memory database right.
+- If you work with different database. -> Eg: Postgres -> You need to install it on your machine -> do some configuration -> It is a good thing in real life we do that. ->
+- But since we are into learning phase H2 works for us, its a in-memory database.
+- And you dont have to do lot of setup.
+- You just add the dependency and your work is done.
+- It will give you some default settings.
+- Just use it and make it work, ok.
+
+# working here
 
 - But what if you dont want to write the queries? -> You just need Java dont need SQL.
 - Can we do that yes -> with ORM.
