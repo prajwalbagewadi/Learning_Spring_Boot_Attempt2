@@ -10271,6 +10271,15 @@ class Product {    //-> Table name Product
 - It will give you some default settings.
 - Just use it and make it work, ok.
 
+- So we don't have this things in our Project.
+- One thing you can do. -> Go to start.spring.io and copy the dependencies. 
+- Or
+- We can go to Maven Repository.
+- And here you can search for it.
+- Spring Data JPA. -> Choose a version.
+- Choose a version. -> Which you are already using for Web.
+- You can mention the dependency without version.
+- 3.2.6 copy. -> Search 'Spring Boot - Starter - Data JPA'.
 # working here
 
 - But what if you dont want to write the queries? -> You just need Java dont need SQL.
